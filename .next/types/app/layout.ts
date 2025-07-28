@@ -1,4 +1,4 @@
-// File: /home/humayou/Desktop/Decentralized-Voting-System/src/app/layout.tsx
+// File: /home/humayou/Desktop/Decentralized-Voting-System/src/app/layout.js
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

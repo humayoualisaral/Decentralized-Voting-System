@@ -1,6 +1,5 @@
-import connectToDatabase from '@/libs/mongodb.js';
-import Registration from '@/models/Registration';
-import { NextResponse } from 'next/server';
+import connectToDatabase from '../../../libs/mongodb';
+import Registration from '../../../models/Registration';
 
 // Rate limiting setup (simple in-memory store - use Redis in production)
 const registrationAttempts = new Map();

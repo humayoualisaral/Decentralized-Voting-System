@@ -1,4 +1,11 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/CandidateManagement/page": "app/CandidateManagement/page.js",
+  "/CastVoteManagement/page": "app/CastVoteManagement/page.js",
+  "/GeographicManagement/page": "app/GeographicManagement/page.js",
+  "/PartyManagement/page": "app/PartyManagement/page.js",
+  "/VoterManagement/page": "app/VoterManagement/page.js",
+  "/page": "app/page.js",
+  "/registration/page": "app/registration/page.js"
 }
