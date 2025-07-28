@@ -1,47 +1,92 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { User, MapPin, Hash, Calendar } from "lucide-react";
 
-const BiometricFingerprintAuth = () => {
-  const [isSupported, setIsSupported] = useState(false);
-  const [status, setStatus] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [registeredCredential, setRegisteredCredential] = useState(null);
-  const [authCount, setAuthCount] = useState(0);
+export default function NadraRegistrationForm() {
+  const [formData, setFormData] = useState({
+    cnicNumber: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    province: "",
+    constituency: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [constituencies, setConstituencies] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showFingerprints, setShowFingerprints] = useState(false);
+
+  // Biometric states
+  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+  const [biometricStatus, setBiometricStatus] = useState('');
+  const [isBiometricLoading, setIsBiometricLoading] = useState(false);
+  const [registeredCredential, setRegisteredCredential] = useState(null);
+  const [biometricData, setBiometricData] = useState(null);
 
+  // Province → Constituency data map
+  const constituenciesData = {
+    Punjab: [
+      "Lahore", "Multan", "Rawalpindi", "Faisalabad", "Gujranwala", 
+      "Sialkot", "Gujrat", "Bahawalpur", "Sargodha"
+    ],
+    Sindh: [
+      "Karachi", "Hyderabad", "Sukkur", "Larkana", "Mirpurkhas", 
+      "Nawabshah", "Thatta"
+    ],
+    "Khyber Pakhtunkhwa": [
+      "Peshawar", "Swat", "Abbottabad", "Mardan", 
+      "Dera Ismail Khan", "Bannu", "Kohat"
+    ],
+    Balochistan: [
+      "Quetta", "Gwadar", "Khuzdar", "Sibi", 
+      "Zhob", "Kalat", "Lasbella"
+    ],
+    "Gilgit": [
+      "Gilgit", "Skardu", "Hunza", "Ghizer", 
+      "Ghanche", "Diamer", "Astore", "Nagar", 
+      "Shigar", "Kharmang"
+    ]
+  };
+
+  // Initialize biometric support check
   useEffect(() => {
     checkBiometricSupport();
   }, []);
 
+  // Update constituencies when province changes
+  useEffect(() => {
+    if (formData.province && constituenciesData[formData.province]) {
+      setConstituencies(constituenciesData[formData.province]);
+      setFormData(prev => ({ ...prev, constituency: "" }));
+    } else {
+      setConstituencies([]);
+      setFormData(prev => ({ ...prev, constituency: "" }));
+    }
+  }, [formData.province]);
+
+  // Biometric helper functions
   const checkBiometricSupport = async () => {
     try {
-      // Check if WebAuthn is supported
       if (!window.PublicKeyCredential) {
-        setStatus('❌ WebAuthn not supported in this browser');
+        setBiometricStatus('❌ WebAuthn not supported in this browser');
         return;
       }
 
-      // Check if platform authenticator (biometric) is available
       const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
       setIsBiometricAvailable(available);
-      setIsSupported(true);
+      setIsBiometricSupported(true);
 
       if (available) {
-        setStatus('✅ Biometric fingerprint authentication is available');
+        setBiometricStatus('✅ Biometric fingerprint authentication is available');
       } else {
-        setStatus('⚠️ No biometric authenticator detected on this device');
+        setBiometricStatus('⚠️ No biometric authenticator detected on this device');
       }
-
-      // Check for conditional UI support (enhanced UX)
-      if (PublicKeyCredential.isConditionalMediationAvailable) {
-        const conditionalUI = await PublicKeyCredential.isConditionalMediationAvailable();
-        console.log('Conditional UI supported:', conditionalUI);
-      }
-
     } catch (error) {
       console.error('Error checking biometric support:', error);
-      setStatus('❌ Error checking biometric capabilities');
-      setIsSupported(false);
+      setBiometricStatus('❌ Error checking biometric capabilities');
+      setIsBiometricSupported(false);
     }
   };
 
@@ -66,23 +111,14 @@ const BiometricFingerprintAuth = () => {
     return btoa(binary);
   };
 
-  const base64ToArrayBuffer = (base64) => {
-    const binary = atob(base64);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) {
-      bytes[i] = binary.charCodeAt(i);
-    }
-    return bytes.buffer;
-  };
-
   const handleBiometricRegistration = async () => {
     if (!isBiometricAvailable) {
       alert('🚫 BIOMETRIC NOT AVAILABLE\n\nYour device does not support biometric authentication or no fingerprint is enrolled.');
       return;
     }
 
-    setIsLoading(true);
-    setStatus('🔐 Place your finger on the biometric sensor...');
+    setIsBiometricLoading(true);
+    setBiometricStatus('🔐 Place your finger on the biometric sensor...');
 
     try {
       const userId = generateUserId();
@@ -91,13 +127,13 @@ const BiometricFingerprintAuth = () => {
       const registrationOptions = {
         challenge: challenge,
         rp: {
-          name: "Biometric Fingerprint Demo",
+          name: "NADRA Registration System",
           id: window.location.hostname || "localhost",
         },
         user: {
           id: userId,
-          name: "biometric@demo.com",
-          displayName: "Biometric User",
+          name: `${formData.firstName || 'User'}.${formData.lastName || 'NADRA'}@nadra.gov.pk`,
+          displayName: `${formData.firstName || 'NADRA'} ${formData.lastName || 'User'}`,
         },
         pubKeyCredParams: [
           { alg: -7, type: "public-key" },   // ES256
@@ -106,18 +142,16 @@ const BiometricFingerprintAuth = () => {
           { alg: -257, type: "public-key" }, // RS256
         ],
         authenticatorSelection: {
-          authenticatorAttachment: "platform", // Built-in biometric
-          userVerification: "required",        // Force biometric verification
-          requireResidentKey: true,           // Store credential on device
+          authenticatorAttachment: "platform",
+          userVerification: "required",
+          requireResidentKey: true,
           residentKey: "required"
         },
         timeout: 60000,
-        attestation: "direct", // Get device attestation info
-        excludeCredentials: [] // Allow multiple registrations
+        attestation: "direct",
+        excludeCredentials: []
       };
 
-      console.log('Starting biometric registration with options:', registrationOptions);
-      
       const credential = await navigator.credentials.create({
         publicKey: registrationOptions
       });
@@ -126,9 +160,6 @@ const BiometricFingerprintAuth = () => {
         throw new Error('No credential returned from biometric registration');
       }
 
-      console.log('Biometric registration successful:', credential);
-
-      // Store credential info for authentication
       const credentialInfo = {
         id: credential.id,
         rawId: credential.rawId,
@@ -139,272 +170,432 @@ const BiometricFingerprintAuth = () => {
       };
 
       setRegisteredCredential(credentialInfo);
-      setStatus('✅ Biometric fingerprint registered successfully!');
-
-      // Detailed success alert
-      const alertMessage = `🎉 BIOMETRIC REGISTRATION SUCCESSFUL!
-
-👆 Fingerprint Type: Platform Biometric Authenticator
-🆔 Credential ID: ${credential.id}
-🔐 Algorithm: ES256/RS256 (Public Key Cryptography)
-📱 Authenticator: ${credential.response.authenticatorData ? 'Hardware Security Module' : 'Platform'}
-🛡️ Attestation: ${credential.response.attestationObject ? 'Device Verified' : 'Self-Attested'}
-⏰ Registered: ${new Date().toLocaleString()}
-
-🔒 Your biometric fingerprint has been securely enrolled!
-The private key is stored in your device's secure hardware.`;
-
-      alert(alertMessage);
+      setBiometricData(credentialInfo);
+      
+      setBiometricStatus('✅ Biometric fingerprint registered successfully!');
+      
+      alert(`🎉 BIOMETRIC REGISTRATION SUCCESSFUL!\n\n✅ Your fingerprint has been securely registered with NADRA.\n🔐 Credential ID: ${credential.id.substring(0, 20)}...\n⏰ Registered: ${new Date().toLocaleString()}\n\n🛡️ Your biometric data is encrypted and stored securely.`);
 
     } catch (error) {
       console.error('Biometric registration failed:', error);
-      setStatus(error);
+      setBiometricStatus('❌ Biometric registration failed');
       
       let errorMessage = '🚫 BIOMETRIC REGISTRATION FAILED\n\n';
       
       if (error.name === 'NotAllowedError') {
-        errorMessage += '❌ Error: User cancelled or biometric verification failed\n\n🔧 Solutions:\n• Try again and complete the biometric prompt\n• Ensure your finger is clean and dry\n• Make sure fingerprint is enrolled in system settings';
+        errorMessage += '❌ Registration cancelled or verification failed\n\n🔧 Please try again and complete the biometric prompt';
       } else if (error.name === 'SecurityError') {
-        errorMessage += '❌ Error: Security requirements not met\n\n🔧 Solutions:\n• Ensure you\'re using HTTPS\n• Check if site is trusted\n• Try refreshing the page';
-      } else if (error.name === 'NotSupportedError') {
-        errorMessage += '❌ Error: Biometric authentication not supported\n\n🔧 Solutions:\n• Enable fingerprint in device settings\n• Update your browser\n• Use a device with biometric capabilities';
-      } else if (error.name === 'InvalidStateError') {
-        errorMessage += '❌ Error: Credential already exists or invalid state\n\n🔧 Solutions:\n• Clear existing credentials\n• Try the reset function\n• Restart your browser';
+        errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
       } else {
-        errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}\n\n🔧 General Solutions:\n• Ensure fingerprint sensor is working\n• Check device biometric settings\n• Try again in a few moments`;
+        errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
       }
       
       alert(errorMessage);
     } finally {
-      setIsLoading(false);
+      setIsBiometricLoading(false);
     }
   };
 
-  const handleBiometricAuthentication = async () => {
-    if (!registeredCredential) {
-      alert('⚠️ NO BIOMETRIC REGISTERED\n\nPlease register your biometric fingerprint first before attempting authentication.');
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+
+    // CNIC validation
+    if (!formData.cnicNumber) {
+      newErrors.cnicNumber = "CNIC Number is required";
+    } else if (!/^\d{13}$/.test(formData.cnicNumber)) {
+      newErrors.cnicNumber = "CNIC must be exactly 13 digits";
+    }
+
+    // First name validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First Name is required";
+    }
+
+    // Last name validation
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last Name is required";
+    }
+
+    // Date of birth validation
+    if (!formData.dateOfBirth) {
+      newErrors.dateOfBirth = "Date of Birth is required";
+    } else {
+      const birthDate = new Date(formData.dateOfBirth);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      
+      if (age < 18 || age > 100) {
+        newErrors.dateOfBirth = "Age must be between 18 and 100 years";
+      }
+    }
+
+    // Province validation
+    if (!formData.province) {
+      newErrors.province = "Province is required";
+    }
+
+    // Constituency validation
+    if (!formData.constituency) {
+      newErrors.constituency = "Constituency is required";
+    }
+
+    // Fingerprints validation
+    if (!biometricData) {
+      newErrors.biometric = "Biometric fingerprint registration is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle input changes
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  // Format CNIC input
+  const formatCNIC = (value) => {
+    const digits = value.replace(/\D/g, '');
+    return digits.slice(0, 13);
+  };
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    if (!validateForm()) {
       return;
     }
 
-    setIsLoading(true);
-    setStatus('🔍 Verify your biometric fingerprint...');
-
-    try {
-      const challenge = generateSecureChallenge();
-
-      const authenticationOptions = {
-        challenge: challenge,
-        allowCredentials: [{
-          id: base64ToArrayBuffer(btoa(String.fromCharCode(...new Uint8Array(registeredCredential.rawId)))),
-          type: 'public-key',
-          transports: ['internal'] // Platform biometric
-        }],
-        userVerification: 'required', // Force biometric verification
-        timeout: 60000
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      const submissionData = {
+        ...formData,
+        biometricData: biometricData,
+        submissionTime: new Date().toISOString()
       };
-
-      console.log('Starting biometric authentication:', authenticationOptions);
-
-      const assertion = await navigator.credentials.get({
-        publicKey: authenticationOptions
+      
+      console.log("NADRA Registration Data:", submissionData);
+      alert("✅ NADRA Registration Successful!\n\nYour application has been submitted with biometric authentication.\nReference ID: " + Math.random().toString(36).substr(2, 9).toUpperCase());
+      setIsSubmitting(false);
+      
+      // Reset form
+      setFormData({
+        cnicNumber: "",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        province: "",
+        constituency: "",
       });
-
-      if (!assertion) {
-        throw new Error('No assertion returned from biometric authentication');
-      }
-
-      console.log('Biometric authentication successful:', assertion);
-
-      const newAuthCount = authCount + 1;
-      setAuthCount(newAuthCount);
-      setStatus(`🎉 Biometric authentication #${newAuthCount} successful!`);
-
-      // Detailed success alert
-      const alertMessage = `✅ BIOMETRIC AUTHENTICATION SUCCESSFUL!
-
-🎯 Authentication #: ${newAuthCount}
-👆 Method: Biometric Fingerprint Verification
-🆔 Credential ID: ${assertion.id}
-🔐 Algorithm: Public Key Cryptography Verified
-📊 Authenticator Data: ${arrayBufferToBase64(assertion.response.authenticatorData)}
-✍️ Digital Signature: ${arrayBufferToBase64(assertion.response.signature)}
-👤 User Handle: ${assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : 'Anonymous'}
-⏰ Authenticated: ${new Date().toLocaleString()}
-🛡️ Security Level: Hardware-backed biometric
-
-🔓 ACCESS GRANTED! Your biometric identity has been verified.
-The authentication used your device's secure hardware module.`;
-
-      alert(alertMessage);
-
-    } catch (error) {
-      console.error('Biometric authentication failed:', error);
-      setStatus('❌ Biometric authentication failed');
-      
-      let errorMessage = '🚫 BIOMETRIC AUTHENTICATION FAILED\n\n';
-      
-      if (error.name === 'NotAllowedError') {
-        errorMessage += '❌ Error: Biometric verification was cancelled or failed\n\n🔧 Solutions:\n• Place finger properly on sensor\n• Ensure finger is clean and dry\n• Try a different enrolled finger\n• Complete the biometric prompt fully';
-      } else if (error.name === 'SecurityError') {
-        errorMessage += '❌ Error: Security validation failed\n\n🔧 Solutions:\n• Refresh the page and try again\n• Ensure secure connection (HTTPS)\n• Check if credential is still valid';
-      } else if (error.name === 'NotSupportedError') {
-        errorMessage += '❌ Error: Biometric authentication unavailable\n\n🔧 Solutions:\n• Check if fingerprint sensor is working\n• Verify biometric settings are enabled\n• Restart biometric services';
-      } else {
-        errorMessage += `❌ Error: ${error.message || 'Biometric verification failed'}\n\n🔧 Troubleshooting:\n• Clean fingerprint sensor\n• Re-register if issues persist\n• Check device biometric functionality`;
-      }
-      
-      alert(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const resetBiometricDemo = () => {
-    setRegisteredCredential(null);
-    setAuthCount(0);
-    setStatus('🔄 Demo reset - ready for new biometric registration');
-    alert('🔄 BIOMETRIC DEMO RESET\n\nAll biometric credentials cleared.\nYou can now register a new fingerprint for authentication.');
+      setErrors({});
+      setRegisteredCredential(null);
+      setBiometricData(null);
+      setBiometricStatus('');
+    }, 2000);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-5xl animate-pulse">
-            👆
+          <div className="inline-flex items-center justify-center w-[100px] rounded-full overflow-hidden h-[100px] mb-4">
+           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAb082NJggC71VykY1zPCSQbib4oNe6Tm2DA&s" alt="NADRA Logo" width={"100px"} height={"100px"} />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Biometric Fingerprint
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+            NADRA Registration Form
           </h1>
-          <p className="text-gray-600 leading-relaxed">
-            Hardware-backed biometric authentication using your device's fingerprint sensor
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Complete your National Database and Registration Authority (NADRA) registration with biometric authentication.
           </p>
         </div>
 
-        {/* Support Status */}
-        <div className={`mb-6 p-4 rounded-xl border ${
-          isBiometricAvailable 
-            ? 'bg-green-50 border-green-200' 
-            : 'bg-yellow-50 border-yellow-200'
-        }`}>
-          <div className="flex items-center">
-            <span className="text-2xl mr-3">
-              {isBiometricAvailable ? '✅' : '⚠️'}
-            </span>
-            <div>
-              <p className={`font-semibold ${
-                isBiometricAvailable ? 'text-green-800' : 'text-yellow-800'
-              }`}>
-                {isBiometricAvailable ? 'Biometric Ready' : 'Limited Support'}
-              </p>
-              <p className={`text-sm ${
-                isBiometricAvailable ? 'text-green-700' : 'text-yellow-700'
-              }`}>
-                {isBiometricAvailable 
-                  ? 'Hardware biometric authenticator detected'
-                  : 'Requires device with enrolled fingerprint and HTTPS'
-                }
-              </p>
-            </div>
+        {/* Form Container */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+          <div className="bg-[darkgreen] px-6 py-4">
+            <h2 className="text-xl font-semibold text-white">Personal Information & Biometric Registration</h2>
           </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="space-y-4 mb-6">
-          <button 
-            onClick={handleBiometricRegistration}
-            disabled={!isSupported || isLoading}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
-          >
-            {isLoading && !registeredCredential ? (
-              <span className="flex items-center justify-center">
-                <span className="animate-spin mr-2">🔄</span>
-                Enrolling Biometric...
-              </span>
-            ) : (
-              <span className="flex items-center justify-center">
-                <span className="mr-2">👆</span>
-                Register Biometric Fingerprint
-              </span>
-            )}
-          </button>
           
-          <button 
-            onClick={handleBiometricAuthentication}
-            disabled={!registeredCredential || isLoading}
-            className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-xl transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
-          >
-            {isLoading && registeredCredential ? (
-              <span className="flex items-center justify-center">
-                <span className="animate-spin mr-2">🔄</span>
-                Verifying Biometric...
-              </span>
-            ) : (
-              <span className="flex items-center justify-center">
-                <span className="mr-2">🔓</span>
-                Authenticate with Biometric
-              </span>
-            )}
-          </button>
-
-          {registeredCredential && (
-            <button 
-              onClick={resetBiometricDemo}
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-semibold py-3 px-6 rounded-xl transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
-            >
-              <span className="flex items-center justify-center">
-                <span className="mr-2">🔄</span>
-                Reset Biometric Demo
-              </span>
-            </button>
-          )}
-        </div>
-
-        {/* Status Display */}
-        {status && (
-          <div className={`p-4 rounded-xl text-center font-medium ${
-            status.includes('failed') || status.includes('❌') 
-              ? 'bg-red-50 text-red-700 border border-red-200' 
-              : status.includes('successful') || status.includes('✅') || status.includes('🎉')
-              ? 'bg-green-50 text-green-700 border border-green-200'
-              : 'bg-blue-50 text-blue-700 border border-blue-200'
-          }`}>
-            {status}
-          </div>
-        )}
-
-        {/* Credential Info */}
-        {registeredCredential && (
-          <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-            <h3 className="font-semibold text-gray-800 mb-2">
-              🔐 Active Biometric Credential
-            </h3>
-            <div className="text-sm text-gray-600 space-y-1">
-              <div className="font-mono break-all">
-                ID: {registeredCredential.id.substring(0, 20)}...
+          <div className="p-6 md:p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* CNIC Number */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Hash className="inline w-4 h-4 mr-2" />
+                  CNIC Number
+                </label>
+                <input
+                  type="text"
+                  value={formData.cnicNumber}
+                  onChange={(e) => handleInputChange('cnicNumber', formatCNIC(e.target.value))}
+                  placeholder="Enter 13-digit CNIC number"
+                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    errors.cnicNumber 
+                      ? 'border-red-300 bg-red-50' 
+                      : 'border-gray-300 focus:border-emerald-500'
+                  }`}
+                />
+                {errors.cnicNumber && (
+                  <p className="mt-1 text-sm text-red-600">{errors.cnicNumber}</p>
+                )}
               </div>
+
+              {/* First Name */}
               <div>
-                📅 Registered: {new Date(registeredCredential.timestamp).toLocaleString()}
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <User className="inline w-4 h-4 mr-2" />
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  value={formData.firstName}
+                  onChange={(e) => handleInputChange('firstName', e.target.value)}
+                  placeholder="Enter first name"
+                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    errors.firstName 
+                      ? 'border-red-300 bg-red-50' 
+                      : 'border-gray-300 focus:border-emerald-500'
+                  }`}
+                />
+                {errors.firstName && (
+                  <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
+                )}
               </div>
-              {authCount > 0 && (
-                <div className="text-green-600 font-medium">
-                  ✅ Successful authentications: {authCount}
+
+              {/* Last Name */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <User className="inline w-4 h-4 mr-2" />
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  value={formData.lastName}
+                  onChange={(e) => handleInputChange('lastName', e.target.value)}
+                  placeholder="Enter last name"
+                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    errors.lastName 
+                      ? 'border-red-300 bg-red-50' 
+                      : 'border-gray-300 focus:border-emerald-500'
+                  }`}
+                />
+                {errors.lastName && (
+                  <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
+                )}
+              </div>
+
+              {/* Date of Birth */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Calendar className="inline w-4 h-4 mr-2" />
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  value={formData.dateOfBirth}
+                  onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+                  max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+                  min={new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]}
+                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    errors.dateOfBirth 
+                      ? 'border-red-300 bg-red-50' 
+                      : 'border-gray-300 focus:border-emerald-500'
+                  }`}
+                />
+                {errors.dateOfBirth && (
+                  <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>
+                )}
+              </div>
+
+              {/* Province */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <MapPin className="inline w-4 h-4 mr-2" />
+                  Province
+                </label>
+                <select
+                  value={formData.province}
+                  onChange={(e) => handleInputChange('province', e.target.value)}
+                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white ${
+                    errors.province 
+                      ? 'border-red-300 bg-red-50' 
+                      : 'border-gray-300 focus:border-emerald-500'
+                  }`}
+                >
+                  <option value="">Select Province</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Sindh">Sindh</option>
+                  <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                  <option value="Balochistan">Balochistan</option>
+                  <option value="Gilgit">Gilgit-Baltistan</option>
+                </select>
+                {errors.province && (
+                  <p className="mt-1 text-sm text-red-600">{errors.province}</p>
+                )}
+              </div>
+
+              {/* Constituency */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <MapPin className="inline w-4 h-4 mr-2" />
+                  Constituency
+                </label>
+                <select
+                  value={formData.constituency}
+                  onChange={(e) => handleInputChange('constituency', e.target.value)}
+                  disabled={!formData.province}
+                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white ${
+                    !formData.province 
+                      ? 'bg-gray-100 cursor-not-allowed' 
+                      : errors.constituency 
+                        ? 'border-red-300 bg-red-50' 
+                        : 'border-gray-300 focus:border-emerald-500'
+                  }`}
+                >
+                  <option value="">
+                    {formData.province ? 'Select Constituency' : 'Select Province First'}
+                  </option>
+                  {constituencies.map((constituency) => (
+                    <option key={constituency} value={constituency}>
+                      {constituency}
+                    </option>
+                  ))}
+                </select>
+                {errors.constituency && (
+                  <p className="mt-1 text-sm text-red-600">{errors.constituency}</p>
+                )}
+              </div>
+
+              {/* Biometric Fingerprint Section */}
+              <div className="md:col-span-2">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      Biometric Fingerprint Authentication
+                    </h3>
+                    
+                    {/* Custom Fingerprint Logo */}
+                    <div className="flex justify-center mb-4">
+                      <button
+                        type="button"
+                        onClick={handleBiometricRegistration}
+                        disabled={!isBiometricSupported || isBiometricLoading}
+                        className={`relative group transition-all duration-300 ${
+                          registeredCredential
+                            ? 'cursor-default'
+                            : isBiometricLoading
+                            ? 'cursor-wait'
+                            : 'cursor-pointer hover:scale-110'
+                        }`}
+                      >
+                        {/* Fingerprint SVG Logo */}
+                        <img src="/Fingerprint Scanning.gif" width={'200px'} height={"200px"}  alt="" />
+                      </button>
+                    </div>
+
+                    {/* Status Message */}
+                    <div className={`mb-4 p-3 rounded-lg text-sm font-medium ${
+                      registeredCredential
+                        ? 'bg-green-50 border border-green-200 text-green-800'
+                        : isBiometricLoading
+                        ? 'bg-blue-50 border border-blue-200 text-blue-800'
+                        : isBiometricAvailable 
+                        ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' 
+                        : 'bg-yellow-50 border border-yellow-200 text-yellow-800'
+                    }`}>
+                      {isBiometricLoading ? (
+                        <div className="flex items-center justify-center">
+                          <span className="animate-spin mr-2">🔄</span>
+                          Place your finger on the biometric sensor...
+                        </div>
+                      ) : registeredCredential ? (
+                        <div className="flex items-center justify-center">
+                          <span className="mr-2">✅</span>
+                          Biometric fingerprint registered successfully!
+                        </div>
+                      ) : biometricStatus ? (
+                        biometricStatus
+                      ) : (
+                        'Checking biometric capabilities...'
+                      )}
+                    </div>
+
+                    {/* Instructions */}
+                    {!registeredCredential && (
+                      <p className="text-sm text-gray-600">
+                        {isBiometricAvailable 
+                          ? 'Click the fingerprint icon above to register your biometric authentication'
+                          : 'Biometric authentication is not available on this device'
+                        }
+                      </p>
+                    )}
+
+                    {/* Biometric Details */}
+                    {registeredCredential && (
+                      <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
+                        <div className="font-medium text-green-800 mb-2">Registered Biometric Details:</div>
+                        <div className="text-green-700 space-y-1">
+                          <div className="font-mono">ID: {registeredCredential.id.substring(0, 30)}...</div>
+                          <div>Type: Hardware Security Platform</div>
+                          <div>Registered: {new Date(registeredCredential.timestamp).toLocaleString()}</div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Error Display */}
+                    {errors.biometric && (
+                      <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <p className="text-sm text-red-600 font-medium">{errors.biometric}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )}
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="mt-8 flex justify-center">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className={`px-8 py-4 rounded-lg font-semibold text-white transition-all duration-200 min-w-[200px] ${
+                  isSubmitting
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-[darkgreen] hover:bg-green-700 transform hover:scale-105 shadow-lg hover:shadow-xl'
+                }`}
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Submitting Registration...
+                  </div>
+                ) : (
+                  'Submit NADRA Registration'
+                )}
+              </button>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* Info Footer */}
-        <div className="mt-6 text-center text-xs text-gray-500">
-          <p>🔒 Hardware Security • 👆 Biometric • 🛡️ Zero Knowledge</p>
-          <p className="mt-1">Real WebAuthn biometric authentication</p>
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-sm text-gray-500">
+            By submitting this form, you agree to NADRA's terms and conditions.
+          </p>
+          <p className="text-xs text-gray-400 mt-2">
+            🔒 Your biometric data is encrypted and securely stored according to NADRA protocols.
+          </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default BiometricFingerprintAuth;
+}
