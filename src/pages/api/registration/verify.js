@@ -1,5 +1,5 @@
-import connectToDatabase from '../../../lib/mongodb';
-import Registration from '../../../models/Registration';
+import connectToDatabase from '@/libs/mongodb.js';
+import Registration from '@/models/Registration';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

@@ -1,5 +1,5 @@
-import connectToDatabase from '../../../lib/mongodb';
-import Registration from '../../../models/Registration';
+import connectToDatabase from '@/libs/mongodb.js';
+import Registration from '@/models/Registration';
 import { NextResponse } from 'next/server';
 
 // Rate limiting setup (simple in-memory store - use Redis in production)

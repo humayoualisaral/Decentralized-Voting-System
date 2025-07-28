@@ -1,1 +1,9 @@
-{}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/api/registration/[id]": "pages/api/registration/[id].js",
+  "/api/registration/register": "pages/api/registration/register.js",
+  "/api/registration/stats": "pages/api/registration/stats.js",
+  "/api/registration/verify": "pages/api/registration/verify.js",
+  "/_document": "pages/_document.js"
+}
