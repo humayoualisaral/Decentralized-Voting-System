@@ -1,10 +1,5 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/api/registration/[id]": "pages/api/registration/[id].js",
-  "/api/registration/register": "pages/api/registration/register.js",
-  "/api/registration/verify": "pages/api/registration/verify.js",
-  "/api/registration/stats": "pages/api/registration/stats.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.html"
+  "/_error": "pages/_error.js"
 }
