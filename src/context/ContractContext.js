@@ -260,7 +260,7 @@ export const VotingProvider = ({ children }) => {
     try {
       if (!contract) throw new Error('Contract not initialized');
       
-      const electionId = await contract.currentElectionId();
+      const electionId =await contract.currentElectionId();
       return electionId.toString();
     } catch (error) {
       console.error('Error getting current election ID:', error);

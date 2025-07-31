@@ -1084,7 +1084,7 @@ const VotingProvider = (param)=>{
     const [isConnected, setIsConnected] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [chainId, setChainId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const CONTRACT_ADDRESS = ("TURBOPACK compile-time value", "0x643c0305e3438c043bdf09aa9ab07aa36c2e347419e7ecc4c5aa20e871305467");
+    const CONTRACT_ADDRESS = ("TURBOPACK compile-time value", "0xCC129538eF038A7B10219cC08721F4BE28265bc7");
     // Initialize contract
     const initializeContract = async (signerOrProvider)=>{
         try {
