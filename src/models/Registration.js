@@ -1,3 +1,4 @@
+// models/Registration.js
 import mongoose from 'mongoose';
 
 const BiometricDataSchema = new mongoose.Schema({
@@ -12,6 +13,15 @@ const BiometricDataSchema = new mongoose.Schema({
     platform: String,
     language: String
   }
+}, { _id: false });
+
+const BiometricVerificationSchema = new mongoose.Schema({
+  timestamp: { type: Date, required: true },
+  biometricId: { type: String, required: true },
+  electionId: { type: String, required: true },
+  verificationHash: { type: String, required: true },
+  ipAddress: String,
+  userAgent: String
 }, { _id: false });
 
 const RegistrationSchema = new mongoose.Schema({
@@ -65,6 +75,14 @@ const RegistrationSchema = new mongoose.Schema({
     required: true
   },
   
+  // Biometric Verification Tracking (for audit trail only)
+  lastBiometricVerification: {
+    type: BiometricVerificationSchema,
+    default: null
+  },
+  
+  biometricVerifications: [BiometricVerificationSchema],
+  
   // System Information
   registrationId: {
     type: String,
@@ -75,7 +93,7 @@ const RegistrationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'verified', 'rejected', 'active'],
+    enum: ['pending', 'verified', 'rejected', 'active', 'suspended'],
     default: 'pending'
   },
   submissionTime: {
@@ -95,13 +113,33 @@ const RegistrationSchema = new mongoose.Schema({
     default: false
   },
   verificationDate: Date,
-  verificationNotes: String
+  verificationNotes: String,
+  
+  // Voting Status
+  isEligibleToVote: {
+    type: Boolean,
+    default: true
+  },
+  votingRestrictions: [{
+    reason: String,
+    imposedDate: Date,
+    expiryDate: Date,
+    isActive: { type: Boolean, default: true }
+  }],
+  
+  // Security Features
+  lastLoginAttempt: Date,
+  failedLoginAttempts: { type: Number, default: 0 },
+  accountLocked: { type: Boolean, default: false },
+  lockExpiry: Date
   
 }, {
   timestamps: true,
   toJSON: { 
     transform: function(doc, ret) {
       delete ret.__v;
+      delete ret.biometricData.rawId; // Don't expose raw biometric data
+      delete ret.biometricData.challenge;
       return ret;
     }
   }
@@ -113,6 +151,8 @@ RegistrationSchema.index({ registrationId: 1 });
 RegistrationSchema.index({ submissionTime: -1 });
 RegistrationSchema.index({ province: 1, constituency: 1 });
 RegistrationSchema.index({ status: 1 });
+RegistrationSchema.index({ isVerified: 1 });
+RegistrationSchema.index({ 'lastBiometricVerification.timestamp': -1 });
 
 // Pre-save middleware
 RegistrationSchema.pre('save', function(next) {
@@ -135,6 +175,53 @@ RegistrationSchema.methods.rejectRegistration = function(reason) {
   return this.save();
 };
 
+RegistrationSchema.methods.addBiometricVerification = function(verificationData) {
+  this.lastBiometricVerification = verificationData;
+  this.biometricVerifications.push(verificationData);
+  return this.save();
+};
+
+RegistrationSchema.methods.canVote = function() {
+  if (!this.isVerified || this.status !== 'verified') {
+    return { canVote: false, reason: 'Registration not verified' };
+  }
+  
+  if (!this.isEligibleToVote) {
+    return { canVote: false, reason: 'Voting eligibility suspended' };
+  }
+  
+  if (this.accountLocked && this.lockExpiry > new Date()) {
+    return { canVote: false, reason: 'Account temporarily locked' };
+  }
+  
+  const activeRestrictions = this.votingRestrictions.filter(
+    restriction => restriction.isActive && 
+    (!restriction.expiryDate || restriction.expiryDate > new Date())
+  );
+  
+  if (activeRestrictions.length > 0) {
+    return { 
+      canVote: false, 
+      reason: `Voting restricted: ${activeRestrictions[0].reason}` 
+    };
+  }
+  
+  return { canVote: true, reason: null };
+};
+
+RegistrationSchema.methods.lockAccount = function(durationMinutes = 30) {
+  this.accountLocked = true;
+  this.lockExpiry = new Date(Date.now() + durationMinutes * 60 * 1000);
+  return this.save();
+};
+
+RegistrationSchema.methods.unlockAccount = function() {
+  this.accountLocked = false;
+  this.lockExpiry = null;
+  this.failedLoginAttempts = 0;
+  return this.save();
+};
+
 // Static methods
 RegistrationSchema.statics.findByCNIC = function(cnic) {
   return this.findOne({ cnicNumber: cnic });
@@ -153,6 +240,46 @@ RegistrationSchema.statics.getRegistrationStats = function() {
       }
     }
   ]);
+};
+
+RegistrationSchema.statics.getVerificationStats = function(electionId) {
+  return this.aggregate([
+    { 
+      $match: { 
+        'biometricVerifications.electionId': electionId 
+      } 
+    },
+    {
+      $group: {
+        _id: '$province',
+        totalRegistrations: { $sum: 1 },
+        verifiedCount: {
+          $sum: {
+            $size: {
+              $filter: {
+                input: '$biometricVerifications',
+                cond: { $eq: ['$this.electionId', electionId] }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]);
+};
+
+RegistrationSchema.statics.findEligibleVoters = function(constituency, province) {
+  return this.find({
+    isVerified: true,
+    status: 'verified',
+    isEligibleToVote: true,
+    constituency: constituency,
+    province: province,
+    $or: [
+      { accountLocked: false },
+      { lockExpiry: { $lt: new Date() } }
+    ]
+  });
 };
 
 export default mongoose.models.Registration || mongoose.model('Registration', RegistrationSchema);

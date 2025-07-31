@@ -8,6 +8,40 @@ const ElectionManagement = ({
   setSuccess, 
   isLoading 
 }) => {
+  // Helper function to determine if election should be active based on current time
+  const getElectionStatus = (election) => {
+    const currentTime = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+    const startTime = parseInt(election.startTime);
+    const endTime = parseInt(election.endTime);
+    
+    // Election is active if current time is between start and end time
+    return currentTime >= startTime && currentTime <= endTime;
+  };
+
+  // Helper function to get status text and styling
+  const getStatusDisplay = (election) => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const startTime = parseInt(election.startTime);
+    const endTime = parseInt(election.endTime);
+    
+    if (currentTime < startTime) {
+      return {
+        text: 'Upcoming',
+        className: 'bg-yellow-100 text-yellow-800'
+      };
+    } else if (currentTime > endTime) {
+      return {
+        text: 'Ended',
+        className: 'bg-red-100 text-red-800'
+      };
+    } else {
+      return {
+        text: 'Active',
+        className: 'bg-green-100 text-green-800'
+      };
+    }
+  };
+
   const handleToggleElectionStatus = async (electionId, currentStatus) => {
     try {
       setError('');
@@ -49,59 +83,46 @@ const ElectionManagement = ({
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Votes
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+                
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {elections.map(election => (
-                <tr key={election.electionId}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">{election.title}</div>
-                      <div className="text-sm text-gray-500">{election.description}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <div>
-                      <div>Start: {new Date(parseInt(election.startTime) * 1000).toLocaleDateString()}</div>
-                      <div>End: {new Date(parseInt(election.endTime) * 1000).toLocaleDateString()}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      election.isActive 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {election.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {election.totalVotes}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex space-x-2">
-                      <button 
-                        onClick={() => handleToggleElectionStatus(election.electionId, election.isActive)}
-                        disabled={isLoading}
-                        className={`${
-                          election.isActive ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900'
-                        } disabled:opacity-50`}
-                      >
-                        {election.isActive ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                      </button>
-                      <button className="text-indigo-600 hover:text-indigo-900">
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button className="text-red-600 hover:text-red-900">
-                        <Download className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {elections.map(election => {
+                const statusDisplay = getStatusDisplay(election);
+                const isCurrentlyActive = getElectionStatus(election);
+                
+                return (
+                  <tr key={election.electionId}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{election.title}</div>
+                        <div className="text-sm text-gray-500">{election.description}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div>
+                        <div>Start: {new Date(parseInt(election.startTime) * 1000).toLocaleDateString()}</div>
+                        <div>End: {new Date(parseInt(election.endTime) * 1000).toLocaleDateString()}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusDisplay.className}`}>
+                        {statusDisplay.text}
+                      </span>
+                      {/* Show manual override status if different from calculated status */}
+                      {election.isActive !== isCurrentlyActive && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          (Manually {election.isActive ? 'enabled' : 'disabled'})
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {election.totalVotes}
+                    </td>
+            
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

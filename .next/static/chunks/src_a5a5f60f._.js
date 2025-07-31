@@ -1575,8 +1575,7 @@ const DashboardHeader = (param)=>{
                                 className: "text-sm text-gray-600",
                                 children: [
                                     account === null || account === void 0 ? void 0 : account.substring(0, 6),
-                                    "...",
-                                    account === null || account === void 0 ? void 0 : account.substring(-4)
+                                    "..."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/DashboardHeader.jsx",
@@ -1853,6 +1852,28 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Dashboa
 ;
 const DashboardOverview = (param)=>{
     let { dashboardStats, elections, candidates } = param;
+    // Helper function to get status display based on current time
+    const getStatusDisplay = (election)=>{
+        const currentTime = Math.floor(Date.now() / 1000);
+        const startTime = parseInt(election.startTime);
+        const endTime = parseInt(election.endTime);
+        if (currentTime < startTime) {
+            return {
+                text: 'Upcoming',
+                className: 'bg-yellow-100 text-yellow-800'
+            };
+        } else if (currentTime > endTime) {
+            return {
+                text: 'Ended',
+                className: 'bg-red-100 text-red-800'
+            };
+        } else {
+            return {
+                text: 'Active',
+                className: 'bg-green-100 text-green-800'
+            };
+        }
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6",
         children: [
@@ -1860,8 +1881,8 @@ const DashboardOverview = (param)=>{
                 dashboardStats: dashboardStats
             }, void 0, false, {
                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                lineNumber: 5,
-                columnNumber: 5
+                lineNumber: 30,
+                columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 lg:grid-cols-2 gap-6",
@@ -1874,12 +1895,14 @@ const DashboardOverview = (param)=>{
                                 children: "Recent Elections"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                lineNumber: 9,
-                                columnNumber: 9
+                                lineNumber: 34,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "space-y-3",
-                                children: elections.slice(0, 3).map((election)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: elections.slice(0, 3).map((election)=>{
+                                    const statusDisplay = getStatusDisplay(election);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex items-center justify-between p-3 bg-gray-50 rounded-lg",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1889,8 +1912,8 @@ const DashboardOverview = (param)=>{
                                                         children: election.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                        lineNumber: 14,
-                                                        columnNumber: 17
+                                                        lineNumber: 42,
+                                                        columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "text-sm text-gray-600",
@@ -1900,39 +1923,73 @@ const DashboardOverview = (param)=>{
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                        lineNumber: 15,
-                                                        columnNumber: 17
+                                                        lineNumber: 43,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "text-xs text-gray-500 mt-1",
+                                                        children: [
+                                                            new Date(parseInt(election.startTime) * 1000).toLocaleDateString(),
+                                                            " -",
+                                                            new Date(parseInt(election.endTime) * 1000).toLocaleDateString()
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/DashboardOverview.jsx",
+                                                        lineNumber: 44,
+                                                        columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                lineNumber: 13,
-                                                columnNumber: 15
+                                                lineNumber: 41,
+                                                columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "px-2 py-1 rounded-full text-xs font-medium ".concat(election.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'),
-                                                children: election.isActive ? 'Active' : 'Inactive'
-                                            }, void 0, false, {
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex flex-col items-end space-y-1",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "px-2 py-1 rounded-full text-xs font-medium ".concat(statusDisplay.className),
+                                                        children: statusDisplay.text
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/DashboardOverview.jsx",
+                                                        lineNumber: 50,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    election.isActive !== (statusDisplay.text === 'Active') && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-xs text-gray-500",
+                                                        children: [
+                                                            "(Manual: ",
+                                                            election.isActive ? 'On' : 'Off',
+                                                            ")"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/DashboardOverview.jsx",
+                                                        lineNumber: 55,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                lineNumber: 17,
-                                                columnNumber: 15
+                                                lineNumber: 49,
+                                                columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, election.electionId, true, {
                                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                                        lineNumber: 12,
-                                        columnNumber: 13
-                                    }, ("TURBOPACK compile-time value", void 0)))
+                                        lineNumber: 40,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0));
+                                })
                             }, void 0, false, {
                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                lineNumber: 10,
-                                columnNumber: 9
+                                lineNumber: 35,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                        lineNumber: 8,
-                        columnNumber: 7
+                        lineNumber: 33,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "bg-white rounded-lg shadow-md p-6",
@@ -1942,24 +1999,59 @@ const DashboardOverview = (param)=>{
                                 children: "Top Candidates"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                lineNumber: 28,
-                                columnNumber: 9
+                                lineNumber: 67,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "space-y-3",
-                                children: candidates.sort((a, b)=>parseInt(b.voteCount) - parseInt(a.voteCount)).slice(0, 3).map((candidate)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: candidates.sort((a, b)=>parseInt(b.voteCount) - parseInt(a.voteCount)).slice(0, 3).map((candidate)=>{
+                                    var _candidate_symbol, _candidate_symbol1, _candidate_symbol2;
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex items-center justify-between p-3 bg-gray-50 rounded-lg",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "flex items-center space-x-3",
                                                 children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-2xl",
-                                                        children: candidate.symbol
-                                                    }, void 0, false, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "w-12 h-12 flex-shrink-0",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                src: ((_candidate_symbol = candidate.symbol) === null || _candidate_symbol === void 0 ? void 0 : _candidate_symbol.startsWith('ipfs://')) ? "https://ipfs.io/ipfs/".concat(candidate.symbol.replace('ipfs://', '')) : ((_candidate_symbol1 = candidate.symbol) === null || _candidate_symbol1 === void 0 ? void 0 : _candidate_symbol1.startsWith('Qm')) || ((_candidate_symbol2 = candidate.symbol) === null || _candidate_symbol2 === void 0 ? void 0 : _candidate_symbol2.startsWith('bafy')) ? "https://ipfs.io/ipfs/".concat(candidate.symbol) : candidate.symbol,
+                                                                alt: "".concat(candidate.name, " symbol"),
+                                                                className: "w-full h-full object-cover rounded-full border-2 border-gray-200",
+                                                                onError: (e)=>{
+                                                                    console.log('Image failed to load:', candidate.symbol);
+                                                                    e.target.style.display = 'none';
+                                                                    e.target.nextSibling.style.display = 'flex';
+                                                                },
+                                                                onLoad: ()=>console.log('Image loaded successfully:', candidate.symbol)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/DashboardOverview.jsx",
+                                                                lineNumber: 77,
+                                                                columnNumber: 23
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "w-full h-full bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-xs",
+                                                                style: {
+                                                                    display: 'none'
+                                                                },
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                    children: "👤"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/DashboardOverview.jsx",
+                                                                    lineNumber: 96,
+                                                                    columnNumber: 25
+                                                                }, ("TURBOPACK compile-time value", void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/DashboardOverview.jsx",
+                                                                lineNumber: 95,
+                                                                columnNumber: 23
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                        lineNumber: 36,
-                                                        columnNumber: 19
+                                                        lineNumber: 76,
+                                                        columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         children: [
@@ -1968,28 +2060,28 @@ const DashboardOverview = (param)=>{
                                                                 children: candidate.name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                                lineNumber: 38,
-                                                                columnNumber: 21
+                                                                lineNumber: 100,
+                                                                columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-sm text-gray-600",
                                                                 children: candidate.partyName
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                                lineNumber: 39,
-                                                                columnNumber: 21
+                                                                lineNumber: 101,
+                                                                columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                        lineNumber: 37,
-                                                        columnNumber: 19
+                                                        lineNumber: 99,
+                                                        columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                lineNumber: 35,
-                                                columnNumber: 17
+                                                lineNumber: 74,
+                                                columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "font-bold text-blue-600",
@@ -1999,37 +2091,38 @@ const DashboardOverview = (param)=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                                lineNumber: 42,
-                                                columnNumber: 17
+                                                lineNumber: 104,
+                                                columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, candidate.candidateId, true, {
                                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                                        lineNumber: 34,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)))
+                                        lineNumber: 73,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0));
+                                })
                             }, void 0, false, {
                                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                                lineNumber: 29,
-                                columnNumber: 9
+                                lineNumber: 68,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/DashboardOverview.jsx",
-                        lineNumber: 27,
-                        columnNumber: 7
+                        lineNumber: 66,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/DashboardOverview.jsx",
-                lineNumber: 7,
-                columnNumber: 5
+                lineNumber: 32,
+                columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/DashboardOverview.jsx",
-        lineNumber: 4,
-        columnNumber: 3
+        lineNumber: 29,
+        columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 _c = DashboardOverview;
@@ -2050,14 +2143,40 @@ __turbopack_context__.s({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/plus.js [app-client] (ecmascript) <export default as Plus>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye.js [app-client] (ecmascript) <export default as Eye>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye-off.js [app-client] (ecmascript) <export default as EyeOff>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/square-pen.js [app-client] (ecmascript) <export default as Edit>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/download.js [app-client] (ecmascript) <export default as Download>");
 ;
 ;
 const ElectionManagement = (param)=>{
     let { elections, setActiveTab, setElectionStatus, setError, setSuccess, isLoading } = param;
+    // Helper function to determine if election should be active based on current time
+    const getElectionStatus = (election)=>{
+        const currentTime = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+        const startTime = parseInt(election.startTime);
+        const endTime = parseInt(election.endTime);
+        // Election is active if current time is between start and end time
+        return currentTime >= startTime && currentTime <= endTime;
+    };
+    // Helper function to get status text and styling
+    const getStatusDisplay = (election)=>{
+        const currentTime = Math.floor(Date.now() / 1000);
+        const startTime = parseInt(election.startTime);
+        const endTime = parseInt(election.endTime);
+        if (currentTime < startTime) {
+            return {
+                text: 'Upcoming',
+                className: 'bg-yellow-100 text-yellow-800'
+            };
+        } else if (currentTime > endTime) {
+            return {
+                text: 'Ended',
+                className: 'bg-red-100 text-red-800'
+            };
+        } else {
+            return {
+                text: 'Active',
+                className: 'bg-green-100 text-green-800'
+            };
+        }
+    };
     const handleToggleElectionStatus = async (electionId, currentStatus)=>{
         try {
             setError('');
@@ -2079,7 +2198,7 @@ const ElectionManagement = (param)=>{
                         children: "Election Management"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ElectionManagement.jsx",
-                        lineNumber: 25,
+                        lineNumber: 59,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2090,26 +2209,26 @@ const ElectionManagement = (param)=>{
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                lineNumber: 30,
+                                lineNumber: 64,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: "Create Election"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                lineNumber: 31,
+                                lineNumber: 65,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ElectionManagement.jsx",
-                        lineNumber: 26,
+                        lineNumber: 60,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                lineNumber: 24,
+                lineNumber: 58,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2128,7 +2247,7 @@ const ElectionManagement = (param)=>{
                                             children: "Election Details"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                            lineNumber: 40,
+                                            lineNumber: 74,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -2136,7 +2255,7 @@ const ElectionManagement = (param)=>{
                                             children: "Duration"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                            lineNumber: 43,
+                                            lineNumber: 77,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -2144,7 +2263,7 @@ const ElectionManagement = (param)=>{
                                             children: "Status"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                            lineNumber: 46,
+                                            lineNumber: 80,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -2152,31 +2271,26 @@ const ElectionManagement = (param)=>{
                                             children: "Votes"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                            lineNumber: 49,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0)),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                            className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                                            children: "Actions"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/ElectionManagement.jsx",
-                                            lineNumber: 52,
+                                            lineNumber: 83,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/ElectionManagement.jsx",
-                                    lineNumber: 39,
+                                    lineNumber: 73,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                lineNumber: 38,
+                                lineNumber: 72,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
                                 className: "bg-white divide-y divide-gray-200",
-                                children: elections.map((election)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                children: elections.map((election)=>{
+                                    const statusDisplay = getStatusDisplay(election);
+                                    const isCurrentlyActive = getElectionStatus(election);
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4 whitespace-nowrap",
@@ -2187,27 +2301,27 @@ const ElectionManagement = (param)=>{
                                                             children: election.title
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 62,
-                                                            columnNumber: 23
+                                                            lineNumber: 98,
+                                                            columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "text-sm text-gray-500",
                                                             children: election.description
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 63,
-                                                            columnNumber: 23
+                                                            lineNumber: 99,
+                                                            columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                    lineNumber: 61,
-                                                    columnNumber: 21
+                                                    lineNumber: 97,
+                                                    columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                lineNumber: 60,
-                                                columnNumber: 19
+                                                lineNumber: 96,
+                                                columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4 whitespace-nowrap text-sm text-gray-900",
@@ -2220,8 +2334,8 @@ const ElectionManagement = (param)=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 68,
-                                                            columnNumber: 23
+                                                            lineNumber: 104,
+                                                            columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             children: [
@@ -2230,140 +2344,89 @@ const ElectionManagement = (param)=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 69,
-                                                            columnNumber: 23
+                                                            lineNumber: 105,
+                                                            columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                    lineNumber: 67,
-                                                    columnNumber: 21
+                                                    lineNumber: 103,
+                                                    columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                lineNumber: 66,
-                                                columnNumber: 19
+                                                lineNumber: 102,
+                                                columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4 whitespace-nowrap",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full ".concat(election.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'),
-                                                    children: election.isActive ? 'Active' : 'Inactive'
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                    lineNumber: 73,
-                                                    columnNumber: 21
-                                                }, ("TURBOPACK compile-time value", void 0))
-                                            }, void 0, false, {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full ".concat(statusDisplay.className),
+                                                        children: statusDisplay.text
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/ElectionManagement.jsx",
+                                                        lineNumber: 109,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    election.isActive !== isCurrentlyActive && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "text-xs text-gray-500 mt-1",
+                                                        children: [
+                                                            "(Manually ",
+                                                            election.isActive ? 'enabled' : 'disabled',
+                                                            ")"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/ElectionManagement.jsx",
+                                                        lineNumber: 114,
+                                                        columnNumber: 25
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                lineNumber: 72,
-                                                columnNumber: 19
+                                                lineNumber: 108,
+                                                columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4 whitespace-nowrap text-sm text-gray-900",
                                                 children: election.totalVotes
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                lineNumber: 81,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                className: "px-6 py-4 whitespace-nowrap text-sm font-medium",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "flex space-x-2",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            onClick: ()=>handleToggleElectionStatus(election.electionId, election.isActive),
-                                                            disabled: isLoading,
-                                                            className: "".concat(election.isActive ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900', " disabled:opacity-50"),
-                                                            children: election.isActive ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
-                                                                className: "h-4 w-4"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                                lineNumber: 93,
-                                                                columnNumber: 46
-                                                            }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
-                                                                className: "h-4 w-4"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                                lineNumber: 93,
-                                                                columnNumber: 79
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 86,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            className: "text-indigo-600 hover:text-indigo-900",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__["Edit"], {
-                                                                className: "h-4 w-4"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                                lineNumber: 96,
-                                                                columnNumber: 25
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 95,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            className: "text-red-600 hover:text-red-900",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
-                                                                className: "h-4 w-4"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                                lineNumber: 99,
-                                                                columnNumber: 25
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                            lineNumber: 98,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                    lineNumber: 85,
-                                                    columnNumber: 21
-                                                }, ("TURBOPACK compile-time value", void 0))
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/ElectionManagement.jsx",
-                                                lineNumber: 84,
-                                                columnNumber: 19
+                                                lineNumber: 119,
+                                                columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, election.electionId, true, {
                                         fileName: "[project]/src/components/ElectionManagement.jsx",
-                                        lineNumber: 59,
-                                        columnNumber: 17
-                                    }, ("TURBOPACK compile-time value", void 0)))
+                                        lineNumber: 95,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0));
+                                })
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                                lineNumber: 57,
+                                lineNumber: 89,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ElectionManagement.jsx",
-                        lineNumber: 37,
+                        lineNumber: 71,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/ElectionManagement.jsx",
-                    lineNumber: 36,
+                    lineNumber: 70,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/ElectionManagement.jsx",
-                lineNumber: 35,
+                lineNumber: 69,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ElectionManagement.jsx",
-        lineNumber: 23,
+        lineNumber: 57,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3102,7 +3165,7 @@ const CandidateManagement = (param)=>{
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+                className: "grid grid-cols-1 md:grid-cols-2 gap-8",
                 children: filteredCandidates.map((candidate)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$CandidateCard$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                         candidate: candidate,
                         onToggleStatus: handleToggleCandidateStatus,
@@ -3257,6 +3320,7 @@ const ElectionCommissionDashboard = ()=>{
                 try {
                     const election = await getElectionDetails(i);
                     const candidateIds = await getElectionCandidates(i);
+                    console.log(election, "this is elec");
                     electionsList.push({
                         ...election,
                         candidatesCount: candidateIds.length

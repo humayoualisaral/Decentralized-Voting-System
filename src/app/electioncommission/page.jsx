@@ -68,7 +68,7 @@ const ElectionCommissionDashboard = () => {
         try {
           const election = await getElectionDetails(i);
           const candidateIds = await getElectionCandidates(i);
-          
+          console.log(election,"this is elec")
           electionsList.push({
             ...election,
             candidatesCount: candidateIds.length

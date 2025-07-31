@@ -19,7 +19,7 @@ const DashboardHeader = ({ account }) => (
             <span>Connected</span>
           </div>
           <div className="text-sm text-gray-600">
-            {account?.substring(0, 6)}...{account?.substring(-4)}
+            {account?.substring(0, 6)}...
           </div>
         </div>
       </div>
