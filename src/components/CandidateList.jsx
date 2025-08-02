@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useVoting } from '@/context/ContractContext';
 import CandidateCard from '@/components/CandidateUserCard';
-import { Users, Trophy, BarChart3, Loader2, Hash, Fingerprint, X, AlertCircle } from 'lucide-react';
+import { Users, Trophy, BarChart3, Loader2, Hash, Fingerprint, X, AlertCircle, Shield, CheckCircle2, Clock, Zap } from 'lucide-react';
 
 const CandidateList = ({ electionId, isElectionActive }) => {
   const {
@@ -328,13 +328,16 @@ const CandidateList = ({ electionId, isElectionActive }) => {
   if (loadingCandidates) {
     return (
       <div className="space-y-6">
-        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-          <Loader2 className="w-16 h-16 text-blue-600 mx-auto mb-4 animate-spin" />
-          <h3 className="text-xl font-semibold text-gray-600 mb-2">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-12 text-center border border-white/20">
+          <div className="relative mb-6">
+            <Loader2 className="w-16 h-16 text-purple-400 mx-auto animate-spin" />
+            <div className="absolute inset-0 w-16 h-16 border-4 border-purple-400/20 rounded-full mx-auto animate-ping"></div>
+          </div>
+          <h3 className="text-2xl font-semibold text-white mb-2">
             Loading Candidates...
           </h3>
-          <p className="text-gray-500">
-            Fetching candidate information from the blockchain.
+          <p className="text-blue-200">
+            Fetching candidate information from the blockchain network.
           </p>
         </div>
       </div>
@@ -342,58 +345,65 @@ const CandidateList = ({ electionId, isElectionActive }) => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Election Stats */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-white/20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mx-auto mb-2">
-              <Users className="w-6 h-6 text-blue-600" />
+          <div className="text-center group hover:scale-105 transition-transform duration-300">
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-blue-400/25">
+              <Users className="w-8 h-8 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">{candidates.length}</p>
-            <p className="text-sm text-gray-600">Candidates</p>
+            <p className="text-3xl font-bold text-white mb-1">{candidates.length}</p>
+            <p className="text-blue-200 font-medium">Candidates</p>
           </div>
           
-          <div className="text-center">
-            <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mx-auto mb-2">
-              <BarChart3 className="w-6 h-6 text-green-600" />
+          <div className="text-center group hover:scale-105 transition-transform duration-300">
+            <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-green-400 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-emerald-400/25">
+              <BarChart3 className="w-8 h-8 text-white" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">{getTotalVotes()}</p>
-            <p className="text-sm text-gray-600">Total Votes</p>
+            <p className="text-3xl font-bold text-white mb-1">{getTotalVotes()}</p>
+            <p className="text-emerald-200 font-medium">Total Votes</p>
           </div>
           
-          <div className="text-center">
-            <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-lg mx-auto mb-2">
-              <Trophy className="w-6 h-6 text-yellow-600" />
+          <div className="text-center group hover:scale-105 transition-transform duration-300">
+            <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:shadow-yellow-400/25">
+              <Trophy className="w-8 h-8 text-white" />
             </div>
-            <p className="text-lg font-bold text-gray-900 truncate">
-              {getLeadingCandidate()?.name || 'TBD'}
+            <p className="text-lg font-bold text-white mb-1 truncate">
+              {getLeadingCandidate()?.name || 'No Votes Yet'}
             </p>
-            <p className="text-sm text-gray-600">Leading</p>
+            <p className="text-yellow-200 font-medium">Leading</p>
           </div>
         </div>
       </div>
 
       {/* Results Toggle */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Candidates</h2>
+        <h2 className="text-3xl font-bold text-white flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+            <Users className="w-5 h-5 text-white" />
+          </div>
+          Candidates
+        </h2>
         <button
           onClick={() => setShowResults(!showResults)}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg border border-white/20 hover:scale-105"
         >
-          <BarChart3 className="w-4 h-4" />
+          <BarChart3 className="w-5 h-5" />
           {showResults ? 'Hide Results' : 'Show Results'}
         </button>
       </div>
 
       {/* Candidates Grid */}
       {candidates.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-          <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-600 mb-2">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-12 text-center border border-white/20">
+          <div className="w-20 h-20 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-6 opacity-50">
+            <Users className="w-10 h-10 text-white" />
+          </div>
+          <h3 className="text-2xl font-semibold text-white mb-3">
             No Candidates Found
           </h3>
-          <p className="text-gray-500">
+          <p className="text-blue-200">
             No candidates have been added to this election yet.
           </p>
         </div>
@@ -412,164 +422,195 @@ const CandidateList = ({ electionId, isElectionActive }) => {
         </div>
       )}
 
-      {/* CNIC Verification Modal */}
+      {/* Enhanced CNIC Verification Modal */}
       {showCnicModal && selectedCandidate && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900">
-                Voter Verification
-              </h3>
-              <button
-                onClick={() => {
-                  setShowCnicModal(false);
-                  resetVerificationState();
-                }}
-                disabled={votingInProgress}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Selected Candidate Info */}
-            <div className="bg-gray-50 rounded-lg p-4 mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold">
-                  {selectedCandidate.name.charAt(0)}
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full border border-slate-600 overflow-hidden">
+            {/* Header with gradient */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-6">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">
+                    Secure Voter Verification
+                  </h3>
                 </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">{selectedCandidate.name}</h4>
-                  <p className="text-gray-600 text-sm">{selectedCandidate.partyName}</p>
-                  <p className="text-lg">{selectedCandidate.symbol}</p>
-                </div>
+                <button
+                  onClick={() => {
+                    setShowCnicModal(false);
+                    resetVerificationState();
+                  }}
+                  disabled={votingInProgress}
+                  className="text-white/70 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
             </div>
 
-            {/* Verification Steps */}
-            <div className="space-y-4">
-              {/* Step 1: CNIC Verification */}
-              {verificationStep === 'cnic' && (
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Hash className="w-4 h-4 text-blue-600" />
-                    </div>
-                    <h4 className="font-semibold text-gray-900">Step 1: CNIC Verification</h4>
+            <div className="p-6">
+              {/* Selected Candidate Info */}
+              <div className="bg-gradient-to-r from-slate-700 to-slate-600 rounded-xl p-4 mb-6 border border-slate-500">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                    {selectedCandidate.name.charAt(0)}
                   </div>
-                  
-                  <p className="text-gray-600 mb-4">
-                    Enter your 13-digit CNIC number to verify your voter registration.
-                  </p>
-                  
-                  <input
-                    type="text"
-                    value={cnicNumber}
-                    onChange={(e) => {
-                      setCnicNumber(formatCNIC(e.target.value));
-                      setCnicError('');
-                    }}
-                    placeholder="Enter your CNIC number"
-                    className={`w-full px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                      cnicError 
-                        ? 'border-red-300 bg-red-50' 
-                        : 'border-gray-300 focus:border-blue-500'
-                    }`}
-                    disabled={votingInProgress}
-                  />
-                  
-                  {cnicError && (
-                    <div className="mt-2 flex items-center gap-2 text-red-600 text-sm">
-                      <AlertCircle className="w-4 h-4" />
-                      {cnicError}
-                    </div>
-                  )}
-                  
-                  <button
-                    onClick={handleCnicSubmit}
-                    disabled={votingInProgress || !cnicNumber || cnicNumber.length !== 13}
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {votingInProgress ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Verifying CNIC...
-                      </>
-                    ) : (
-                      'Verify CNIC'
-                    )}
-                  </button>
+                  <div>
+                    <h4 className="font-bold text-white text-lg">{selectedCandidate.name}</h4>
+                    <p className="text-slate-300">{selectedCandidate.partyName}</p>
+                    <p className="text-2xl">{selectedCandidate.symbol}</p>
+                  </div>
                 </div>
-              )}
+              </div>
 
-              {/* Step 2: Fingerprint Verification */}
-              {verificationStep === 'fingerprint' && userRegistration && (
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                      <Fingerprint className="w-4 h-4 text-green-600" />
-                    </div>
-                    <h4 className="font-semibold text-gray-900">Step 2: Fingerprint Verification</h4>
-                  </div>
-
-                  {/* User Info */}
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                    <div className="text-green-800">
-                      <p className="font-medium">✅ CNIC Verified</p>
-                      <p className="text-sm">Name: {userRegistration.firstName} {userRegistration.lastName}</p>
-                      <p className="text-sm">Province: {userRegistration.province}</p>
-                      <p className="text-sm">Constituency: {userRegistration.constituency}</p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 mb-4">
-                    Now verify your identity using your fingerprint to cast your vote securely.
-                  </p>
-
-                  {/* Fingerprint Button */}
-                  <div className="text-center mb-4">
-                    <button
-                      onClick={handleBiometricVerification}
-                      disabled={isBiometricLoading}
-                      className={`relative group transition-all duration-300 ${
-                        isBiometricLoading ? 'cursor-wait' : 'cursor-pointer hover:scale-110'
-                      }`}
-                    >
-                      <div className="w-32 h-32 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg mx-auto">
-                        <Fingerprint className="w-16 h-16 text-white" />
+              {/* Verification Steps */}
+              <div className="space-y-6">
+                {/* Step 1: CNIC Verification */}
+                {verificationStep === 'cnic' && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
+                        <Hash className="w-5 h-5 text-white" />
                       </div>
-                    </button>
-                  </div>
-
-                  {/* Status Message */}
-                  {biometricStatus && (
-                    <div className={`p-3 rounded-lg text-sm font-medium text-center ${
-                      biometricStatus.includes('✅') 
-                        ? 'bg-green-50 border border-green-200 text-green-800'
-                        : biometricStatus.includes('❌')
-                        ? 'bg-red-50 border border-red-200 text-red-800'
-                        : 'bg-blue-50 border border-blue-200 text-blue-800'
-                    }`}>
-                      {biometricStatus}
+                      <div>
+                        <h4 className="font-semibold text-white text-lg">Step 1: CNIC Verification</h4>
+                        <p className="text-slate-400 text-sm">Verify your voter registration</p>
+                      </div>
                     </div>
-                  )}
-                </div>
-              )}
+                    
+                    <div className="space-y-4">
+                      <input
+                        type="text"
+                        value={cnicNumber}
+                        onChange={(e) => {
+                          setCnicNumber(formatCNIC(e.target.value));
+                          setCnicError('');
+                        }}
+                        placeholder="Enter your 13-digit CNIC number"
+                        className={`w-full px-4 py-3 bg-slate-700 border-2 rounded-xl text-white placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          cnicError 
+                            ? 'border-red-400 bg-red-900/20' 
+                            : 'border-slate-600 focus:border-blue-500'
+                        }`}
+                        disabled={votingInProgress}
+                      />
+                      
+                      {cnicError && (
+                        <div className="flex items-center gap-2 text-red-400 text-sm bg-red-900/20 p-3 rounded-lg border border-red-500/30">
+                          <AlertCircle className="w-4 h-4" />
+                          {cnicError}
+                        </div>
+                      )}
+                      
+                      <button
+                        onClick={handleCnicSubmit}
+                        disabled={votingInProgress || !cnicNumber || cnicNumber.length !== 13}
+                        className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-105 disabled:transform-none shadow-lg"
+                      >
+                        {votingInProgress ? (
+                          <>
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                            Verifying CNIC...
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle2 className="w-5 h-5" />
+                            Verify CNIC
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
 
-              {/* Step 3: Processing Vote */}
-              {verificationStep === 'verifying' && (
-                <div className="text-center py-8">
-                  <Loader2 className="w-16 h-16 text-blue-600 mx-auto mb-4 animate-spin" />
-                  <h4 className="font-semibold text-gray-900 mb-2">Processing Your Vote</h4>
-                  <p className="text-gray-600">
-                    Your vote is being securely recorded on the blockchain...
-                  </p>
-                  {biometricStatus && (
-                    <p className="text-sm text-blue-600 mt-2">{biometricStatus}</p>
-                  )}
-                </div>
-              )}
+                {/* Step 2: Fingerprint Verification */}
+                {verificationStep === 'fingerprint' && userRegistration && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full flex items-center justify-center">
+                        <Fingerprint className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-white text-lg">Step 2: Biometric Verification</h4>
+                        <p className="text-slate-400 text-sm">Authenticate with your fingerprint</p>
+                      </div>
+                    </div>
+
+                    {/* User Info */}
+                    <div className="bg-gradient-to-r from-emerald-900/30 to-green-900/30 border border-emerald-500/30 rounded-xl p-4 mb-6">
+                      <div className="text-emerald-200">
+                        <div className="flex items-center gap-2 mb-2">
+                          <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                          <p className="font-medium">CNIC Verified Successfully</p>
+                        </div>
+                        <div className="space-y-1 text-sm">
+                          <p><span className="text-slate-300">Name:</span> {userRegistration.firstName} {userRegistration.lastName}</p>
+                          <p><span className="text-slate-300">Province:</span> {userRegistration.province}</p>
+                          <p><span className="text-slate-300">Constituency:</span> {userRegistration.constituency}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Fingerprint Button */}
+                    <div className="text-center mb-6">
+                      <button
+                        onClick={handleBiometricVerification}
+                        disabled={isBiometricLoading}
+                        className={`relative group transition-all duration-500 ${
+                          isBiometricLoading ? 'cursor-wait' : 'cursor-pointer hover:scale-110'
+                        }`}
+                      >
+                        <div className="w-32 h-32 bg-gradient-to-br from-emerald-500 via-green-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl mx-auto relative overflow-hidden">
+                          <Fingerprint className="w-16 h-16 text-white z-10" />
+                          {isBiometricLoading && (
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                          )}
+                        </div>
+                        <div className="absolute inset-0 w-32 h-32 border-4 border-emerald-400/30 rounded-full mx-auto animate-ping"></div>
+                      </button>
+                      <p className="text-slate-300 mt-4 text-sm">
+                        {isBiometricLoading ? 'Scanning fingerprint...' : 'Tap to authenticate'}
+                      </p>
+                    </div>
+
+                    {/* Status Message */}
+                    {biometricStatus && (
+                      <div className={`p-4 rounded-xl text-sm font-medium text-center border ${
+                        biometricStatus.includes('✅') 
+                          ? 'bg-emerald-900/30 border-emerald-500/30 text-emerald-200'
+                          : biometricStatus.includes('❌')
+                          ? 'bg-red-900/30 border-red-500/30 text-red-200'
+                          : 'bg-blue-900/30 border-blue-500/30 text-blue-200'
+                      }`}>
+                        {biometricStatus}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Step 3: Processing Vote */}
+                {verificationStep === 'verifying' && (
+                  <div className="text-center py-8">
+                    <div className="relative mb-6">
+                      <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto">
+                        <Zap className="w-10 h-10 text-white" />
+                      </div>
+                      <div className="absolute inset-0 w-20 h-20 border-4 border-purple-400/30 rounded-full mx-auto animate-spin"></div>
+                    </div>
+                    <h4 className="font-semibold text-white text-xl mb-3">Processing Your Vote</h4>
+                    <p className="text-slate-300 mb-4">
+                      Your vote is being securely recorded on the blockchain...
+                    </p>
+                    {biometricStatus && (
+                      <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-3">
+                        <p className="text-blue-200 text-sm">{biometricStatus}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

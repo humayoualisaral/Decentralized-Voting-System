@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Vote, User, Calendar, BarChart3, ImageIcon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Vote, User, Calendar, BarChart3, Image, Award, Zap, Crown, Sparkles, Target, Flame } from 'lucide-react';
 
 const CandidateCard = ({ 
   candidate, 
@@ -14,33 +14,36 @@ const CandidateCard = ({
   const [imageLoading, setImageLoading] = useState(true);
   const [symbolError, setSymbolError] = useState(false);
   const [symbolLoading, setSymbolLoading] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [glowIntensity, setGlowIntensity] = useState(0);
   
   const voteCount = parseInt(candidate.voteCount || 0);
   const votePercentage = totalVotes > 0 ? ((voteCount / totalVotes) * 100).toFixed(1) : 0;
   const candidateDate = new Date(parseInt(candidate.timestamp) * 1000);
 
-  // IPFS Gateway URLs (you can configure multiple fallbacks)
+  // Animated glow effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGlowIntensity(prev => (prev + 1) % 100);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  // IPFS Gateway URLs
   const getIPFSUrl = (hash) => {
     if (!hash || hash === '0x' || hash === '') return null;
-    
-    // Remove 'Qm' prefix if it exists and hash starts with it
     const cleanHash = hash.startsWith('Qm') ? hash : hash.replace(/^0x/, '');
-    
-    // Primary IPFS gateways (you can add more for better reliability)
     const gateways = [
       `https://ipfs.io/ipfs/${cleanHash}`,
       `https://gateway.pinata.cloud/ipfs/${cleanHash}`,
       `https://cloudflare-ipfs.com/ipfs/${cleanHash}`,
       `https://dweb.link/ipfs/${cleanHash}`
     ];
-    
-    return gateways[0]; // Use primary gateway, can implement fallback logic
+    return gateways[0];
   };
 
-  // Check if string is IPFS hash or regular emoji/text
   const isIPFSHash = (str) => {
     if (!str || typeof str !== 'string') return false;
-    // Check if it looks like an IPFS hash (starts with Qm and is long enough)
     return str.startsWith('Qm') || (str.startsWith('0x') && str.length > 10);
   };
 
@@ -70,215 +73,321 @@ const CandidateCard = ({
     setSymbolError(false);
   };
 
-  // Fallback Avatar Component
+  // Compact Avatar Component
   const AvatarFallback = () => (
-    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
-      {candidate.name.charAt(0).toUpperCase()}
+    <div className="relative group flex-shrink-0">
+      {/* Outer rotating ring */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-spin opacity-70 blur-sm"></div>
+      
+      {/* Main avatar */}
+      <div className="relative w-16 h-16 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500 rounded-full flex items-center justify-center text-white text-xl font-black shadow-xl border border-white/20">
+        {/* Inner glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent rounded-full"></div>
+        
+        <span className="relative z-10 drop-shadow-lg tracking-wider">
+          {candidate.name.charAt(0).toUpperCase()}
+        </span>
+      </div>
     </div>
   );
 
-  // IPFS Image Component
+  // Compact IPFS Image Component
   const IPFSImage = () => (
-    <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 bg-gray-100 relative">
-      {imageLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
-      <img
-        src={imageUrl}
-        alt={`${candidate.name} profile`}
-        className={`w-full h-full object-cover transition-opacity duration-200 ${
-          imageLoading ? 'opacity-0' : 'opacity-100'
-        }`}
-        onError={handleImageError}
-        onLoad={handleImageLoad}
-        style={{ display: imageError ? 'none' : 'block' }}
-      />
-      {imageError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-400">
-          <ImageIcon className="w-6 h-6" />
-        </div>
-      )}
+    <div className="relative group flex-shrink-0">
+      {/* Animated border */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-pulse opacity-50 blur-sm"></div>
+      
+      <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-xl border border-cyan-400/50">
+        {/* Scanning line effect */}
+        <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent h-0.5 transition-transform duration-2000 ${
+          isHovered ? 'translate-y-full' : '-translate-y-full'
+        }`}></div>
+        
+        {imageLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-20">
+            <div className="relative">
+              <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          </div>
+        )}
+        
+        <img
+          src={imageUrl}
+          alt={`${candidate.name} profile`}
+          className={`w-full h-full object-cover transition-all duration-700 ${
+            imageLoading ? 'opacity-0 scale-110 blur-sm' : 'opacity-100 scale-100 blur-0'
+          }`}
+          onError={handleImageError}
+          onLoad={handleImageLoad}
+          style={{ display: imageError ? 'none' : 'block' }}
+        />
+        
+        {imageError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-900 text-cyan-400">
+            <Image className="w-8 h-8 animate-pulse" />
+          </div>
+        )}
+        
+        {/* Holographic overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-transparent to-purple-400/10 mix-blend-overlay"></div>
+      </div>
     </div>
   );
 
-  // Symbol Component (handles both IPFS and regular emoji/text)
+  // Enhanced Symbol Component with better visibility
   const SymbolDisplay = () => {
     if (hasValidSymbol) {
       return (
-        <div className="relative">
-          {symbolLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          )}
-          <img
-            src={symbolUrl}
-            alt="Party Symbol"
-            className={`w-8 h-8 object-contain transition-opacity duration-200 ${
-              symbolLoading ? 'opacity-0' : 'opacity-100'
-            }`}
-            onError={handleSymbolError}
-            onLoad={handleSymbolLoad}
-            style={{ display: symbolError ? 'none' : 'block' }}
-          />
-          {symbolError && (
-            <span className="text-2xl" title="Symbol failed to load">
-              🏛️
-            </span>
-          )}
+        <div className="relative group flex-shrink-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-xl blur-sm opacity-60 animate-pulse"></div>
+          <div className="relative w-[100px] h-[100px] bg-slate-800/90 backdrop-blur-xl rounded-xl flex items-center justify-center border-2 border-cyan-400/60 shadow-lg">
+            {symbolLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+            <img
+              src={symbolUrl}
+              alt="Party Symbol"
+              className={`w-[100px] h-[100px] object-contain transition-all duration-500 ${
+                symbolLoading ? 'opacity-0 scale-0 rotate-180' : 'opacity-100 scale-100 rotate-0'
+              }`}
+              onError={handleSymbolError}
+              onLoad={handleSymbolLoad}
+              style={{ display: symbolError ? 'none' : 'block' }}
+            />
+            {symbolError && (
+              <span className="text-2xl animate-bounce filter drop-shadow-lg" title="Symbol failed to load">
+                🏛️
+              </span>
+            )}
+          </div>
         </div>
       );
     } else {
-      // Regular emoji or text symbol
       return (
-        <span className="text-2xl" title="Party Symbol">
-          {candidate.symbol || '🏛️'}
-        </span>
+        <div className="relative group flex-shrink-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl blur-sm opacity-60 animate-pulse"></div>
+          <div className="relative w-12 h-12 bg-gradient-to-br from-yellow-400/30 to-orange-500/30 backdrop-blur-xl rounded-xl flex items-center justify-center border-2 border-yellow-400/60 shadow-lg">
+            <span className="text-2xl filter drop-shadow-lg transform hover:scale-110 transition-transform duration-300" title="Party Symbol">
+              {candidate.symbol || '🏛️'}
+            </span>
+          </div>
+        </div>
       );
     }
   };
 
+  const isLeading = showResults && totalVotes > 0 && voteCount > 0 && 
+    votePercentage === Math.max(...(arguments[5] || []), parseFloat(votePercentage));
+
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
-      <div className="p-6">
-        {/* Candidate Header */}
-        <div className="flex items-center gap-4 mb-4">
-          {/* Avatar - IPFS Image or Fallback */}
-          {hasValidImage ? <IPFSImage /> : <AvatarFallback />}
-          
-          {/* Candidate Info */}
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-gray-900 truncate">
-              {candidate.name}
-            </h3>
-            <p className="text-gray-600 text-sm truncate">
-              {candidate.partyName}
-            </p>
-            <div className="flex items-center gap-2 mt-1">
-              <SymbolDisplay />
-              <span className="text-xs text-gray-500">
-                ID: {candidate.candidateId}
-              </span>
-            </div>
-          </div>
-        </div>
+    <div 
+      className={`relative group cursor-pointer transition-all duration-700 ${
+        isHovered ? 'scale-105' : 'scale-100'
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Epic outer glow */}
+      <div className={`absolute -inset-2 bg-gradient-to-r opacity-0 group-hover:opacity-30 rounded-2xl blur-xl transition-all duration-1000 ${
+        isLeading 
+          ? 'from-yellow-400 via-orange-500 to-yellow-400' 
+          : 'from-purple-600 via-blue-500 to-cyan-400'
+      }`}></div>
 
-        {/* Candidate Details */}
-        <div className="space-y-3 mb-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Calendar className="w-4 h-4" />
-            <span>Added: {candidateDate.toLocaleDateString()}</span>
-          </div>
-          
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <User className="w-4 h-4" />
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-              candidate.isActive 
-                ? 'bg-green-100 text-green-800' 
-                : 'bg-red-100 text-red-800'
-            }`}>
-              {candidate.isActive ? 'Active' : 'Inactive'}
-            </span>
-          </div>
-        </div>
-
-        {/* Vote Count & Results */}
-        {showResults && (
-          <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-gray-700">Results</span>
-              </div>
-              <span className="text-lg font-bold text-gray-900">
-                {voteCount} votes
-              </span>
-            </div>
-            
-            {/* Vote Percentage Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
-              <div 
-                className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                style={{ width: `${votePercentage}%` }}
-              ></div>
-            </div>
-            
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>{votePercentage}% of total votes</span>
-              <span>{totalVotes} total</span>
-            </div>
+      {/* Main card with glass morphism */}
+      <div className={`relative bg-slate-900/90 backdrop-blur-2xl rounded-2xl border overflow-hidden transition-all duration-700 ${
+        isLeading 
+          ? 'border-yellow-400/60 shadow-xl shadow-yellow-400/20' 
+          : 'border-slate-600/50 group-hover:border-cyan-400/60 shadow-xl group-hover:shadow-cyan-400/10'
+      }`}>
+        
+        {/* Epic leading indicator */}
+        {isLeading && (
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400">
+            <div className="h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-pulse"></div>
           </div>
         )}
 
-        {/* Action Button */}
-        <div className="flex gap-2">
-          {canVote && candidate.isActive ? (
-            <button
-              onClick={() => onVoteNow(candidate)}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
-            >
-              <Vote className="w-4 h-4" />
-              Vote Now
-            </button>
-          ) : (
-            <button
-              disabled
-              className="flex-1 bg-gray-100 text-gray-500 font-medium py-2 px-4 rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              <Vote className="w-4 h-4" />
-              {!candidate.isActive ? 'Inactive' : 'Voting Closed'}
-            </button>
-          )}
+        {/* Matrix-style background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, cyan 1px, transparent 1px), radial-gradient(circle at 75% 75%, purple 1px, transparent 1px)`,
+            backgroundSize: '20px 20px'
+          }}></div>
         </div>
 
-        {/* Image Hash Info */}
-        {(candidate.imageHash && candidate.imageHash !== '0x' && candidate.imageHash !== '') && (
-          <div className="mt-3 pt-3 border-t border-gray-100">
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <p className="text-xs text-gray-400 truncate" title={candidate.imageHash}>
-                  Image: {candidate.imageHash.slice(0, 15)}...
-                </p>
-                {isIPFSHash(candidate.symbol) && (
-                  <p className="text-xs text-gray-400 truncate mt-1" title={candidate.symbol}>
-                    Symbol: {candidate.symbol.slice(0, 15)}...
-                  </p>
-                )}
-              </div>
-              <div className="flex flex-col items-end space-y-1">
-                {imageError && (
-                  <span className="text-xs text-red-500">Image failed</span>
-                )}
-                {symbolError && isIPFSHash(candidate.symbol) && (
-                  <span className="text-xs text-red-500">Symbol failed</span>
-                )}
-                {!imageError && imageUrl && (
-                  <a 
-                    href={imageUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-xs text-blue-500 hover:text-blue-700"
-                  >
-                    View Image
-                  </a>
-                )}
-                {!symbolError && symbolUrl && (
-                  <a 
-                    href={symbolUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-xs text-blue-500 hover:text-blue-700"
-                  >
-                    View Symbol
-                  </a>
-                )}
+        <div className="relative p-6">
+          {/* Floating leading badge */}
+          {isLeading && (
+            <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 py-1 rounded-xl text-xs font-black flex items-center gap-2 shadow-lg animate-bounce">
+              <Crown className="w-3 h-3" />
+              <span className="tracking-wider">CHAMPION</span>
+            </div>
+          )}
+
+          {/* Compact header section with perfect alignment */}
+          <div className="flex items-center gap-4 mb-6">
+            {/* Avatar */}
+            {hasValidImage ? <IPFSImage /> : <AvatarFallback />}
+            
+            {/* Name and Party */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-purple-200 mb-1 tracking-tight leading-tight truncate">
+                {candidate.name}
+              </h3>
+              <p className="text-slate-300 text-sm font-semibold opacity-90 truncate">
+                {candidate.partyName}
+              </p>
+            </div>
+            
+            {/* Symbol aligned to the right */}
+            <SymbolDisplay />
+          </div>
+
+          {/* Compact info cards */}
+          <div className="flex gap-3 mb-6">
+            <div className="flex-1 relative group/card">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative p-3 bg-slate-800/60 backdrop-blur-xl rounded-xl border border-blue-400/30">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+                    <Calendar className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-blue-400 font-bold tracking-wider">REGISTERED</div>
+                    <div className="text-white text-xs font-semibold">{candidateDate.toLocaleDateString()}</div>
+                  </div>
+                </div>
               </div>
             </div>
+            
+            <div className="flex-1 relative group/card">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl blur-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative p-3 bg-slate-800/60 backdrop-blur-xl rounded-xl border border-green-400/30">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shadow-lg">
+                    <Target className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-green-400 font-bold tracking-wider">STATUS</div>
+                    <div className={`flex items-center gap-1 text-xs font-bold ${
+                      candidate.isActive ? 'text-green-300' : 'text-red-300'
+                    }`}>
+                      <div className={`w-2 h-2 rounded-full ${
+                        candidate.isActive ? 'bg-green-400 animate-pulse' : 'bg-red-400'
+                      }`}></div>
+                      {candidate.isActive ? 'ACTIVE' : 'INACTIVE'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Compact vote results section */}
+          {showResults && (
+            <div className="relative mb-6 group/results">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-cyan-500/10 rounded-2xl blur-lg opacity-0 group-hover/results:opacity-100 transition-opacity duration-1000"></div>
+              <div className="relative p-5 bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-2xl rounded-2xl border border-purple-400/30">
+                
+                {/* Results header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                      <BarChart3 className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                        LIVE RESULTS
+                      </div>
+                      <div className="text-xs text-slate-400 font-semibold">Real-time data</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-200">
+                      {voteCount.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-purple-400 font-bold tracking-wider">VOTES</div>
+                  </div>
+                </div>
+                
+                {/* Compact progress bar */}
+                <div className="relative mb-4">
+                  <div className="w-full bg-slate-700/50 rounded-xl h-4 overflow-hidden border border-slate-600/50">
+                    <div 
+                      className={`h-4 rounded-xl relative overflow-hidden transition-all duration-2000 ease-out ${
+                        isLeading 
+                          ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400' 
+                          : 'bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500'
+                      }`}
+                      style={{ width: `${Math.max(5, votePercentage)}%` }}
+                    >
+                      {/* Animated shine effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-pulse"></div>
+                      <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transition-transform duration-3000 ${
+                        isHovered ? 'translate-x-full' : '-translate-x-full'
+                      }`}></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <Flame className="w-4 h-4 text-orange-500 animate-pulse" />
+                    <span className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+                      {votePercentage}%
+                    </span>
+                    <span className="text-slate-400 text-xs font-semibold">of total</span>
+                  </div>
+                  <div className="text-slate-400 text-xs font-semibold">
+                    {totalVotes.toLocaleString()} total
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Compact action button */}
+          <div>
+            {canVote && candidate.isActive ? (
+              <button
+                onClick={() => onVoteNow(candidate)}
+                className="relative w-full group/button overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-xl blur-lg opacity-50 group-hover/button:opacity-75 transition-opacity duration-500"></div>
+                <div className="relative bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-black py-4 px-6 rounded-xl transition-all duration-500 flex items-center justify-center gap-3 border-2 border-green-400/50 shadow-xl transform group-hover/button:scale-105">
+                  <Vote className="w-5 h-5" />
+                  <span className="text-lg tracking-wider">CAST VOTE</span>
+                  <Zap className="w-4 h-4 animate-pulse" />
+                </div>
+              </button>
+            ) : (
+              <button
+                disabled
+                className="w-full bg-slate-700/50 text-slate-500 font-bold py-4 px-6 rounded-xl cursor-not-allowed flex items-center justify-center gap-3 border-2 border-slate-600/30"
+              >
+                <Vote className="w-5 h-5" />
+                <span className="text-lg">{!candidate.isActive ? 'INACTIVE' : 'VOTING CLOSED'}</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom accent for active voting */}
+        {canVote && candidate.isActive && (
+          <div className={`h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent transition-all duration-700 ${
+            isHovered ? 'opacity-100 shadow-lg shadow-green-400/50' : 'opacity-0'
+          }`}>
+            <div className="h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-pulse"></div>
           </div>
         )}
       </div>
+
+      {/* Floating elements */}
+      <div className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/20 rounded-full animate-ping opacity-0 group-hover:opacity-100"></div>
+      <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse opacity-0 group-hover:opacity-100"></div>
     </div>
   );
 };

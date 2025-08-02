@@ -24,6 +24,16 @@ const BiometricVerificationSchema = new mongoose.Schema({
   userAgent: String
 }, { _id: false });
 
+const VotingHistorySchema = new mongoose.Schema({
+  electionId: { type: String, required: true },
+  candidateId: { type: String, required: true },
+  timestamp: { type: Date, required: true },
+  verificationHash: { type: String, required: true },
+  biometricId: { type: String, required: true },
+  blockchainTxHash: String,
+  ipAddress: String
+}, { _id: false });
+
 const RegistrationSchema = new mongoose.Schema({
   // Personal Information
   cnicNumber: {
@@ -75,13 +85,16 @@ const RegistrationSchema = new mongoose.Schema({
     required: true
   },
   
-  // Biometric Verification Tracking (for audit trail only)
+  // Biometric Verification Tracking
   lastBiometricVerification: {
     type: BiometricVerificationSchema,
     default: null
   },
   
   biometricVerifications: [BiometricVerificationSchema],
+  
+  // Voting History (for audit purposes)
+  votingHistory: [VotingHistorySchema],
   
   // System Information
   registrationId: {
@@ -181,6 +194,25 @@ RegistrationSchema.methods.addBiometricVerification = function(verificationData)
   return this.save();
 };
 
+RegistrationSchema.methods.recordVote = function(voteData) {
+  const voteRecord = {
+    electionId: voteData.electionId,
+    candidateId: voteData.candidateId,
+    timestamp: new Date(),
+    verificationHash: voteData.verificationHash,
+    biometricId: voteData.biometricId,
+    blockchainTxHash: voteData.txHash,
+    ipAddress: voteData.ipAddress
+  };
+  
+  this.votingHistory.push(voteRecord);
+  return this.save();
+};
+
+RegistrationSchema.methods.hasVotedInElection = function(electionId) {
+  return this.votingHistory.some(vote => vote.electionId === electionId);
+};
+
 RegistrationSchema.methods.canVote = function() {
   if (!this.isVerified || this.status !== 'verified') {
     return { canVote: false, reason: 'Registration not verified' };
@@ -242,23 +274,19 @@ RegistrationSchema.statics.getRegistrationStats = function() {
   ]);
 };
 
-RegistrationSchema.statics.getVerificationStats = function(electionId) {
+RegistrationSchema.statics.getVotingStats = function(electionId) {
   return this.aggregate([
-    { 
-      $match: { 
-        'biometricVerifications.electionId': electionId 
-      } 
-    },
+    { $match: { 'votingHistory.electionId': electionId } },
     {
       $group: {
         _id: '$province',
-        totalRegistrations: { $sum: 1 },
-        verifiedCount: {
+        totalVoters: { $sum: 1 },
+        votedCount: {
           $sum: {
             $size: {
               $filter: {
-                input: '$biometricVerifications',
-                cond: { $eq: ['$this.electionId', electionId] }
+                input: '$votingHistory',
+                cond: { $eq: ['$$this.electionId', electionId] }
               }
             }
           }
