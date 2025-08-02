@@ -77,10 +77,10 @@ const CandidateCard = ({
   const AvatarFallback = () => (
     <div className="relative group flex-shrink-0">
       {/* Outer rotating ring */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-spin opacity-70 blur-sm"></div>
+      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-spin opacity-70"></div>
       
       {/* Main avatar */}
-      <div className="relative w-16 h-16 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500 rounded-full flex items-center justify-center text-white text-xl font-black shadow-xl border border-white/20">
+      <div className="relative w-24 h-24 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500 rounded-full flex items-center justify-center text-white text-2xl font-black shadow-xl border border-white/20">
         {/* Inner glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent rounded-full"></div>
         
@@ -95,9 +95,9 @@ const CandidateCard = ({
   const IPFSImage = () => (
     <div className="relative group flex-shrink-0">
       {/* Animated border */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-pulse opacity-50 blur-sm"></div>
+      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-pulse opacity-50"></div>
       
-      <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-xl border border-cyan-400/50">
+      <div className="relative w-24 h-24 rounded-full overflow-hidden shadow-xl border border-cyan-400/50">
         {/* Scanning line effect */}
         <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent h-0.5 transition-transform duration-2000 ${
           isHovered ? 'translate-y-full' : '-translate-y-full'
@@ -115,7 +115,7 @@ const CandidateCard = ({
           src={imageUrl}
           alt={`${candidate.name} profile`}
           className={`w-full h-full object-cover transition-all duration-700 ${
-            imageLoading ? 'opacity-0 scale-110 blur-sm' : 'opacity-100 scale-100 blur-0'
+            imageLoading ? 'opacity-0' : 'opacity-100'
           }`}
           onError={handleImageError}
           onLoad={handleImageLoad}
@@ -139,8 +139,8 @@ const CandidateCard = ({
     if (hasValidSymbol) {
       return (
         <div className="relative group flex-shrink-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-xl blur-sm opacity-60 animate-pulse"></div>
-          <div className="relative w-[100px] h-[100px] bg-slate-800/90 backdrop-blur-xl rounded-xl flex items-center justify-center border-2 border-cyan-400/60 shadow-lg">
+          <div className="absolute inset-0 rounded-xl opacity-60 animate-pulse"></div>
+          <div className="relative w-[120px] h-[120px] flex items-center justify-center">
             {symbolLoading && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
@@ -149,7 +149,7 @@ const CandidateCard = ({
             <img
               src={symbolUrl}
               alt="Party Symbol"
-              className={`w-[100px] h-[100px] object-contain transition-all duration-500 ${
+              className={`w-[120px] h-[120px] object-contain transition-all duration-500 ${
                 symbolLoading ? 'opacity-0 scale-0 rotate-180' : 'opacity-100 scale-100 rotate-0'
               }`}
               onError={handleSymbolError}
@@ -167,7 +167,7 @@ const CandidateCard = ({
     } else {
       return (
         <div className="relative group flex-shrink-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl blur-sm opacity-60 animate-pulse"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl opacity-60 animate-pulse"></div>
           <div className="relative w-12 h-12 bg-gradient-to-br from-yellow-400/30 to-orange-500/30 backdrop-blur-xl rounded-xl flex items-center justify-center border-2 border-yellow-400/60 shadow-lg">
             <span className="text-2xl filter drop-shadow-lg transform hover:scale-110 transition-transform duration-300" title="Party Symbol">
               {candidate.symbol || '🏛️'}
@@ -184,13 +184,13 @@ const CandidateCard = ({
   return (
     <div 
       className={`relative group cursor-pointer transition-all duration-700 ${
-        isHovered ? 'scale-105' : 'scale-100'
+        isHovered ? 'scale-102' : 'scale-100'
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Epic outer glow */}
-      <div className={`absolute -inset-2 bg-gradient-to-r opacity-0 group-hover:opacity-30 rounded-2xl blur-xl transition-all duration-1000 ${
+      <div className={`absolute -inset-2 bg-gradient-to-r opacity-0 group-hover:opacity-30 rounded-2xl transition-all duration-1000 ${
         isLeading 
           ? 'from-yellow-400 via-orange-500 to-yellow-400' 
           : 'from-purple-600 via-blue-500 to-cyan-400'
@@ -249,7 +249,6 @@ const CandidateCard = ({
           {/* Compact info cards */}
           <div className="flex gap-3 mb-6">
             <div className="flex-1 relative group/card">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl blur-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
               <div className="relative p-3 bg-slate-800/60 backdrop-blur-xl rounded-xl border border-blue-400/30">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
@@ -264,7 +263,6 @@ const CandidateCard = ({
             </div>
             
             <div className="flex-1 relative group/card">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl blur-sm opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
               <div className="relative p-3 bg-slate-800/60 backdrop-blur-xl rounded-xl border border-green-400/30">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shadow-lg">
@@ -289,7 +287,6 @@ const CandidateCard = ({
           {/* Compact vote results section */}
           {showResults && (
             <div className="relative mb-6 group/results">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-cyan-500/10 rounded-2xl blur-lg opacity-0 group-hover/results:opacity-100 transition-opacity duration-1000"></div>
               <div className="relative p-5 bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-2xl rounded-2xl border border-purple-400/30">
                 
                 {/* Results header */}
@@ -356,7 +353,6 @@ const CandidateCard = ({
                 onClick={() => onVoteNow(candidate)}
                 className="relative w-full group/button overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-xl blur-lg opacity-50 group-hover/button:opacity-75 transition-opacity duration-500"></div>
                 <div className="relative bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-black py-4 px-6 rounded-xl transition-all duration-500 flex items-center justify-center gap-3 border-2 border-green-400/50 shadow-xl transform group-hover/button:scale-105">
                   <Vote className="w-5 h-5" />
                   <span className="text-lg tracking-wider">CAST VOTE</span>
