@@ -1,351 +1,228 @@
-// pages/api/registration/register.js
-import mongoose from 'mongoose';
+import connectToDatabase from '../../../libs/mongodb';
+import Registration from '../../../models/Registration';
 
-// Registration model - adjust the path based on your project structure
-// Common paths: '../../../models/Registration' or '../../models/Registration'
-let Registration;
+// Rate limiting setup (simple in-memory store - use Redis in production)
+const registrationAttempts = new Map();
 
-async function getRegistrationModel() {
-  if (Registration) {
-    return Registration;
-  }
-  
-  try {
-    // Try different import paths
-    const paths = [
-      '../../../models/Registration',
-      '../../models/Registration', 
-      '../../../models/Registration.js',
-      '../../models/Registration.js'
-    ];
-    
-    for (const importPath of paths) {
-      try {
-        const module = await import(importPath);
-        Registration = module.default;
-        console.log(`✅ Registration model loaded from: ${importPath}`);
-        return Registration;
-      } catch (err) {
-        console.log(`❌ Failed to load from: ${importPath}`);
-        continue;
-      }
-    }
-    
-    throw new Error('Could not load Registration model from any path');
-  } catch (error) {
-    console.error('Error loading Registration model:', error);
-    throw error;
-  }
-}
-
-// MongoDB connection
-const connectDB = async () => {
-  try {
-    // Check if already connected
-    if (mongoose.connections[0].readyState === 1) {
-      console.log('Using existing MongoDB connection');
-      return mongoose.connections[0];
-    }
-
-    // Check if connecting
-    if (mongoose.connections[0].readyState === 2) {
-      console.log('MongoDB connection is connecting...');
-      // Wait for connection to complete
-      await new Promise((resolve) => {
-        mongoose.connections[0].on('connected', resolve);
-      });
-      return mongoose.connections[0];
-    }
-
-    console.log('Creating new MongoDB connection...');
-    console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
-    
-    if (!process.env.MONGODB_URI) {
-      throw new Error('MONGODB_URI environment variable is not set');
-    }
-    
-    const connection = await mongoose.connect(process.env.MONGODB_URI, {
-      bufferCommands: false,
-      maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-    });
-    
-    console.log('✅ MongoDB connected successfully');
-    return connection;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    console.error('Error details:', {
-      name: error.name,
-      message: error.message,
-      code: error.code
-    });
-    throw error;
-  }
-};
-
-// Rate limiting (simple in-memory store - use Redis in production)
-const rateLimit = new Map();
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-const MAX_ATTEMPTS = 5;
-
-const checkRateLimit = (ip) => {
+function checkRateLimit(ip) {
   const now = Date.now();
-  const userAttempts = rateLimit.get(ip) || [];
+  const windowMs = 15 * 60 * 1000; // 15 minutes
+  const maxAttempts = 5;
   
-  // Clean old attempts
-  const recentAttempts = userAttempts.filter(time => now - time < RATE_LIMIT_WINDOW);
+  if (!registrationAttempts.has(ip)) {
+    registrationAttempts.set(ip, []);
+  }
   
-  if (recentAttempts.length >= MAX_ATTEMPTS) {
+  const attempts = registrationAttempts.get(ip);
+  const recentAttempts = attempts.filter(time => now - time < windowMs);
+  
+  if (recentAttempts.length >= maxAttempts) {
     return false;
   }
   
   recentAttempts.push(now);
-  rateLimit.set(ip, recentAttempts);
+  registrationAttempts.set(ip, recentAttempts);
   return true;
-};
+}
 
-// Validation helper
-const validateRegistrationData = (data) => {
-  const errors = {};
+function validateBiometricData(biometricData) {
+  const required = ['id', 'rawId', 'type', 'challenge', 'userId', 'timestamp'];
   
-  // CNIC validation
-  if (!data.cnicNumber || !/^\d{13}$/.test(data.cnicNumber)) {
-    errors.cnicNumber = 'CNIC must be exactly 13 digits';
+  if (!biometricData || typeof biometricData !== 'object') {
+    return { valid: false, error: 'Biometric data is required' };
   }
   
-  // Name validation
-  if (!data.firstName || !data.firstName.trim()) {
-    errors.firstName = 'First name is required';
-  }
-  
-  if (!data.lastName || !data.lastName.trim()) {
-    errors.lastName = 'Last name is required';
-  }
-  
-  // Date of birth validation
-  if (!data.dateOfBirth) {
-    errors.dateOfBirth = 'Date of birth is required';
-  } else {
-    const birthDate = new Date(data.dateOfBirth);
-    const age = Math.floor((Date.now() - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
-    if (age < 18 || age > 100) {
-      errors.dateOfBirth = 'Age must be between 18 and 100 years';
+  for (const field of required) {
+    if (!biometricData[field]) {
+      return { valid: false, error: `Missing biometric field: ${field}` };
     }
   }
   
-  // Province validation
-  const validProvinces = ['Punjab', 'Sindh', 'Khyber Pakhtunkhwa', 'Balochistan', 'Gilgit'];
-  if (!data.province || !validProvinces.includes(data.province)) {
-    errors.province = 'Valid province is required';
+  // Validate timestamp (should be within last 10 minutes)
+  const biometricTime = new Date(biometricData.timestamp);
+  const now = new Date();
+  const timeDiff = now - biometricTime;
+  
+  if (timeDiff > 10 * 60 * 1000) { // 10 minutes
+    return { valid: false, error: 'Biometric data is too old, please re-register fingerprint' };
   }
   
-  // Constituency validation
-  if (!data.constituency || !data.constituency.trim()) {
-    errors.constituency = 'Constituency is required';
-  }
-  
-  // Biometric data validation
-  if (!data.biometricData) {
-    errors.biometricData = 'Biometric data is required';
-  } else {
-    const { id, rawId, type, challenge, userId, timestamp } = data.biometricData;
-    
-    if (!id || !rawId || !type || !challenge || !userId || !timestamp) {
-      errors.biometricData = 'Complete biometric data is required';
-    }
-    
-    // Check if biometric data is too old (max 10 minutes)
-    const biometricAge = Date.now() - new Date(timestamp).getTime();
-    if (biometricAge > 10 * 60 * 1000) {
-      errors.biometricData = 'Biometric data is too old, please re-register fingerprint';
-    }
-  }
-  
-  return {
-    isValid: Object.keys(errors).length === 0,
-    errors
-  };
-};
+  return { valid: true };
+}
 
 export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Handle preflight OPTIONS request
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
-
-  // Only allow POST requests
+  
   if (req.method !== 'POST') {
-    res.status(405).json({
+    return res.status(405).json({
       success: false,
-      message: 'Method not allowed'
+      error: 'Method not allowed',
+      message: 'Only POST requests are accepted'
     });
-    return;
   }
-
+  
   try {
-    console.log('=== REGISTRATION API CALLED ===');
+    // Rate limiting
+    const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'unknown';
+    
+    if (!checkRateLimit(clientIP)) {
+      return res.status(429).json({
+        success: false,
+        error: 'Rate limit exceeded',
+        message: 'Too many registration attempts. Please try again in 15 minutes.',
+        retryAfter: 900 // 15 minutes in seconds
+      });
+    }
     
     // Connect to database
-    await connectDB();
-    console.log('Database connected successfully');
+    await connectToDatabase();
     
-    // Get Registration model
-    const RegistrationModel = await getRegistrationModel();
+    // Extract and validate request data
+    const {
+      cnicNumber,
+      firstName,
+      lastName,
+      dateOfBirth,
+      province,
+      constituency,
+      biometricData
+    } = req.body;
     
-    // Get client IP
-    const clientIP = req.headers['x-forwarded-for']?.split(',')[0] || 
-                    req.headers['x-real-ip'] || 
-                    req.socket.remoteAddress || 
-                    'unknown';
-
-    console.log('Client IP:', clientIP);
-
-    // Check rate limiting
-    if (!checkRateLimit(clientIP)) {
-      console.log('Rate limit exceeded for IP:', clientIP);
-      res.status(429).json({
+    // Basic validation
+    if (!cnicNumber || !firstName || !lastName || !dateOfBirth || !province || !constituency || !biometricData) {
+      return res.status(400).json({
         success: false,
-        message: 'Rate limit exceeded. Please wait 15 minutes before trying again.'
+        error: 'Missing required fields',
+        message: 'All fields including biometric data are required'
       });
-      return;
-    }
-
-    const registrationData = req.body;
-    
-    // Log the received data for debugging (without sensitive info)
-    console.log('Received registration data:', {
-      cnicNumber: registrationData?.cnicNumber?.substring(0, 5) + '********',
-      firstName: registrationData?.firstName,
-      lastName: registrationData?.lastName,
-      province: registrationData?.province,
-      constituency: registrationData?.constituency,
-      hasBiometricData: !!registrationData?.biometricData,
-      biometricDataKeys: registrationData?.biometricData ? Object.keys(registrationData.biometricData) : []
-    });
-    
-    // Basic data check
-    if (!registrationData) {
-      console.log('No registration data received');
-      res.status(400).json({
-        success: false,
-        message: 'No registration data provided'
-      });
-      return;
     }
     
-    // Validate input data
-    const validation = validateRegistrationData(registrationData);
-    if (!validation.isValid) {
-      console.log('Validation errors:', validation.errors);
-      res.status(400).json({
+    // Validate CNIC format
+    if (!/^\d{13}$/.test(cnicNumber)) {
+      return res.status(400).json({
         success: false,
-        message: 'Validation failed',
-        errors: validation.errors
+        error: 'Invalid CNIC format',
+        message: 'CNIC must be exactly 13 digits'
       });
-      return;
     }
-
-    console.log('Validation passed');
-
+    
     // Check if CNIC already exists
-    const existingRegistration = await RegistrationModel.findByCNIC(registrationData.cnicNumber);
+    const existingRegistration = await Registration.findByCNIC(cnicNumber);
     if (existingRegistration) {
-      console.log('CNIC already exists:', registrationData.cnicNumber);
-      res.status(409).json({
+      return res.status(409).json({
         success: false,
-        message: 'CNIC already registered'
+        error: 'CNIC already registered',
+        message: 'This CNIC number is already registered in the system',
+        registrationId: existingRegistration.registrationId
       });
-      return;
     }
-
-    console.log('CNIC is unique, proceeding with registration');
-
-    // Prepare registration data
-    const newRegistration = new RegistrationModel({
-      cnicNumber: registrationData.cnicNumber,
-      firstName: registrationData.firstName.trim(),
-      lastName: registrationData.lastName.trim(),
-      dateOfBirth: new Date(registrationData.dateOfBirth),
-      province: registrationData.province,
-      constituency: registrationData.constituency.trim(),
-      biometricData: {
-        ...registrationData.biometricData,
-        timestamp: new Date(registrationData.biometricData.timestamp),
-        deviceInfo: {
-          userAgent: req.headers['user-agent'] || '',
-          platform: req.headers['sec-ch-ua-platform'] || '',
-          language: req.headers['accept-language'] || ''
-        }
-      },
+    
+    // Validate biometric data
+    const biometricValidation = validateBiometricData(biometricData);
+    if (!biometricValidation.valid) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid biometric data',
+        message: biometricValidation.error
+      });
+    }
+    
+    // Validate age
+    const birthDate = new Date(dateOfBirth);
+    const age = Math.floor((Date.now() - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
+    
+    if (age < 18 || age > 100) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid age',
+        message: 'Age must be between 18 and 100 years'
+      });
+    }
+    
+    // Add device information to biometric data
+    const enhancedBiometricData = {
+      ...biometricData,
+      deviceInfo: {
+        userAgent: req.headers['user-agent'] || 'Unknown',
+        platform: req.headers['sec-ch-ua-platform'] || 'Unknown',
+        language: req.headers['accept-language'] || 'Unknown'
+      }
+    };
+    
+    // Create new registration
+    const newRegistration = new Registration({
+      cnicNumber,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      dateOfBirth: new Date(dateOfBirth),
+      province,
+      constituency,
+      biometricData: enhancedBiometricData,
       ipAddress: clientIP,
-      userAgent: req.headers['user-agent'] || '',
-      status: 'pending',
-      submissionTime: new Date(),
-      lastUpdated: new Date()
+      userAgent: req.headers['user-agent'] || 'Unknown'
     });
-
-    console.log('Attempting to save registration to database...');
     
     // Save to database
     const savedRegistration = await newRegistration.save();
     
-    console.log('Registration saved successfully with ID:', savedRegistration.registrationId);
-
-    // Return success response (without sensitive data)
+    // Log successful registration
+    console.log(`✅ New NADRA Registration: ${savedRegistration.registrationId} for CNIC: ${cnicNumber}`);
+    
+    // Return success response (exclude sensitive biometric data from response)
     const responseData = {
-      registrationId: savedRegistration.registrationId,
-      fullName: `${savedRegistration.firstName} ${savedRegistration.lastName}`,
-      status: savedRegistration.status,
-      province: savedRegistration.province,
-      constituency: savedRegistration.constituency,
-      submissionTime: savedRegistration.submissionTime,
-    };
-
-    console.log('Sending success response');
-    res.status(201).json({
       success: true,
-      message: 'Registration submitted successfully',
-      data: responseData
-    });
-
+      message: 'NADRA registration completed successfully',
+      data: {
+        registrationId: savedRegistration.registrationId,
+        cnicNumber: savedRegistration.cnicNumber,
+        fullName: `${savedRegistration.firstName} ${savedRegistration.lastName}`,
+        province: savedRegistration.province,
+        constituency: savedRegistration.constituency,
+        status: savedRegistration.status,
+        submissionTime: savedRegistration.submissionTime,
+        biometricRegistered: true
+      }
+    };
+    
+    res.status(201).json(responseData);
+    
   } catch (error) {
-    console.error('=== REGISTRATION ERROR ===');
-    console.error('Error details:', error);
-    console.error('Error stack:', error.stack);
+    console.error('❌ Registration Error:', error);
     
     // Handle specific MongoDB errors
     if (error.code === 11000) {
-      console.log('Duplicate key error (11000)');
-      res.status(409).json({
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(409).json({
         success: false,
-        message: 'CNIC already registered'
+        error: 'Duplicate entry',
+        message: `This ${field} is already registered in the system`
       });
-      return;
     }
     
     if (error.name === 'ValidationError') {
-      console.log('Mongoose validation error');
-      console.log('Validation details:', error.errors);
-      res.status(400).json({
+      const errors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
         success: false,
-        message: 'Validation error',
-        errors: error.errors
+        error: 'Validation failed',
+        message: 'Please check your input data',
+        details: errors
       });
-      return;
     }
-
+    
     // Generic error response
     res.status(500).json({
       success: false,
-      message: 'Internal server error. Please try again later.',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: 'Internal server error',
+      message: 'Registration failed due to server error. Please try again.',
+      timestamp: new Date().toISOString()
     });
   }
 }
