@@ -38,6 +38,51 @@ const CandidateList = ({ electionId, isElectionActive }) => {
   const [verificationLoading, setVerificationLoading] = useState(false);
   const [verificationError, setVerificationError] = useState('');
 
+  // IPFS Gateway helper function
+  const getIPFSUrl = (hash) => {
+    if (!hash) return null;
+    if (hash.startsWith('http')) return hash;
+    return `https://gateway.pinata.cloud/ipfs/${hash}`;
+  };
+
+  // Image fallback component
+  const CandidateImage = ({ candidate, className = "w-14 h-14", showFallback = true }) => {
+    const [imageError, setImageError] = useState(false);
+    const [imageLoading, setImageLoading] = useState(true);
+
+    const imageUrl = getIPFSUrl(candidate?.imageHash);
+
+    if (!imageUrl || imageError) {
+      return showFallback ? (
+        <div className={`${className} bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg`}>
+          {candidate?.name?.charAt(0) || '?'}
+        </div>
+      ) : null;
+    }
+
+    return (
+      <div className={`${className} relative rounded-full overflow-hidden shadow-lg`}>
+        {imageLoading && (
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 animate-pulse flex items-center justify-center">
+            <Loader2 className="w-6 h-6 text-white animate-spin" />
+          </div>
+        )}
+        <img
+          src={imageUrl}
+          alt={candidate?.name || 'Candidate'}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+          onLoad={() => setImageLoading(false)}
+          onError={() => {
+            setImageError(true);
+            setImageLoading(false);
+          }}
+        />
+      </div>
+    );
+  };
+
   // Fetch candidates from contract
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -423,7 +468,12 @@ const CandidateList = ({ electionId, isElectionActive }) => {
         return;
       }
 
-      setVerificationResult(result);
+      // Fetch candidate details for the verification result
+      const candidateDetails = await getCandidateDetails(result.candidateId);
+      setVerificationResult({
+        ...result,
+        candidateData: candidateDetails
+      });
 
     } catch (error) {
       console.error('Error verifying vote:', error);
@@ -594,12 +644,13 @@ const CandidateList = ({ electionId, isElectionActive }) => {
             </div>
 
             <div className="p-6">
-              {/* Selected Candidate Info */}
+              {/* Selected Candidate Info with IPFS Image */}
               <div className="bg-gradient-to-r from-slate-700 to-slate-600 rounded-xl p-4 mb-6 border border-slate-500">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">
-                    {selectedCandidate.name.charAt(0)}
-                  </div>
+                  <CandidateImage 
+                    candidate={selectedCandidate} 
+                    className="w-16 h-16" 
+                  />
                   <div>
                     <h4 className="font-bold text-white text-lg">{selectedCandidate.name}</h4>
                     <p className="text-slate-300">{selectedCandidate.partyName}</p>
