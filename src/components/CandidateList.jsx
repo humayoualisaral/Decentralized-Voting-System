@@ -78,183 +78,240 @@ const CandidateList = ({ electionId, isElectionActive }) => {
       setCnicError('CNIC must be exactly 13 digits');
       return;
     }
-
+  
     try {
       setVotingInProgress(true);
       setCnicError('');
-
+  
+      console.log('🔍 Verifying CNIC:', cnicNumber);
+  
       // Verify CNIC with backend
       const response = await fetch(`/api/registration/${cnicNumber}`);
       const result = await response.json();
-
+       
       if (!response.ok) {
         throw new Error(result.message || 'CNIC verification failed');
       }
-
+  
+      console.log('✅ CNIC verification response:', result);
+      console.log('📋 Registration data:', result.data);
+      console.log('🔑 Biometric data available:', !!result.data.biometricData);
+      
+      if (result.data.biometricData) {
+        console.log('🆔 Credential ID:', result.data.biometricData.id);
+        console.log('📱 Biometric type:', result.data.biometricData.type);
+        console.log('⏰ Registration time:', result.data.biometricData.timestamp);
+      }
+  
       if (!result.data.isVerified) {
         throw new Error('CNIC is not verified. Please complete your NADRA registration first.');
       }
-
+  
+      // FIXED: Check if biometric data exists
+      if (!result.data.biometricData || !result.data.biometricData.id) {
+        throw new Error('No biometric data found. Please complete your NADRA registration with fingerprint enrollment first.');
+      }
+  
+      // FIXED: Store the complete registration data including biometric info
       setUserRegistration(result.data);
       setVerificationStep('fingerprint');
-      setBiometricStatus('✅ CNIC verified! Now register your fingerprint to proceed.');
-
+      setBiometricStatus(`✅ CNIC verified! Found biometric registration with ID: ${result.data.biometricData.id.substring(0, 20)}...`);
+  
+      console.log('🎉 CNIC verification successful, proceeding to biometric authentication');
+  
     } catch (error) {
-      console.error('CNIC verification error:', error);
+      console.error('❌ CNIC verification error:', error);
       setCnicError(error.message);
+      
+      // Clear any partial registration data on error
+      setUserRegistration(null);
     } finally {
       setVotingInProgress(false);
     }
   };
 
 
-
-  const generateUserId = () => {
-    const array = new Uint8Array(16);
+  const handleBiometricVerification = async () => {
+    try {
+      if (!window.PublicKeyCredential) {
+        throw new Error('WebAuthn not supported in this browser');
+      }
+  
+      const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+      if (!available) {
+        throw new Error('No biometric authenticator detected on this device');
+      }
+  
+      // FIXED: Check if we have the required registration data
+      if (!userRegistration || !userRegistration.biometricData || !userRegistration.biometricData.id) {
+        throw new Error('Missing biometric registration data. Please verify your CNIC first.');
+      }
+  
+      setIsBiometricLoading(true);
+      setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
+  
+      console.log('🔍 Starting biometric authentication...');
+      console.log('📋 User registration:', userRegistration.registrationId);
+      console.log('🔑 Expected credential ID:', userRegistration.biometricData.id);
+  
+      // Generate challenge for authentication
+      const challenge = generateSecureChallenge();
+  
+      // FIXED: Use the registered credential ID from the database
+      const allowCredentials = [];
+      
+      try {
+        const credentialId = userRegistration.biometricData.id;
+        console.log('🆔 Using credential ID for authentication:', credentialId);
+        
+        // Convert the credential ID to ArrayBuffer
+        const credentialIdBuffer = base64ToArrayBuffer(credentialId);
+        
+        allowCredentials.push({
+          id: credentialIdBuffer,
+          type: "public-key",
+          transports: ["internal"] // Platform authenticator
+        });
+        
+      } catch (conversionError) {
+        console.error('❌ Error converting credential ID:', conversionError);
+        throw new Error('Invalid credential ID format from registration data');
+      }
+  
+      // Authentication options
+      const authenticationOptions = {
+        challenge: challenge,
+        timeout: 60000,
+        userVerification: "required",
+        allowCredentials: allowCredentials
+      };
+  
+      console.log('🚀 Calling navigator.credentials.get...');
+  
+      // Perform authentication
+      const assertion = await navigator.credentials.get({
+        publicKey: authenticationOptions
+      });
+  
+      if (!assertion) {
+        throw new Error('No assertion returned from biometric authentication');
+      }
+  
+      console.log('✅ Authentication successful!');
+      console.log('🔑 Returned credential ID:', assertion.id);
+      console.log('✔️ Credential ID match:', assertion.id === userRegistration.biometricData.id);
+  
+      // Verify that the credential ID matches the registered one
+      if (assertion.id !== userRegistration.biometricData.id) {
+        console.error('❌ Credential ID mismatch:');
+        console.error('  Expected:', userRegistration.biometricData.id);
+        console.error('  Received:', assertion.id);
+        throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
+      }
+  
+      // Create authentication data for backend verification
+      const authenticationData = {
+        id: assertion.id,
+        rawId: arrayBufferToBase64(assertion.rawId),
+        type: assertion.type,
+        challenge: arrayBufferToBase64(challenge),
+        timestamp: new Date().toISOString(),
+        cnicNumber: cnicNumber,
+        // Include assertion response data for verification
+        authenticatorData: arrayBufferToBase64(assertion.response.authenticatorData),
+        signature: arrayBufferToBase64(assertion.response.signature),
+        userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null,
+        clientDataJSON: arrayBufferToBase64(assertion.response.clientDataJSON)
+      };
+  
+      console.log('📤 Authentication data prepared:', {
+        id: authenticationData.id,
+        type: authenticationData.type,
+        cnicNumber: authenticationData.cnicNumber,
+        hasSignature: !!authenticationData.signature,
+        hasAuthenticatorData: !!authenticationData.authenticatorData,
+        hasClientData: !!authenticationData.clientDataJSON
+      });
+  
+      setBiometricData(authenticationData);
+      setBiometricStatus('✅ Fingerprint authenticated successfully!');
+      setVerificationStep('verifying');
+  
+      // Proceed with vote casting
+      await castVoteWithVerification(authenticationData);
+  
+    } catch (error) {
+      console.error('❌ Biometric authentication failed:', error);
+      setBiometricStatus('❌ Fingerprint authentication failed');
+      
+      let errorMessage = '🚫 FINGERPRINT AUTHENTICATION FAILED\n\n';
+      
+      if (error.name === 'NotAllowedError') {
+        errorMessage += '❌ Authentication cancelled or failed\n\n🔧 Please try again and complete the biometric prompt';
+      } else if (error.name === 'SecurityError') {
+        errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
+      } else if (error.name === 'InvalidStateError') {
+        errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
+      } else if (error.name === 'NotSupportedError') {
+        errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
+      } else if (error.message.includes('Credential ID mismatch')) {
+        errorMessage += '❌ This fingerprint does not match your registered biometric data\n\n🔧 Please use the same finger you registered with NADRA';
+      } else if (error.message.includes('Missing biometric registration data')) {
+        errorMessage += '❌ No biometric registration found\n\n🔧 Please verify your CNIC first';
+      } else if (error.message.includes('Invalid credential ID format')) {
+        errorMessage += '❌ Corrupted biometric registration data\n\n🔧 Please contact support or re-register';
+      } else {
+        errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setIsBiometricLoading(false);
+    }
+  };
+  
+  // Helper functions (should be the same as before)
+  const base64ToArrayBuffer = (base64) => {
+    try {
+      // Convert base64url to base64 if needed
+      let base64String = base64;
+      
+      // Check if it's base64url (contains - or _ characters)
+      if (base64String.includes('-') || base64String.includes('_')) {
+        base64String = base64String.replace(/-/g, '+').replace(/_/g, '/');
+      }
+      
+      // Add padding if needed
+      while (base64String.length % 4) {
+        base64String += '=';
+      }
+      
+      const binaryString = atob(base64String);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes.buffer;
+    } catch (error) {
+      console.error('Error converting base64 to ArrayBuffer:', error);
+      throw new Error('Invalid base64 format');
+    }
+  };
+  
+  const arrayBufferToBase64 = (buffer) => {
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  };
+  
+  const generateSecureChallenge = () => {
+    const array = new Uint8Array(32);
     crypto.getRandomValues(array);
     return array;
   };
-
-
- // Fixed handleBiometricVerification function for CandidateList component
-
-const handleBiometricVerification = async () => {
-  try {
-    if (!window.PublicKeyCredential) {
-      throw new Error('WebAuthn not supported in this browser');
-    }
-
-    const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-    if (!available) {
-      throw new Error('No biometric authenticator detected on this device');
-    }
-
-    setIsBiometricLoading(true);
-    setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
-
-    // Generate challenge for authentication
-    const challenge = generateSecureChallenge();
-
-    // IMPORTANT: For authentication, we need to specify the registered credential ID
-    // We should get this from the user's registration data
-    const allowCredentials = [];
-    
-    // If we have the user's registered credential ID from the CNIC verification
-    if (userRegistration?.biometricData?.id) {
-      // Convert the stored credential ID back to the required format
-      const credentialId = userRegistration.biometricData.rawId; // Use rawId for authentication
-      
-      // Convert base64 back to ArrayBuffer
-      const credentialIdBuffer = base64ToArrayBuffer(credentialId);
-      
-      allowCredentials.push({
-        id: credentialIdBuffer,
-        type: "public-key",
-        transports: ["internal"] // Platform authenticator
-      });
-    }
-
-    // Authentication options - specify the allowed credentials
-    const authenticationOptions = {
-      challenge: challenge,
-      timeout: 60000,
-      userVerification: "required",
-      allowCredentials: allowCredentials // Specify which credential to use
-    };
-
-    console.log('Starting biometric authentication with credential ID:', userRegistration?.biometricData?.id);
-    console.log(userRegistration,"this is registration")
-
-    // USE GET() for authentication
-    const assertion = await navigator.credentials.get({
-      publicKey: authenticationOptions
-    });
-
-    if (!assertion) {
-      throw new Error('No assertion returned from biometric authentication');
-    }
-
-    console.log('Authentication successful, credential ID:', assertion.id);
-
-    // Verify that the credential ID matches the registered one
-    if (assertion.id !== userRegistration?.biometricData?.id) {
-      throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
-    }
-
-    // Create authentication data for backend verification
-    const authenticationData = {
-      id: assertion.id,
-      rawId: arrayBufferToBase64(assertion.rawId),
-      type: assertion.type,
-      challenge: arrayBufferToBase64(challenge),
-      timestamp: new Date().toISOString(),
-      cnicNumber: cnicNumber,
-      // Include assertion response data for verification
-      authenticatorData: arrayBufferToBase64(assertion.response.authenticatorData),
-      signature: arrayBufferToBase64(assertion.response.signature),
-      userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null
-    };
-
-    setBiometricData(authenticationData);
-    setBiometricStatus('✅ Fingerprint authenticated successfully!');
-    setVerificationStep('verifying');
-
-    // Proceed with vote casting
-    await castVoteWithVerification(authenticationData);
-
-  } catch (error) {
-    console.error('Biometric authentication failed:', error);
-    setBiometricStatus('❌ Fingerprint authentication failed');
-    
-    let errorMessage = '🚫 FINGERPRINT AUTHENTICATION FAILED\n\n';
-    
-    if (error.name === 'NotAllowedError') {
-      errorMessage += '❌ Authentication cancelled or failed\n\n🔧 Please try again and complete the biometric prompt';
-    } else if (error.name === 'SecurityError') {
-      errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
-    } else if (error.name === 'InvalidStateError') {
-      errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
-    } else if (error.name === 'NotSupportedError') {
-      errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
-    } else if (error.message.includes('Credential ID mismatch')) {
-      errorMessage += '❌ This fingerprint does not match your registered biometric data\n\n🔧 Please use the same finger you registered with NADRA';
-    } else {
-      errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
-    }
-    
-    alert(errorMessage);
-  } finally {
-    setIsBiometricLoading(false);
-  }
-};
-
-// Helper function to convert base64 to ArrayBuffer
-const base64ToArrayBuffer = (base64) => {
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  return bytes.buffer;
-};
-
-// Helper function to convert ArrayBuffer to base64 (should already exist in your code)
-const arrayBufferToBase64 = (buffer) => {
-  const bytes = new Uint8Array(buffer);
-  let binary = '';
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-};
-
-// Helper function to generate secure challenge (should already exist)
-const generateSecureChallenge = () => {
-  const array = new Uint8Array(32);
-  crypto.getRandomValues(array);
-  return array;
-};
-
 
 
   const castVoteWithVerification = async (biometricCredential) => {

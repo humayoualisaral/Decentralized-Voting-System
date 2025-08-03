@@ -59,8 +59,10 @@ export default async function handler(req, res) {
     }
     
     console.log('✅ Registration found:', registration.registrationId || registration._id);
+    console.log('📋 Has biometric data:', !!registration.biometricData);
+    console.log('🔑 Biometric credential ID:', registration.biometricData?.id?.substring(0, 20) + '...');
     
-    // Return registration data (exclude sensitive biometric raw data)
+    // FIXED: Return registration data INCLUDING biometric data for authentication
     const responseData = {
       success: true,
       data: {
@@ -75,10 +77,43 @@ export default async function handler(req, res) {
         isVerified: registration.isVerified,
         submissionTime: registration.submissionTime,
         verificationDate: registration.verificationDate,
+        
+        // FIXED: Include biometric data for authentication purposes
         biometricRegistered: !!registration.biometricData,
-        biometricTimestamp: registration.biometricData?.timestamp
+        biometricTimestamp: registration.biometricData?.timestamp,
+        
+        // CRITICAL: Include the biometric data needed for authentication
+        biometricData: registration.biometricData ? {
+          id: registration.biometricData.id, // Credential ID needed for authentication
+          rawId: registration.biometricData.rawId, // Raw credential ID
+          type: registration.biometricData.type, // Should be "public-key"
+          timestamp: registration.biometricData.timestamp,
+          // Don't include sensitive data like challenge, userId, signature etc.
+          // Only include what's needed for authentication
+          hasChallenge: !!registration.biometricData.challenge,
+          hasUserId: !!registration.biometricData.userId,
+          deviceInfo: registration.biometricData.deviceInfo
+        } : null,
+        
+        // Additional verification info
+        lastBiometricVerification: registration.lastBiometricVerification,
+        biometricVerificationCount: registration.biometricVerifications?.length || 0,
+        
+        // Voting eligibility
+        isEligibleToVote: registration.isEligibleToVote,
+        votingHistory: registration.votingHistory || [],
+        
+        // Account status
+        accountLocked: registration.accountLocked,
+        failedLoginAttempts: registration.failedLoginAttempts || 0
       }
     };
+    
+    console.log('📤 Returning data with biometric info:', {
+      hasBiometricData: !!responseData.data.biometricData,
+      credentialId: responseData.data.biometricData?.id?.substring(0, 20) + '...',
+      type: responseData.data.biometricData?.type
+    });
     
     res.status(200).json(responseData);
     
@@ -87,7 +122,8 @@ export default async function handler(req, res) {
     res.status(500).json({
       success: false,
       error: 'Internal server error',
-      message: 'Failed to retrieve registration data'
+      message: 'Failed to retrieve registration data',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 }
