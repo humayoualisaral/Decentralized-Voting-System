@@ -118,6 +118,8 @@ const CandidateList = ({ electionId, isElectionActive }) => {
 
  // Replace the handleBiometricVerification function in your CandidateList component
 
+// Fixed handleBiometricVerification function for CandidateList component
+
 const handleBiometricVerification = async () => {
   try {
     if (!window.PublicKeyCredential) {
@@ -135,17 +137,36 @@ const handleBiometricVerification = async () => {
     // Generate challenge for authentication
     const challenge = generateSecureChallenge();
 
-    // AUTHENTICATION OPTIONS (using discoverable credentials)
+    // IMPORTANT: For authentication, we need to specify the registered credential ID
+    // We should get this from the user's registration data
+    const allowCredentials = [];
+    
+    // If we have the user's registered credential ID from the CNIC verification
+    if (userRegistration?.biometricData?.id) {
+      // Convert the stored credential ID back to the required format
+      const credentialId = userRegistration.biometricData.rawId; // Use rawId for authentication
+      
+      // Convert base64 back to ArrayBuffer
+      const credentialIdBuffer = base64ToArrayBuffer(credentialId);
+      
+      allowCredentials.push({
+        id: credentialIdBuffer,
+        type: "public-key",
+        transports: ["internal"] // Platform authenticator
+      });
+    }
+
+    // Authentication options - specify the allowed credentials
     const authenticationOptions = {
       challenge: challenge,
       timeout: 60000,
       userVerification: "required",
-      // No allowCredentials - let the platform find any registered credentials
+      allowCredentials: allowCredentials // Specify which credential to use
     };
 
-    console.log('Starting biometric authentication...');
+    console.log('Starting biometric authentication with credential ID:', userRegistration?.biometricData?.id);
 
-    // USE GET() for authentication, not create()!
+    // USE GET() for authentication
     const assertion = await navigator.credentials.get({
       publicKey: authenticationOptions
     });
@@ -155,6 +176,11 @@ const handleBiometricVerification = async () => {
     }
 
     console.log('Authentication successful, credential ID:', assertion.id);
+
+    // Verify that the credential ID matches the registered one
+    if (assertion.id !== userRegistration.biometricData.id) {
+      throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
+    }
 
     // Create authentication data for backend verification
     const authenticationData = {
@@ -191,6 +217,8 @@ const handleBiometricVerification = async () => {
       errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
     } else if (error.name === 'NotSupportedError') {
       errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
+    } else if (error.message.includes('Credential ID mismatch')) {
+      errorMessage += '❌ This fingerprint does not match your registered biometric data\n\n🔧 Please use the same finger you registered with NADRA';
     } else {
       errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
     }
@@ -199,6 +227,16 @@ const handleBiometricVerification = async () => {
   } finally {
     setIsBiometricLoading(false);
   }
+};
+
+// Helper function to convert base64 to ArrayBuffer
+const base64ToArrayBuffer = (base64) => {
+  const binaryString = atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes.buffer;
 };
 
 // Helper function to convert ArrayBuffer to base64 (should already exist in your code)
@@ -217,6 +255,8 @@ const generateSecureChallenge = () => {
   crypto.getRandomValues(array);
   return array;
 };
+
+
 
   const castVoteWithVerification = async (biometricCredential) => {
     try {
