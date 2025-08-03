@@ -178,7 +178,7 @@ const handleBiometricVerification = async () => {
     console.log('Authentication successful, credential ID:', assertion.id);
 
     // Verify that the credential ID matches the registered one
-    if (assertion.id !== userRegistration.biometricData.id) {
+    if (assertion.id !== userRegistration?.biometricData?.id) {
       throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
     }
 
