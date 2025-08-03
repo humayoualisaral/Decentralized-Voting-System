@@ -102,9 +102,14 @@ export const CONTRACT_ABI=[
 				"type": "uint256"
 			},
 			{
-				"internalType": "bytes32",
-				"name": "_fingerprintVerification",
-				"type": "bytes32"
+				"internalType": "string",
+				"name": "_cnicHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_biometricId",
+				"type": "string"
 			}
 		],
 		"name": "castVote",
@@ -240,29 +245,6 @@ export const CONTRACT_ABI=[
 		],
 		"name": "Paused",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_electionId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_cnicHash",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_fingerprintHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "registerVoter",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -464,25 +446,6 @@ export const CONTRACT_ABI=[
 				"internalType": "uint256",
 				"name": "candidateId",
 				"type": "uint256"
-			}
-		],
-		"name": "VoteCast",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "electionId",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "voter",
-				"type": "address"
 			},
 			{
 				"indexed": false,
@@ -491,7 +454,7 @@ export const CONTRACT_ABI=[
 				"type": "string"
 			}
 		],
-		"name": "VoterRegistered",
+		"name": "VoteCast",
 		"type": "event"
 	},
 	{
@@ -569,6 +532,30 @@ export const CONTRACT_ABI=[
 				"internalType": "uint256",
 				"name": "timestamp",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "cnicToAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -873,6 +860,60 @@ export const CONTRACT_ABI=[
 				"type": "uint256"
 			},
 			{
+				"internalType": "string",
+				"name": "_cnicHash",
+				"type": "string"
+			}
+		],
+		"name": "getVoteByCAIC",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "hasVoted",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "votedCandidateId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "candidateName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "partyName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "voteTimestamp",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "voterAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_electionId",
+				"type": "uint256"
+			},
+			{
 				"internalType": "address",
 				"name": "_voter",
 				"type": "address"
@@ -880,11 +921,6 @@ export const CONTRACT_ABI=[
 		],
 		"name": "getVoterStatus",
 		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "isRegistered",
-				"type": "bool"
-			},
 			{
 				"internalType": "bool",
 				"name": "hasVoted",
@@ -1000,9 +1036,9 @@ export const CONTRACT_ABI=[
 				"type": "string"
 			},
 			{
-				"internalType": "bytes32",
-				"name": "fingerprintHash",
-				"type": "bytes32"
+				"internalType": "string",
+				"name": "biometricId",
+				"type": "string"
 			},
 			{
 				"internalType": "bool",
@@ -1020,9 +1056,9 @@ export const CONTRACT_ABI=[
 				"type": "uint256"
 			},
 			{
-				"internalType": "bool",
-				"name": "isRegistered",
-				"type": "bool"
+				"internalType": "address",
+				"name": "voterAddress",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
