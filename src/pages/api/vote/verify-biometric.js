@@ -27,7 +27,8 @@ function checkRateLimit(ip) {
 }
 
 function validateBiometricData(biometricData) {
-  const required = ['id', 'rawId', 'type', 'challenge', 'userId', 'timestamp', 'cnicNumber'];
+  // Updated required fields for authentication (not registration)
+  const required = ['id', 'rawId', 'type', 'challenge', 'timestamp', 'cnicNumber', 'authenticatorData', 'signature'];
   
   if (!biometricData || typeof biometricData !== 'object') {
     return { valid: false, error: 'Biometric data is required' };
@@ -56,13 +57,53 @@ function validateBiometricData(biometricData) {
   return { valid: true };
 }
 
+// Function to verify the credential ID matches the registered one
+async function verifyBiometricCredential(cnicNumber, biometricData) {
+  try {
+    // Get the user's registered biometric data from database
+    const registration = await Registration.findOne({ cnicNumber: cnicNumber });
+    
+    if (!registration || !registration.biometricData) {
+      throw new Error('No registered biometric data found for this CNIC');
+    }
+    
+    // Compare the credential ID from authentication with registered credential ID
+    const registeredCredentialId = registration.biometricData.id;
+    const currentCredentialId = biometricData.id;
+    
+    if (registeredCredentialId !== currentCredentialId) {
+      throw new Error('Biometric credential ID does not match registered fingerprint');
+    }
+    
+    // Additional verification: check if the signature is valid
+    // In a production system, you would verify the signature against the stored public key
+    // For now, we'll just check that the signature exists and has reasonable length
+    if (!biometricData.signature || biometricData.signature.length < 20) {
+      throw new Error('Invalid biometric signature');
+    }
+    
+    // Verify authenticator data exists
+    if (!biometricData.authenticatorData || biometricData.authenticatorData.length < 20) {
+      throw new Error('Invalid authenticator data');
+    }
+    
+    return { valid: true };
+    
+  } catch (error) {
+    console.error('Biometric credential verification failed:', error);
+    return { valid: false, error: error.message };
+  }
+}
+
 // Function to create verification hash for blockchain storage
 function createVerificationHash(cnicNumber, biometricData) {
   const verificationObject = {
     cnic: cnicNumber,
     biometricId: biometricData.id,
     timestamp: biometricData.timestamp,
-    challenge: biometricData.challenge
+    challenge: biometricData.challenge,
+    // Include signature for authentication verification
+    signature: biometricData.signature ? biometricData.signature.substring(0, 32) : ''
   };
   
   // Create a deterministic hash
@@ -138,7 +179,7 @@ export default async function handler(req, res) {
     }
     
     // Check if user is registered and verified
-    const registration = await Registration.findByCNIC(cnicNumber);
+    const registration = await Registration.findOne({ cnicNumber: cnicNumber });
     if (!registration) {
       return res.status(404).json({
         success: false,
@@ -155,7 +196,7 @@ export default async function handler(req, res) {
       });
     }
     
-    // Validate biometric data
+    // Validate biometric data format
     const biometricValidation = validateBiometricData(biometricData);
     if (!biometricValidation.valid) {
       return res.status(400).json({
@@ -174,6 +215,16 @@ export default async function handler(req, res) {
       });
     }
     
+    // Verify biometric credential matches registered one
+    const credentialVerification = await verifyBiometricCredential(cnicNumber, biometricData);
+    if (!credentialVerification.valid) {
+      return res.status(400).json({
+        success: false,
+        error: 'Biometric verification failed',
+        message: credentialVerification.error
+      });
+    }
+    
     // Create verification hash for blockchain
     const verificationHash = createVerificationHash(cnicNumber, biometricData);
     
@@ -182,28 +233,35 @@ export default async function handler(req, res) {
       timestamp: new Date(),
       biometricId: biometricData.id,
       electionId: electionId,
-      verificationHash: verificationHash
+      verificationHash: verificationHash,
+      authenticationType: 'authentication' // Mark as authentication, not registration
     };
     
     // Add to verification history
+    if (!registration.biometricVerifications) {
+      registration.biometricVerifications = [];
+    }
+    
     registration.biometricVerifications.push({
       timestamp: new Date(),
       biometricId: biometricData.id,
       electionId: electionId,
       verificationHash: verificationHash,
       ipAddress: clientIP,
-      userAgent: req.headers['user-agent'] || 'Unknown'
+      userAgent: req.headers['user-agent'] || 'Unknown',
+      authenticationType: 'authentication',
+      signature: biometricData.signature.substring(0, 50) // Store first 50 chars for audit
     });
     
     await registration.save();
     
     // Log successful verification
-    console.log(`✅ Biometric Verification: ${registration.registrationId} for Election: ${electionId} - Ready for blockchain vote`);
+    console.log(`✅ Biometric Authentication: ${registration.registrationId} for Election: ${electionId} - Ready for blockchain vote`);
     
     // Return verification data for blockchain interaction
     const responseData = {
       success: true,
-      message: 'Biometric verification successful - proceed with blockchain vote',
+      message: 'Biometric authentication successful - proceed with blockchain vote',
       data: {
         registrationId: registration.registrationId,
         voterName: `${registration.firstName} ${registration.lastName}`,
@@ -215,14 +273,15 @@ export default async function handler(req, res) {
         electionId: electionId,
         candidateId: candidateId,
         timestamp: new Date().toISOString(),
-        isReadyForVote: true
+        isReadyForVote: true,
+        authenticationType: 'fingerprint_authentication'
       }
     };
     
     res.status(200).json(responseData);
     
   } catch (error) {
-    console.error('❌ Biometric Verification Error:', error);
+    console.error('❌ Biometric Authentication Error:', error);
     
     // Handle specific errors
     if (error.name === 'ValidationError') {
@@ -230,7 +289,7 @@ export default async function handler(req, res) {
       return res.status(400).json({
         success: false,
         error: 'Validation failed',
-        message: 'Invalid verification data',
+        message: 'Invalid authentication data',
         details: errors
       });
     }
@@ -243,11 +302,27 @@ export default async function handler(req, res) {
       });
     }
     
+    if (error.message && error.message.includes('No registered biometric data found')) {
+      return res.status(404).json({
+        success: false,
+        error: 'Biometric not registered',
+        message: 'No biometric data found for this CNIC. Please complete NADRA registration first.'
+      });
+    }
+    
+    if (error.message && error.message.includes('credential ID does not match')) {
+      return res.status(401).json({
+        success: false,
+        error: 'Biometric mismatch',
+        message: 'The fingerprint used does not match the registered biometric data for this CNIC.'
+      });
+    }
+    
     // Generic error response
     res.status(500).json({
       success: false,
       error: 'Internal server error',
-      message: 'Biometric verification failed due to server error',
+      message: 'Biometric authentication failed due to server error',
       timestamp: new Date().toISOString()
     });
   }

@@ -129,95 +129,135 @@ const CandidateList = ({ electionId, isElectionActive }) => {
     return btoa(binary);
   };
 
-  const handleBiometricVerification = async () => {
-    try {
-      if (!window.PublicKeyCredential) {
-        throw new Error('WebAuthn not supported in this browser');
-      }
+ // Replace the handleBiometricVerification function in your CandidateList component
 
-      const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-      if (!available) {
-        throw new Error('No biometric authenticator detected on this device');
-      }
-
-      setIsBiometricLoading(true);
-      setBiometricStatus('🔐 Place your finger on the biometric sensor...');
-
-      const userId = generateUserId();
-      const challenge = generateSecureChallenge();
-
-      const registrationOptions = {
-        challenge: challenge,
-        rp: {
-          name: "Voting System",
-          id: window.location.hostname || "localhost",
-        },
-        user: {
-          id: userId,
-          name: `${userRegistration.firstName}.${userRegistration.lastName}@voting.gov.pk`,
-          displayName: `${userRegistration.firstName} ${userRegistration.lastName}`,
-        },
-        pubKeyCredParams: [
-          { alg: -7, type: "public-key" },
-          { alg: -35, type: "public-key" },
-          { alg: -36, type: "public-key" },
-          { alg: -257, type: "public-key" },
-        ],
-        authenticatorSelection: {
-          authenticatorAttachment: "platform",
-          userVerification: "required",
-          requireResidentKey: true,
-          residentKey: "required"
-        },
-        timeout: 60000,
-        attestation: "direct",
-        excludeCredentials: []
-      };
-
-      const credential = await navigator.credentials.create({
-        publicKey: registrationOptions
-      });
-
-      if (!credential) {
-        throw new Error('No credential returned from biometric registration');
-      }
-
-      const credentialInfo = {
-        id: credential.id,
-        rawId: arrayBufferToBase64(credential.rawId),
-        type: credential.type,
-        challenge: arrayBufferToBase64(challenge),
-        userId: arrayBufferToBase64(userId),
-        timestamp: new Date().toISOString(),
-        cnicNumber: cnicNumber
-      };
-
-      setBiometricData(credentialInfo);
-      setBiometricStatus('✅ Fingerprint verified successfully!');
-      setVerificationStep('verifying');
-
-      // Proceed with vote casting
-      await castVoteWithVerification(credentialInfo);
-
-    } catch (error) {
-      console.error('Biometric verification failed:', error);
-      setBiometricStatus('❌ Fingerprint verification failed');
-      
-      let errorMessage = '🚫 FINGERPRINT VERIFICATION FAILED\n\n';
-      
-      if (error.name === 'NotAllowedError') {
-        errorMessage += '❌ Verification cancelled or failed\n\n🔧 Please try again and complete the biometric prompt';
-      } else if (error.name === 'SecurityError') {
-        errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
-      } else {
-        errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
-      }
-      
-      alert(errorMessage);
-    } finally {
-      setIsBiometricLoading(false);
+const handleBiometricVerification = async () => {
+  try {
+    if (!window.PublicKeyCredential) {
+      throw new Error('WebAuthn not supported in this browser');
     }
-  };
+
+    const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+    if (!available) {
+      throw new Error('No biometric authenticator detected on this device');
+    }
+
+    setIsBiometricLoading(true);
+    setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
+
+    // Generate challenge for authentication
+    const challenge = generateSecureChallenge();
+
+    // Get the stored credential ID from the user registration data
+    let allowCredentials = [];
+    
+    if (userRegistration && userRegistration.biometricData && userRegistration.biometricData.id) {
+      try {
+        // Convert the stored credential ID to ArrayBuffer
+        const credentialId = base64ToArrayBuffer(userRegistration.biometricData.rawId);
+        
+        allowCredentials = [{
+          id: credentialId,
+          type: "public-key",
+          transports: ["internal"] // Platform authenticator
+        }];
+        
+        console.log('Using stored credential ID:', userRegistration.biometricData.id);
+        setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
+      } catch (error) {
+        console.warn('Could not parse stored credential ID, falling back to discoverable credentials');
+        setBiometricStatus('🔐 Searching for registered fingerprint...');
+      }
+    } else {
+      console.warn('No stored credential ID found, using discoverable credentials');
+      setBiometricStatus('🔐 Searching for registered fingerprint...');
+    }
+
+    // AUTHENTICATION OPTIONS
+    const authenticationOptions = {
+      challenge: challenge,
+      timeout: 60000,
+      userVerification: "required",
+      // Use stored credential if available, otherwise let platform discover
+      allowCredentials: allowCredentials.length > 0 ? allowCredentials : undefined
+    };
+
+    console.log('Authentication options:', authenticationOptions);
+
+    // USE GET() for authentication, not create()!
+    const assertion = await navigator.credentials.get({
+      publicKey: authenticationOptions
+    });
+
+    if (!assertion) {
+      throw new Error('No assertion returned from biometric authentication');
+    }
+
+    console.log('Authentication successful, credential ID:', assertion.id);
+
+    // Verify the credential ID matches what we expected
+    if (userRegistration?.biometricData?.id && assertion.id !== userRegistration.biometricData.id) {
+      throw new Error('Authenticated credential does not match registered credential');
+    }
+
+    // Create authentication data for backend verification
+    const authenticationData = {
+      id: assertion.id,
+      rawId: arrayBufferToBase64(assertion.rawId),
+      type: assertion.type,
+      challenge: arrayBufferToBase64(challenge),
+      timestamp: new Date().toISOString(),
+      cnicNumber: cnicNumber,
+      // Include assertion response data for verification
+      authenticatorData: arrayBufferToBase64(assertion.response.authenticatorData),
+      signature: arrayBufferToBase64(assertion.response.signature),
+      userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null
+    };
+
+    setBiometricData(authenticationData);
+    setBiometricStatus('✅ Fingerprint authenticated successfully!');
+    setVerificationStep('verifying');
+
+    // Proceed with vote casting
+    await castVoteWithVerification(authenticationData);
+
+  } catch (error) {
+    console.error('Biometric authentication failed:', error);
+    setBiometricStatus('❌ Fingerprint authentication failed');
+    
+    let errorMessage = '🚫 FINGERPRINT AUTHENTICATION FAILED\n\n';
+    
+    if (error.name === 'NotAllowedError') {
+      errorMessage += '❌ Authentication cancelled or failed\n\n🔧 Please try again and complete the biometric prompt';
+    } else if (error.name === 'SecurityError') {
+      errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
+    } else if (error.name === 'InvalidStateError') {
+      errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
+    } else if (error.name === 'NotSupportedError') {
+      errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
+    } else if (error.message.includes('does not match registered credential')) {
+      errorMessage += '❌ Different fingerprint detected\n\n🔧 Please use the same fingerprint you registered with NADRA';
+    } else {
+      errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
+    }
+    
+    alert(errorMessage);
+  } finally {
+    setIsBiometricLoading(false);
+  }
+};
+
+// Helper function to convert base64 to ArrayBuffer
+const base64ToArrayBuffer = (base64) => {
+  const binaryString = atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes.buffer;
+};
+
+
 
   const castVoteWithVerification = async (biometricCredential) => {
     try {
