@@ -107,12 +107,7 @@ const CandidateList = ({ electionId, isElectionActive }) => {
     }
   };
 
-  // Biometric helper functions
-  const generateSecureChallenge = () => {
-    const array = new Uint8Array(32);
-    crypto.getRandomValues(array);
-    return array;
-  };
+
 
   const generateUserId = () => {
     const array = new Uint8Array(16);
@@ -120,14 +115,6 @@ const CandidateList = ({ electionId, isElectionActive }) => {
     return array;
   };
 
-  const arrayBufferToBase64 = (buffer) => {
-    const bytes = new Uint8Array(buffer);
-    let binary = '';
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  };
 
  // Replace the handleBiometricVerification function in your CandidateList component
 
@@ -148,41 +135,15 @@ const handleBiometricVerification = async () => {
     // Generate challenge for authentication
     const challenge = generateSecureChallenge();
 
-    // Get the stored credential ID from the user registration data
-    let allowCredentials = [];
-    
-    if (userRegistration && userRegistration.biometricData && userRegistration.biometricData.id) {
-      try {
-        // Convert the stored credential ID to ArrayBuffer
-        const credentialId = base64ToArrayBuffer(userRegistration.biometricData.rawId);
-        
-        allowCredentials = [{
-          id: credentialId,
-          type: "public-key",
-          transports: ["internal"] // Platform authenticator
-        }];
-        
-        console.log('Using stored credential ID:', userRegistration.biometricData.id);
-        setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
-      } catch (error) {
-        console.warn('Could not parse stored credential ID, falling back to discoverable credentials');
-        setBiometricStatus('🔐 Searching for registered fingerprint...');
-      }
-    } else {
-      console.warn('No stored credential ID found, using discoverable credentials');
-      setBiometricStatus('🔐 Searching for registered fingerprint...');
-    }
-
-    // AUTHENTICATION OPTIONS
+    // AUTHENTICATION OPTIONS (using discoverable credentials)
     const authenticationOptions = {
       challenge: challenge,
       timeout: 60000,
       userVerification: "required",
-      // Use stored credential if available, otherwise let platform discover
-      allowCredentials: allowCredentials.length > 0 ? allowCredentials : undefined
+      // No allowCredentials - let the platform find any registered credentials
     };
 
-    console.log('Authentication options:', authenticationOptions);
+    console.log('Starting biometric authentication...');
 
     // USE GET() for authentication, not create()!
     const assertion = await navigator.credentials.get({
@@ -194,11 +155,6 @@ const handleBiometricVerification = async () => {
     }
 
     console.log('Authentication successful, credential ID:', assertion.id);
-
-    // Verify the credential ID matches what we expected
-    if (userRegistration?.biometricData?.id && assertion.id !== userRegistration.biometricData.id) {
-      throw new Error('Authenticated credential does not match registered credential');
-    }
 
     // Create authentication data for backend verification
     const authenticationData = {
@@ -235,8 +191,6 @@ const handleBiometricVerification = async () => {
       errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
     } else if (error.name === 'NotSupportedError') {
       errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
-    } else if (error.message.includes('does not match registered credential')) {
-      errorMessage += '❌ Different fingerprint detected\n\n🔧 Please use the same fingerprint you registered with NADRA';
     } else {
       errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
     }
@@ -247,17 +201,22 @@ const handleBiometricVerification = async () => {
   }
 };
 
-// Helper function to convert base64 to ArrayBuffer
-const base64ToArrayBuffer = (base64) => {
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+// Helper function to convert ArrayBuffer to base64 (should already exist in your code)
+const arrayBufferToBase64 = (buffer) => {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
   }
-  return bytes.buffer;
+  return btoa(binary);
 };
 
-
+// Helper function to generate secure challenge (should already exist)
+const generateSecureChallenge = () => {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return array;
+};
 
   const castVoteWithVerification = async (biometricCredential) => {
     try {
