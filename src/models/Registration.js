@@ -123,7 +123,7 @@ const RegistrationSchema = new mongoose.Schema({
   // Verification Status
   isVerified: {
     type: Boolean,
-    default: false
+    default: true
   },
   verificationDate: Date,
   verificationNotes: String,

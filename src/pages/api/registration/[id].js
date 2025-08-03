@@ -14,20 +14,51 @@ export default async function handler(req, res) {
   try {
     await connectToDatabase();
     
-    // Try to find by registration ID first, then by CNIC
-    let registration = await Registration.findByRegistrationId(id);
+    console.log('🔍 Searching for registration with ID:', id);
     
+    // Try to find by registration ID first
+    let registration = await Registration.findByRegistrationId(id);
+    console.log('📋 Found by registration ID:', !!registration);
+    
+    // If not found and looks like a CNIC (13 digits), search by CNIC
     if (!registration && /^\d{13}$/.test(id)) {
+      console.log('🆔 Searching by CNIC:', id);
+      
+      // Try multiple approaches for CNIC search
       registration = await Registration.findByCNIC(id);
+      
+      // If custom method doesn't work, try direct query
+      if (!registration) {
+        console.log('🔄 Trying direct CNIC query...');
+        registration = await Registration.findOne({ cnicNumber: id });
+      }
+      
+      // Try as string and number
+      if (!registration) {
+        console.log('🔄 Trying CNIC as number...');
+        registration = await Registration.findOne({ 
+          $or: [
+            { cnicNumber: id },
+            { cnicNumber: parseInt(id) },
+            { cnic: id }, // In case field name is different
+            { cnic: parseInt(id) }
+          ]
+        });
+      }
+      
+      console.log('📋 Found by CNIC:', !!registration);
     }
     
     if (!registration) {
+      console.log('❌ No registration found for:', id);
       return res.status(404).json({
         success: false,
         error: 'Registration not found',
         message: 'No registration found with the provided ID or CNIC'
       });
     }
+    
+    console.log('✅ Registration found:', registration.registrationId || registration._id);
     
     // Return registration data (exclude sensitive biometric raw data)
     const responseData = {

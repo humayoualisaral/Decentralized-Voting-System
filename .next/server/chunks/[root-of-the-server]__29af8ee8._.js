@@ -135,6 +135,32 @@ const BiometricVerificationSchema = new __TURBOPACK__imported__module__$5b$exter
 }, {
     _id: false
 });
+const VotingHistorySchema = new __TURBOPACK__imported__module__$5b$externals$5d2f$mongoose__$5b$external$5d$__$28$mongoose$2c$__cjs$29$__["default"].Schema({
+    electionId: {
+        type: String,
+        required: true
+    },
+    candidateId: {
+        type: String,
+        required: true
+    },
+    timestamp: {
+        type: Date,
+        required: true
+    },
+    verificationHash: {
+        type: String,
+        required: true
+    },
+    biometricId: {
+        type: String,
+        required: true
+    },
+    blockchainTxHash: String,
+    ipAddress: String
+}, {
+    _id: false
+});
 const RegistrationSchema = new __TURBOPACK__imported__module__$5b$externals$5d2f$mongoose__$5b$external$5d$__$28$mongoose$2c$__cjs$29$__["default"].Schema({
     // Personal Information
     cnicNumber: {
@@ -189,13 +215,17 @@ const RegistrationSchema = new __TURBOPACK__imported__module__$5b$externals$5d2f
         type: BiometricDataSchema,
         required: true
     },
-    // Biometric Verification Tracking (for audit trail only)
+    // Biometric Verification Tracking
     lastBiometricVerification: {
         type: BiometricVerificationSchema,
         default: null
     },
     biometricVerifications: [
         BiometricVerificationSchema
+    ],
+    // Voting History (for audit purposes)
+    votingHistory: [
+        VotingHistorySchema
     ],
     // System Information
     registrationId: {
@@ -317,6 +347,22 @@ RegistrationSchema.methods.addBiometricVerification = function(verificationData)
     this.biometricVerifications.push(verificationData);
     return this.save();
 };
+RegistrationSchema.methods.recordVote = function(voteData) {
+    const voteRecord = {
+        electionId: voteData.electionId,
+        candidateId: voteData.candidateId,
+        timestamp: new Date(),
+        verificationHash: voteData.verificationHash,
+        biometricId: voteData.biometricId,
+        blockchainTxHash: voteData.txHash,
+        ipAddress: voteData.ipAddress
+    };
+    this.votingHistory.push(voteRecord);
+    return this.save();
+};
+RegistrationSchema.methods.hasVotedInElection = function(electionId) {
+    return this.votingHistory.some((vote)=>vote.electionId === electionId);
+};
 RegistrationSchema.methods.canVote = function() {
     if (!this.isVerified || this.status !== 'verified') {
         return {
@@ -382,27 +428,27 @@ RegistrationSchema.statics.getRegistrationStats = function() {
         }
     ]);
 };
-RegistrationSchema.statics.getVerificationStats = function(electionId) {
+RegistrationSchema.statics.getVotingStats = function(electionId) {
     return this.aggregate([
         {
             $match: {
-                'biometricVerifications.electionId': electionId
+                'votingHistory.electionId': electionId
             }
         },
         {
             $group: {
                 _id: '$province',
-                totalRegistrations: {
+                totalVoters: {
                     $sum: 1
                 },
-                verifiedCount: {
+                votedCount: {
                     $sum: {
                         $size: {
                             $filter: {
-                                input: '$biometricVerifications',
+                                input: '$votingHistory',
                                 cond: {
                                     $eq: [
-                                        '$this.electionId',
+                                        '$$this.electionId',
                                         electionId
                                     ]
                                 }
@@ -455,18 +501,53 @@ async function handler(req, res) {
     }
     try {
         await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$libs$2f$mongodb$2e$js__$5b$api$5d$__$28$ecmascript$29$__["default"])();
-        // Try to find by registration ID first, then by CNIC
+        console.log('🔍 Searching for registration with ID:', id);
+        // Try to find by registration ID first
         let registration = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$models$2f$Registration$2e$js__$5b$api$5d$__$28$ecmascript$29$__["default"].findByRegistrationId(id);
+        console.log('📋 Found by registration ID:', !!registration);
+        // If not found and looks like a CNIC (13 digits), search by CNIC
         if (!registration && /^\d{13}$/.test(id)) {
+            console.log('🆔 Searching by CNIC:', id);
+            // Try multiple approaches for CNIC search
             registration = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$models$2f$Registration$2e$js__$5b$api$5d$__$28$ecmascript$29$__["default"].findByCNIC(id);
+            // If custom method doesn't work, try direct query
+            if (!registration) {
+                console.log('🔄 Trying direct CNIC query...');
+                registration = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$models$2f$Registration$2e$js__$5b$api$5d$__$28$ecmascript$29$__["default"].findOne({
+                    cnicNumber: id
+                });
+            }
+            // Try as string and number
+            if (!registration) {
+                console.log('🔄 Trying CNIC as number...');
+                registration = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$models$2f$Registration$2e$js__$5b$api$5d$__$28$ecmascript$29$__["default"].findOne({
+                    $or: [
+                        {
+                            cnicNumber: id
+                        },
+                        {
+                            cnicNumber: parseInt(id)
+                        },
+                        {
+                            cnic: id
+                        },
+                        {
+                            cnic: parseInt(id)
+                        }
+                    ]
+                });
+            }
+            console.log('📋 Found by CNIC:', !!registration);
         }
         if (!registration) {
+            console.log('❌ No registration found for:', id);
             return res.status(404).json({
                 success: false,
                 error: 'Registration not found',
                 message: 'No registration found with the provided ID or CNIC'
             });
         }
+        console.log('✅ Registration found:', registration.registrationId || registration._id);
         // Return registration data (exclude sensitive biometric raw data)
         const responseData = {
             success: true,
