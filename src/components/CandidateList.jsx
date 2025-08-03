@@ -135,41 +135,34 @@ const handleBiometricVerification = async () => {
     // Generate challenge for authentication
     const challenge = generateSecureChallenge();
 
-    // FIXED: For authentication, we need to allow any registered credential
-    // Since we're doing user verification, we don't need to specify exact credentials
+    // IMPORTANT: For authentication, we need to specify the registered credential ID
+    // We should get this from the user's registration data
     const allowCredentials = [];
     
-    // If we have the user's registered credential ID, we can optionally specify it
-    if (userRegistration?.biometricData?.rawId) {
-      try {
-        // Convert the stored base64 rawId back to ArrayBuffer
-        const credentialIdBuffer = base64ToArrayBuffer(userRegistration.biometricData.rawId);
-        
-        allowCredentials.push({
-          id: credentialIdBuffer,
-          type: "public-key",
-          transports: ["internal"] // Platform authenticator
-        });
-        
-        console.log('Using specific credential ID for authentication');
-      } catch (error) {
-        console.warn('Could not parse stored credential ID, will allow any credential:', error);
-        // Continue without specifying credentials - let the authenticator choose
-      }
+    // If we have the user's registered credential ID from the CNIC verification
+    if (userRegistration?.biometricData?.id) {
+      // Convert the stored credential ID back to the required format
+      const credentialId = userRegistration.biometricData.rawId; // Use rawId for authentication
+      
+      // Convert base64 back to ArrayBuffer
+      const credentialIdBuffer = base64ToArrayBuffer(credentialId);
+      
+      allowCredentials.push({
+        id: credentialIdBuffer,
+        type: "public-key",
+        transports: ["internal"] // Platform authenticator
+      });
     }
 
-    // Authentication options
+    // Authentication options - specify the allowed credentials
     const authenticationOptions = {
       challenge: challenge,
       timeout: 60000,
       userVerification: "required",
-      // FIXED: Only specify allowCredentials if we successfully parsed the stored credential
-      ...(allowCredentials.length > 0 && { allowCredentials: allowCredentials })
+      allowCredentials: allowCredentials // Specify which credential to use
     };
 
-    console.log('Starting biometric authentication...');
-    console.log('Challenge:', arrayBufferToBase64(challenge));
-    console.log('Expected credential ID:', userRegistration?.biometricData?.id);
+    console.log('Starting biometric authentication with credential ID:', userRegistration?.biometricData?.id);
 
     // USE GET() for authentication
     const assertion = await navigator.credentials.get({
@@ -180,33 +173,12 @@ const handleBiometricVerification = async () => {
       throw new Error('No assertion returned from biometric authentication');
     }
 
-    console.log('Authentication successful!');
-    console.log('Received credential ID:', assertion.id);
-    console.log('Expected credential ID:', userRegistration?.biometricData?.id);
+    console.log('Authentication successful, credential ID:', assertion.id);
 
-    // FIXED: Verify credential ID matches - handle URL-safe base64 conversion
-    const receivedCredentialId = assertion.id;
-    const storedCredentialId = userRegistration?.biometricData?.id;
-    
-    // Convert between different base64 encodings if needed
-    const normalizeCredentialId = (id) => {
-      return id.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-    };
-    
-    const normalizedReceived = normalizeCredentialId(receivedCredentialId);
-    const normalizedStored = normalizeCredentialId(storedCredentialId);
-    
-    if (normalizedReceived !== normalizedStored) {
-      console.error('Credential ID mismatch:');
-      console.error('  Received:', receivedCredentialId);
-      console.error('  Stored:', storedCredentialId);
-      console.error('  Normalized Received:', normalizedReceived);
-      console.error('  Normalized Stored:', normalizedStored);
-      
+    // Verify that the credential ID matches the registered one
+    if (assertion.id !== userRegistration.biometricData.id) {
       throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
     }
-
-    console.log('✅ Credential ID verification successful');
 
     // Create authentication data for backend verification
     const authenticationData = {
@@ -219,9 +191,7 @@ const handleBiometricVerification = async () => {
       // Include assertion response data for verification
       authenticatorData: arrayBufferToBase64(assertion.response.authenticatorData),
       signature: arrayBufferToBase64(assertion.response.signature),
-      userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null,
-      // Add client data for additional verification
-      clientDataJSON: arrayBufferToBase64(assertion.response.clientDataJSON)
+      userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null
     };
 
     setBiometricData(authenticationData);
@@ -242,15 +212,13 @@ const handleBiometricVerification = async () => {
     } else if (error.name === 'SecurityError') {
       errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
     } else if (error.name === 'InvalidStateError') {
-      errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first or try a different finger';
+      errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
     } else if (error.name === 'NotSupportedError') {
       errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
     } else if (error.message.includes('Credential ID mismatch')) {
       errorMessage += '❌ This fingerprint does not match your registered biometric data\n\n🔧 Please use the same finger you registered with NADRA';
-    } else if (error.message.includes('No biometric authenticator detected')) {
-      errorMessage += '❌ No fingerprint sensor detected\n\n🔧 Ensure your device has a working fingerprint sensor';
     } else {
-      errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}\n\n🔧 Please try again or contact support if the issue persists`;
+      errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
     }
     
     alert(errorMessage);
@@ -259,49 +227,32 @@ const handleBiometricVerification = async () => {
   }
 };
 
-// FIXED: Enhanced helper function to convert base64 to ArrayBuffer with error handling
+// Helper function to convert base64 to ArrayBuffer
 const base64ToArrayBuffer = (base64) => {
-  try {
-    // Handle URL-safe base64
-    const normalizedBase64 = base64
-      .replace(/-/g, '+')
-      .replace(/_/g, '/')
-      .padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
-    
-    const binaryString = atob(normalizedBase64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-  } catch (error) {
-    console.error('Error converting base64 to ArrayBuffer:', error);
-    throw new Error('Invalid base64 data format');
+  const binaryString = atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
   }
+  return bytes.buffer;
 };
 
-// Enhanced helper function to convert ArrayBuffer to base64
+// Helper function to convert ArrayBuffer to base64 (should already exist in your code)
 const arrayBufferToBase64 = (buffer) => {
-  try {
-    const bytes = new Uint8Array(buffer);
-    let binary = '';
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  } catch (error) {
-    console.error('Error converting ArrayBuffer to base64:', error);
-    throw new Error('Invalid ArrayBuffer data');
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
   }
+  return btoa(binary);
 };
 
-// Helper function to generate secure challenge
+// Helper function to generate secure challenge (should already exist)
 const generateSecureChallenge = () => {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
   return array;
 };
-
 
 
 

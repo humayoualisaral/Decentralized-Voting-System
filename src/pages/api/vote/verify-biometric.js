@@ -68,7 +68,7 @@ async function verifyBiometricCredential(cnicNumber, biometricData) {
       throw new Error('No registered biometric data found for this CNIC');
     }
     
-    // FIXED: Enhanced credential ID comparison with normalization
+    // FIXED: Enhanced credential ID comparison with normalization and proper null checking
     const registeredCredentialId = registration.biometricData.id;
     const currentCredentialId = biometricData.id;
     
@@ -76,9 +76,20 @@ async function verifyBiometricCredential(cnicNumber, biometricData) {
     console.log('  Registered ID:', registeredCredentialId);
     console.log('  Current ID:', currentCredentialId);
     
+    // FIXED: Check for null/undefined values before normalization
+    if (!registeredCredentialId) {
+      throw new Error('No registered credential ID found in database');
+    }
+    
+    if (!currentCredentialId) {
+      throw new Error('No credential ID provided in authentication data');
+    }
+    
     // Normalize credential IDs to handle URL-safe base64 variations
     const normalizeCredentialId = (id) => {
-      if (!id) return '';
+      if (!id || typeof id !== 'string') {
+        return '';
+      }
       return id.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
     };
     
@@ -89,8 +100,23 @@ async function verifyBiometricCredential(cnicNumber, biometricData) {
     console.log('  Normalized Current:', normalizedCurrent);
     console.log('  Match:', normalizedRegistered === normalizedCurrent);
     
+    // FIXED: The main issue is here - credential IDs are completely different
+    // This indicates that either:
+    // 1. Different fingerprint is being used
+    // 2. Different device/browser is being used
+    // 3. The registration wasn't completed properly
+    
     if (normalizedRegistered !== normalizedCurrent) {
-      throw new Error(`Biometric credential ID does not match registered fingerprint. This appears to be a different biometric than the one registered for this CNIC.`);
+      console.error('❌ Credential ID mismatch detected:');
+      console.error('  Expected (from DB):', registeredCredentialId);
+      console.error('  Received (from auth):', currentCredentialId);
+      console.error('  This suggests either:');
+      console.error('    - Different fingerprint being used');
+      console.error('    - Different device/browser');
+      console.error('    - Registration data corruption');
+      
+      // FIXED: More detailed error message to help debug
+      throw new Error(`Biometric credential mismatch. Expected credential ID "${registeredCredentialId.substring(0, 20)}..." but received "${currentCredentialId.substring(0, 20)}...". This typically means you're using a different fingerprint or device than during registration.`);
     }
     
     // FIXED: Enhanced validation for authentication response
@@ -109,15 +135,18 @@ async function verifyBiometricCredential(cnicNumber, biometricData) {
     
     // For rawId, we need to be more careful as it's the actual binary data encoded as base64
     if (registeredRawId && currentRawId) {
-      // Normalize both rawIds by ensuring consistent base64 encoding
+      // FIXED: More robust rawId comparison
       const normalizeRawId = (rawId) => {
         try {
+          if (!rawId || typeof rawId !== 'string') {
+            return '';
+          }
           // Convert to buffer and back to ensure consistent encoding
           const buffer = Buffer.from(rawId, 'base64');
           return buffer.toString('base64');
         } catch (error) {
           console.warn('Could not normalize rawId:', error);
-          return rawId;
+          return rawId || '';
         }
       };
       
@@ -130,7 +159,7 @@ async function verifyBiometricCredential(cnicNumber, biometricData) {
       console.log('    Normalized match:', normalizedRegisteredRawId === normalizedCurrentRawId);
       
       if (normalizedRegisteredRawId !== normalizedCurrentRawId) {
-        console.log('⚠️  Raw ID mismatch - but continuing with credential ID match');
+        console.log('⚠️  Raw ID mismatch - but continuing since credential ID matched');
         // Don't fail on rawId mismatch if credential ID matches, as some browsers may encode differently
       }
     }
@@ -301,6 +330,15 @@ export default async function handler(req, res) {
       });
     }
     
+    // FIXED: Add additional check for biometric data in registration
+    if (!registration.biometricData || !registration.biometricData.id) {
+      return res.status(400).json({
+        success: false,
+        error: 'No biometric data registered',
+        message: 'No biometric data found for this CNIC. Please complete your NADRA registration with fingerprint enrollment first.'
+      });
+    }
+    
     // Validate biometric data format
     const biometricValidation = validateBiometricData(biometricData);
     if (!biometricValidation.valid) {
@@ -323,6 +361,23 @@ export default async function handler(req, res) {
     // MAIN VERIFICATION: Check if biometric credential matches registered one
     const credentialVerification = await verifyBiometricCredential(cnicNumber, biometricData);
     if (!credentialVerification.valid) {
+      // FIXED: Return more specific error information for debugging
+      const isCredentialMismatch = credentialVerification.error.includes('credential mismatch') || 
+                                  credentialVerification.error.includes('Credential ID');
+      
+      if (isCredentialMismatch) {
+        return res.status(401).json({
+          success: false,
+          error: 'Biometric credential mismatch',
+          message: credentialVerification.error,
+          debugInfo: {
+            registeredCredentialId: registration.biometricData.id?.substring(0, 20) + '...',
+            providedCredentialId: biometricData.id?.substring(0, 20) + '...',
+            suggestion: 'Please use the same fingerprint and device you used during NADRA registration'
+          }
+        });
+      }
+      
       return res.status(400).json({
         success: false,
         error: 'Biometric verification failed',
