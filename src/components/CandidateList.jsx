@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { useVoting } from '@/context/ContractContext';
 import CandidateCard from '@/components/CandidateUserCard';
-import { Users, Trophy, BarChart3, Loader2, Hash, Fingerprint, X, AlertCircle, Shield, CheckCircle2, Clock, Zap } from 'lucide-react';
+import { Users, Trophy, BarChart3, Loader2, Hash, Fingerprint, X, AlertCircle, Shield, CheckCircle2, Clock, Zap, Search, Eye } from 'lucide-react';
 
 const CandidateList = ({ electionId, isElectionActive }) => {
   const {
     getElectionCandidates,
     getCandidateDetails,
     castVote,
+    getVoteByCNIC, // NEW function for vote verification
     isLoading,
     account
   } = useVoting();
@@ -29,6 +30,13 @@ const CandidateList = ({ electionId, isElectionActive }) => {
   const [biometricData, setBiometricData] = useState(null);
   const [biometricStatus, setBiometricStatus] = useState('');
   const [isBiometricLoading, setIsBiometricLoading] = useState(false);
+
+  // Vote verification states
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [verificationCnic, setVerificationCnic] = useState('');
+  const [verificationResult, setVerificationResult] = useState(null);
+  const [verificationLoading, setVerificationLoading] = useState(false);
+  const [verificationError, setVerificationError] = useState('');
 
   // Fetch candidates from contract
   useEffect(() => {
@@ -56,6 +64,18 @@ const CandidateList = ({ electionId, isElectionActive }) => {
 
     fetchCandidates();
   }, [electionId, getElectionCandidates, getCandidateDetails]);
+
+  // Hash CNIC function (simple hash for demo - use proper hashing in production)
+  const hashCNIC = (cnic) => {
+    // Simple hash function - replace with proper crypto hash in production
+    let hash = 0;
+    for (let i = 0; i < cnic.length; i++) {
+      const char = cnic.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash).toString();
+  };
 
   // CNIC verification functions
   const handleVoteNow = (candidate) => {
@@ -94,25 +114,17 @@ const CandidateList = ({ electionId, isElectionActive }) => {
       }
   
       console.log('✅ CNIC verification response:', result);
-      console.log('📋 Registration data:', result.data);
-      console.log('🔑 Biometric data available:', !!result.data.biometricData);
       
-      if (result.data.biometricData) {
-        console.log('🆔 Credential ID:', result.data.biometricData.id);
-        console.log('📱 Biometric type:', result.data.biometricData.type);
-        console.log('⏰ Registration time:', result.data.biometricData.timestamp);
-      }
-  
       if (!result.data.isVerified) {
         throw new Error('CNIC is not verified. Please complete your NADRA registration first.');
       }
   
-      // FIXED: Check if biometric data exists
+      // Check if biometric data exists
       if (!result.data.biometricData || !result.data.biometricData.id) {
         throw new Error('No biometric data found. Please complete your NADRA registration with fingerprint enrollment first.');
       }
   
-      // FIXED: Store the complete registration data including biometric info
+      // Store the complete registration data including biometric info
       setUserRegistration(result.data);
       setVerificationStep('fingerprint');
       setBiometricStatus(`✅ CNIC verified! Found biometric registration with ID: ${result.data.biometricData.id.substring(0, 20)}...`);
@@ -122,14 +134,11 @@ const CandidateList = ({ electionId, isElectionActive }) => {
     } catch (error) {
       console.error('❌ CNIC verification error:', error);
       setCnicError(error.message);
-      
-      // Clear any partial registration data on error
       setUserRegistration(null);
     } finally {
       setVotingInProgress(false);
     }
   };
-
 
   const handleBiometricVerification = async () => {
     try {
@@ -142,7 +151,6 @@ const CandidateList = ({ electionId, isElectionActive }) => {
         throw new Error('No biometric authenticator detected on this device');
       }
   
-      // FIXED: Check if we have the required registration data
       if (!userRegistration || !userRegistration.biometricData || !userRegistration.biometricData.id) {
         throw new Error('Missing biometric registration data. Please verify your CNIC first.');
       }
@@ -151,13 +159,11 @@ const CandidateList = ({ electionId, isElectionActive }) => {
       setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
   
       console.log('🔍 Starting biometric authentication...');
-      console.log('📋 User registration:', userRegistration.registrationId);
-      console.log('🔑 Expected credential ID:', userRegistration.biometricData.id);
   
       // Generate challenge for authentication
       const challenge = generateSecureChallenge();
   
-      // FIXED: Use the registered credential ID from the database
+      // Use the registered credential ID from the database
       const allowCredentials = [];
       
       try {
@@ -198,14 +204,10 @@ const CandidateList = ({ electionId, isElectionActive }) => {
       }
   
       console.log('✅ Authentication successful!');
-      console.log('🔑 Returned credential ID:', assertion.id);
-      console.log('✔️ Credential ID match:', assertion.id === userRegistration.biometricData.id);
   
       // Verify that the credential ID matches the registered one
       if (assertion.id !== userRegistration.biometricData.id) {
-        console.error('❌ Credential ID mismatch:');
-        console.error('  Expected:', userRegistration.biometricData.id);
-        console.error('  Received:', assertion.id);
+        console.error('❌ Credential ID mismatch');
         throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
       }
   
@@ -217,21 +219,11 @@ const CandidateList = ({ electionId, isElectionActive }) => {
         challenge: arrayBufferToBase64(challenge),
         timestamp: new Date().toISOString(),
         cnicNumber: cnicNumber,
-        // Include assertion response data for verification
         authenticatorData: arrayBufferToBase64(assertion.response.authenticatorData),
         signature: arrayBufferToBase64(assertion.response.signature),
         userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null,
         clientDataJSON: arrayBufferToBase64(assertion.response.clientDataJSON)
       };
-  
-      console.log('📤 Authentication data prepared:', {
-        id: authenticationData.id,
-        type: authenticationData.type,
-        cnicNumber: authenticationData.cnicNumber,
-        hasSignature: !!authenticationData.signature,
-        hasAuthenticatorData: !!authenticationData.authenticatorData,
-        hasClientData: !!authenticationData.clientDataJSON
-      });
   
       setBiometricData(authenticationData);
       setBiometricStatus('✅ Fingerprint authenticated successfully!');
@@ -270,18 +262,15 @@ const CandidateList = ({ electionId, isElectionActive }) => {
     }
   };
   
-  // Helper functions (should be the same as before)
+  // Helper functions
   const base64ToArrayBuffer = (base64) => {
     try {
-      // Convert base64url to base64 if needed
       let base64String = base64;
       
-      // Check if it's base64url (contains - or _ characters)
       if (base64String.includes('-') || base64String.includes('_')) {
         base64String = base64String.replace(/-/g, '+').replace(/_/g, '/');
       }
       
-      // Add padding if needed
       while (base64String.length % 4) {
         base64String += '=';
       }
@@ -313,7 +302,7 @@ const CandidateList = ({ electionId, isElectionActive }) => {
     return array;
   };
 
-
+  // FIXED: Updated vote casting function to match contract parameters
   const castVoteWithVerification = async (biometricCredential) => {
     try {
       setVotingInProgress(true);
@@ -341,14 +330,22 @@ const CandidateList = ({ electionId, isElectionActive }) => {
 
       setBiometricStatus('✅ Biometric verified! Casting vote on blockchain...');
 
-      // Use the verification hash from backend for blockchain transaction
-      const fingerprintVerification = verificationResult.data.verificationHash;
+      // FIXED: Cast vote with correct parameters matching the smart contract
+      const cnicHash = hashCNIC(cnicNumber);
+      const biometricId = biometricCredential.id; // Use the biometric credential ID
 
-      // Cast vote directly to smart contract
+      console.log('Casting vote with parameters:', {
+        electionId,
+        candidateId: selectedCandidate.candidateId,
+        cnicHash,
+        biometricId: biometricId.substring(0, 20) + '...'
+      });
+
       const voteReceipt = await castVote(
         electionId,
         selectedCandidate.candidateId,
-        fingerprintVerification
+        cnicHash,
+        biometricId
       );
 
       setBiometricStatus('🎉 Vote successfully recorded on blockchain!');
@@ -381,12 +378,12 @@ const CandidateList = ({ electionId, isElectionActive }) => {
       
       if (error.message.includes('already voted')) {
         errorMessage += '🚫 You have already voted in this election.\n\n💡 Each voter can only vote once per election.';
+      } else if (error.message.includes('CNIC already used')) {
+        errorMessage += '🚫 This CNIC has already been used to vote in this election.\n\n💡 Each CNIC can only vote once per election.';
       } else if (error.message.includes('not verified')) {
         errorMessage += '🚫 Your registration is not verified.\n\n💡 Please complete your NADRA verification first.';
       } else if (error.message.includes('Rate limit')) {
         errorMessage += '⏰ Too many verification attempts.\n\n🔄 Please wait a few minutes before trying again.';
-      } else if (error.message.includes('Biometric data is too old')) {
-        errorMessage += '⏱️ Biometric data expired.\n\n🔄 Please re-authenticate your fingerprint.';
       } else if (error.message.includes('execution reverted')) {
         errorMessage += '🚫 Smart contract rejected the vote.\n\n💡 You may have already voted or the election may be inactive.';
       } else {
@@ -396,6 +393,44 @@ const CandidateList = ({ electionId, isElectionActive }) => {
       alert(errorMessage);
     } finally {
       setVotingInProgress(false);
+    }
+  };
+
+  // NEW: Vote verification function
+  const handleVerifyVote = () => {
+    setShowVerificationModal(true);
+    setVerificationCnic('');
+    setVerificationResult(null);
+    setVerificationError('');
+  };
+
+  const handleVoteVerification = async () => {
+    if (!verificationCnic || verificationCnic.length !== 13) {
+      setVerificationError('CNIC must be exactly 13 digits');
+      return;
+    }
+
+    try {
+      setVerificationLoading(true);
+      setVerificationError('');
+
+      const cnicHash = hashCNIC(verificationCnic);
+      const result = await getVoteByCNIC(electionId, cnicHash);
+
+      if (!result.hasVoted) {
+        setVerificationError('No vote found for this CNIC in this election');
+        setVerificationResult(null);
+        return;
+      }
+
+      setVerificationResult(result);
+
+    } catch (error) {
+      console.error('Error verifying vote:', error);
+      setVerificationError('Error verifying vote: ' + error.message);
+      setVerificationResult(null);
+    } finally {
+      setVerificationLoading(false);
     }
   };
 
@@ -472,21 +507,34 @@ const CandidateList = ({ electionId, isElectionActive }) => {
         </div>
       </div>
 
-      {/* Results Toggle */}
-      <div className="flex justify-between items-center">
+      {/* Controls */}
+      <div className="flex justify-between items-center flex-wrap gap-4">
         <h2 className="text-3xl font-bold text-white flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
             <Users className="w-5 h-5 text-white" />
           </div>
           Candidates
         </h2>
-        <button
-          onClick={() => setShowResults(!showResults)}
-          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg border border-white/20 hover:scale-105"
-        >
-          <BarChart3 className="w-5 h-5" />
-          {showResults ? 'Hide Results' : 'Show Results'}
-        </button>
+        
+        <div className="flex gap-3">
+          {/* Vote Verification Button */}
+          <button
+            onClick={handleVerifyVote}
+            className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg hover:scale-105 shadow-lg"
+          >
+            <Search className="w-5 h-5" />
+            Verify Vote
+          </button>
+
+          {/* Results Toggle */}
+          <button
+            onClick={() => setShowResults(!showResults)}
+            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg border border-white/20 hover:scale-105"
+          >
+            <BarChart3 className="w-5 h-5" />
+            {showResults ? 'Hide Results' : 'Show Results'}
+          </button>
+        </div>
       </div>
 
       {/* Candidates Grid */}
@@ -703,6 +751,137 @@ const CandidateList = ({ electionId, isElectionActive }) => {
                         <p className="text-blue-200 text-sm">{biometricStatus}</p>
                       </div>
                     )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Vote Verification Modal */}
+      {showVerificationModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full border border-slate-600 overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-cyan-600 to-blue-600 p-6">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Eye className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">
+                    Verify Your Vote
+                  </h3>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowVerificationModal(false);
+                    setVerificationCnic('');
+                    setVerificationResult(null);
+                    setVerificationError('');
+                  }}
+                  className="text-white/70 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <div className="space-y-6">
+                {/* CNIC Input */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center">
+                      <Search className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white text-lg">Enter Your CNIC</h4>
+                      <p className="text-slate-400 text-sm">Check which candidate you voted for</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <input
+                      type="text"
+                      value={verificationCnic}
+                      onChange={(e) => {
+                        setVerificationCnic(formatCNIC(e.target.value));
+                        setVerificationError('');
+                      }}
+                      placeholder="Enter your 13-digit CNIC number"
+                      className={`w-full px-4 py-3 bg-slate-700 border-2 rounded-xl text-white placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
+                        verificationError 
+                          ? 'border-red-400 bg-red-900/20' 
+                          : 'border-slate-600 focus:border-cyan-500'
+                      }`}
+                      disabled={verificationLoading}
+                    />
+                    
+                    {verificationError && (
+                      <div className="flex items-center gap-2 text-red-400 text-sm bg-red-900/20 p-3 rounded-lg border border-red-500/30">
+                        <AlertCircle className="w-4 h-4" />
+                        {verificationError}
+                      </div>
+                    )}
+                    
+                    <button
+                      onClick={handleVoteVerification}
+                      disabled={verificationLoading || !verificationCnic || verificationCnic.length !== 13}
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-105 disabled:transform-none shadow-lg"
+                    >
+                      {verificationLoading ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Checking Vote...
+                        </>
+                      ) : (
+                        <>
+                          <Search className="w-5 h-5" />
+                          Verify Vote
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Verification Result */}
+                {verificationResult && (
+                  <div className="bg-gradient-to-r from-emerald-900/30 to-green-900/30 border border-emerald-500/30 rounded-xl p-6">
+                    <div className="text-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <CheckCircle2 className="w-8 h-8 text-white" />
+                      </div>
+                      <h4 className="font-bold text-white text-lg mb-2">Vote Found!</h4>
+                    </div>
+                    
+                    <div className="space-y-3 text-emerald-200">
+                      <div className="flex justify-between">
+                        <span className="text-slate-300">Candidate:</span>
+                        <span className="font-medium">{verificationResult.candidateName}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-300">Party:</span>
+                        <span className="font-medium">{verificationResult.partyName}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-300">Symbol:</span>
+                        <span className="text-2xl">{verificationResult.symbol}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-300">Vote Time:</span>
+                        <span className="font-medium">
+                          {new Date(parseInt(verificationResult.voteTimestamp) * 1000).toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-300">Wallet Address:</span>
+                        <span className="font-mono text-xs">
+                          {verificationResult.voterAddress.substring(0, 6)}...{verificationResult.voterAddress.substring(-4)}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

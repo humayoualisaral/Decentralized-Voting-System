@@ -131,40 +131,53 @@ export const VotingProvider = ({ children }) => {
     }
   };
 
-  // Voter Functions
-  const registerVoter = async (electionId, cnicHash, fingerprintHash) => {
+  // FIXED: Updated castVote function to match the smart contract signature
+  const castVote = async (electionId, candidateId, cnicHash, biometricId) => {
     try {
       if (!contract) throw new Error('Contract not initialized');
       
       setIsLoading(true);
-      const tx = await contract.registerVoter(electionId, cnicHash, fingerprintHash);
+      console.log('Casting vote with parameters:', {
+        electionId,
+        candidateId,
+        cnicHash,
+        biometricId: biometricId?.substring(0, 20) + '...' // Log truncated version for security
+      });
+      
+      const tx = await contract.castVote(electionId, candidateId, cnicHash, biometricId);
       const receipt = await tx.wait();
       
-      console.log('Voter registered:', receipt);
-      return receipt;
-    } catch (error) {
-      console.error('Error registering voter:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const castVote = async (electionId, candidateId, fingerprintVerification) => {
-    try {
-      if (!contract) throw new Error('Contract not initialized');
-      
-      setIsLoading(true);
-      const tx = await contract.castVote(electionId, candidateId, fingerprintVerification);
-      const receipt = await tx.wait();
-      
-      console.log('Vote cast:', receipt);
+      console.log('Vote cast successfully:', receipt);
       return receipt;
     } catch (error) {
       console.error('Error casting vote:', error);
       throw error;
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // NEW: Vote verification function
+  const getVoteByCNIC = async (electionId, cnicHash) => {
+    try {
+      if (!contract) throw new Error('Contract not initialized');
+      
+      console.log('Verifying vote for CNIC:', cnicHash);
+      
+      const result = await contract.getVoteByCAIC(electionId, cnicHash);
+      
+      return {
+        hasVoted: result.hasVoted,
+        votedCandidateId: result.votedCandidateId.toString(),
+        candidateName: result.candidateName,
+        partyName: result.partyName,
+        symbol: result.symbol,
+        voteTimestamp: result.voteTimestamp.toString(),
+        voterAddress: result.voterAddress
+      };
+    } catch (error) {
+      console.error('Error getting vote by CNIC:', error);
+      throw error;
     }
   };
 
@@ -231,7 +244,6 @@ export const VotingProvider = ({ children }) => {
       
       const status = await contract.getVoterStatus(electionId, address);
       return {
-        isRegistered: status.isRegistered,
         hasVoted: status.hasVoted,
         votedCandidateId: status.votedCandidateId.toString()
       };
@@ -260,7 +272,7 @@ export const VotingProvider = ({ children }) => {
     try {
       if (!contract) throw new Error('Contract not initialized');
       
-      const electionId =await contract.currentElectionId();
+      const electionId = await contract.currentElectionId();
       return electionId.toString();
     } catch (error) {
       console.error('Error getting current election ID:', error);
@@ -446,8 +458,8 @@ export const VotingProvider = ({ children }) => {
     addCandidate,
     
     // Voter functions
-    registerVoter,
     castVote,
+    getVoteByCNIC, // NEW function
     
     // View functions
     getElectionDetails,
