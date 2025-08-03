@@ -163,6 +163,7 @@ const handleBiometricVerification = async () => {
     };
 
     console.log('Starting biometric authentication with credential ID:', userRegistration?.biometricData?.id);
+    console.log(userRegistration,"this is registration")
 
     // USE GET() for authentication
     const assertion = await navigator.credentials.get({
