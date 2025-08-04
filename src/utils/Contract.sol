@@ -25,11 +25,11 @@ contract DecentralizedVotingSystem is AccessControl, ReentrancyGuard, Pausable {
     
     struct Voter {
         string cnicHash; // Hashed CNIC for privacy
-        bytes32 fingerprintHash; // Hashed fingerprint data
+        string biometricId; // Biometric credential ID
         bool hasVoted;
         uint256 votedCandidateId;
         uint256 voteTimestamp;
-        bool isRegistered;
+        address voterAddress;
     }
     
     struct Election {
@@ -50,13 +50,13 @@ contract DecentralizedVotingSystem is AccessControl, ReentrancyGuard, Pausable {
     mapping(uint256 => Candidate) public candidates;
     mapping(uint256 => mapping(address => Voter)) public voters; // electionId => voterAddress => Voter
     mapping(uint256 => mapping(string => bool)) public usedCNICs; // electionId => cnicHash => used
+    mapping(uint256 => mapping(string => address)) public cnicToAddress; // electionId => cnicHash => address
     mapping(uint256 => uint256[]) public electionCandidates; // electionId => candidateIds[]
     
     // Events
     event ElectionCreated(uint256 indexed electionId, string title, uint256 startTime, uint256 endTime);
     event CandidateAdded(uint256 indexed electionId, uint256 indexed candidateId, string name, string partyName);
-    event VoterRegistered(uint256 indexed electionId, address indexed voter, string cnicHash);
-    event VoteCast(uint256 indexed electionId, address indexed voter, uint256 indexed candidateId);
+    event VoteCast(uint256 indexed electionId, address indexed voter, uint256 indexed candidateId, string cnicHash);
     event ElectionStatusChanged(uint256 indexed electionId, bool isActive);
     
     // Modifiers
@@ -139,46 +139,23 @@ contract DecentralizedVotingSystem is AccessControl, ReentrancyGuard, Pausable {
         emit CandidateAdded(_electionId, candidateCounter, _name, _partyName);
     }
     
-    // Voter Registration and Voting Functions
-    function registerVoter(
-        uint256 _electionId,
-        string memory _cnicHash,
-        bytes32 _fingerprintHash
-    ) external electionExists(_electionId) {
-        require(!usedCNICs[_electionId][_cnicHash], "CNIC already registered for this election");
-        require(!voters[_electionId][msg.sender].isRegistered, "Voter already registered");
-        require(bytes(_cnicHash).length > 0, "CNIC hash cannot be empty");
-        require(_fingerprintHash != bytes32(0), "Fingerprint hash cannot be empty");
-        
-        voters[_electionId][msg.sender] = Voter({
-            cnicHash: _cnicHash,
-            fingerprintHash: _fingerprintHash,
-            hasVoted: false,
-            votedCandidateId: 0,
-            voteTimestamp: 0,
-            isRegistered: true
-        });
-        
-        usedCNICs[_electionId][_cnicHash] = true;
-        
-        emit VoterRegistered(_electionId, msg.sender, _cnicHash);
-    }
-    
+    // FIXED: Updated castVote function to match frontend parameters
     function castVote(
         uint256 _electionId,
         uint256 _candidateId,
-        bytes32 _fingerprintVerification
+        string memory _cnicHash,
+        string memory _biometricId
     ) external 
         nonReentrant 
         whenNotPaused 
         electionExists(_electionId) 
         electionActive(_electionId) 
     {
-        Voter storage voter = voters[_electionId][msg.sender];
-        require(voter.isRegistered, "Voter not registered");
-        require(!voter.hasVoted, "Already voted");
+        require(bytes(_cnicHash).length > 0, "CNIC hash cannot be empty");
+        require(bytes(_biometricId).length > 0, "Biometric ID cannot be empty");
+        require(!usedCNICs[_electionId][_cnicHash], "CNIC already used for this election");
+        require(!voters[_electionId][msg.sender].hasVoted, "Address already voted");
         require(candidates[_candidateId].isActive, "Candidate not active");
-        require(voter.fingerprintHash == _fingerprintVerification, "Fingerprint verification failed");
         
         // Verify candidate belongs to this election
         bool candidateInElection = false;
@@ -191,15 +168,65 @@ contract DecentralizedVotingSystem is AccessControl, ReentrancyGuard, Pausable {
         }
         require(candidateInElection, "Candidate not in this election");
         
-        // Cast vote
-        voter.hasVoted = true;
-        voter.votedCandidateId = _candidateId;
-        voter.voteTimestamp = block.timestamp;
+        // Record vote
+        voters[_electionId][msg.sender] = Voter({
+            cnicHash: _cnicHash,
+            biometricId: _biometricId,
+            hasVoted: true,
+            votedCandidateId: _candidateId,
+            voteTimestamp: block.timestamp,
+            voterAddress: msg.sender
+        });
         
+        // Mark CNIC as used for this election and map to address
+        usedCNICs[_electionId][_cnicHash] = true;
+        cnicToAddress[_electionId][_cnicHash] = msg.sender;
+        
+        // Update vote counts
         candidates[_candidateId].voteCount++;
         elections[_electionId].totalVotes++;
         
-        emit VoteCast(_electionId, msg.sender, _candidateId);
+        emit VoteCast(_electionId, msg.sender, _candidateId, _cnicHash);
+    }
+    
+    // NEW: Vote verification function
+    function getVoteByCAIC(
+        uint256 _electionId, 
+        string memory _cnicHash
+    ) external view electionExists(_electionId) returns (
+        bool hasVoted,
+        uint256 votedCandidateId,
+        string memory candidateName,
+        string memory partyName,
+        string memory symbol,
+        uint256 voteTimestamp,
+        address voterAddress
+    ) {
+        require(bytes(_cnicHash).length > 0, "CNIC hash cannot be empty");
+        
+        address voterAddr = cnicToAddress[_electionId][_cnicHash];
+        
+        if (voterAddr == address(0)) {
+            return (false, 0, "", "", "", 0, address(0));
+        }
+        
+        Voter memory voter = voters[_electionId][voterAddr];
+        
+        if (!voter.hasVoted) {
+            return (false, 0, "", "", "", 0, voterAddr);
+        }
+        
+        Candidate memory candidate = candidates[voter.votedCandidateId];
+        
+        return (
+            true,
+            voter.votedCandidateId,
+            candidate.name,
+            candidate.partyName,
+            candidate.symbol,
+            voter.voteTimestamp,
+            voterAddr
+        );
     }
     
     // View Functions
@@ -234,10 +261,10 @@ contract DecentralizedVotingSystem is AccessControl, ReentrancyGuard, Pausable {
         external 
         view 
         electionExists(_electionId) 
-        returns (bool isRegistered, bool hasVoted, uint256 votedCandidateId) 
+        returns (bool hasVoted, uint256 votedCandidateId) 
     {
         Voter memory voter = voters[_electionId][_voter];
-        return (voter.isRegistered, voter.hasVoted, voter.votedCandidateId);
+        return (voter.hasVoted, voter.votedCandidateId);
     }
     
     function getElectionResults(uint256 _electionId) 
