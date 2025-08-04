@@ -461,7 +461,8 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 const CandidateCard = (param)=>{
-    let { candidate, onVoteNow, canVote = false, showResults = false, totalVotes = 0 } = param;
+    let { candidate, onVoteNow, canVote = false, showResults = false, totalVotes = 0, allCandidates = [] // Add this prop to compare with other candidates
+     } = param;
     _s();
     const [imageError, setImageError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [imageLoading, setImageLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
@@ -531,7 +532,7 @@ const CandidateCard = (param)=>{
                     className: "absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-spin opacity-70"
                 }, void 0, false, {
                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                    lineNumber: 80,
+                    lineNumber: 81,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -541,7 +542,7 @@ const CandidateCard = (param)=>{
                             className: "absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent rounded-full"
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 85,
+                            lineNumber: 86,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -549,19 +550,19 @@ const CandidateCard = (param)=>{
                             children: candidate.name.charAt(0).toUpperCase()
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 87,
+                            lineNumber: 88,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                    lineNumber: 83,
+                    lineNumber: 84,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/CandidateUserCard.jsx",
-            lineNumber: 78,
+            lineNumber: 79,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0));
     // Compact IPFS Image Component
@@ -572,7 +573,7 @@ const CandidateCard = (param)=>{
                     className: "absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-full animate-pulse opacity-50"
                 }, void 0, false, {
                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                    lineNumber: 98,
+                    lineNumber: 99,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -582,7 +583,7 @@ const CandidateCard = (param)=>{
                             className: "absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent h-0.5 transition-transform duration-2000 ".concat(isHovered ? 'translate-y-full' : '-translate-y-full')
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 102,
+                            lineNumber: 103,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0)),
                         imageLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -593,17 +594,17 @@ const CandidateCard = (param)=>{
                                     className: "w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                    lineNumber: 109,
+                                    lineNumber: 110,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 108,
+                                lineNumber: 109,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 107,
+                            lineNumber: 108,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -617,7 +618,7 @@ const CandidateCard = (param)=>{
                             }
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 114,
+                            lineNumber: 115,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0)),
                         imageError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -626,31 +627,31 @@ const CandidateCard = (param)=>{
                                 className: "w-8 h-8 animate-pulse"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 127,
+                                lineNumber: 128,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 126,
+                            lineNumber: 127,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-transparent to-purple-400/10 mix-blend-overlay"
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 132,
+                            lineNumber: 133,
                             columnNumber: 9
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                    lineNumber: 100,
+                    lineNumber: 101,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/CandidateUserCard.jsx",
-            lineNumber: 96,
+            lineNumber: 97,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0));
     // Enhanced Symbol Component with better visibility
@@ -663,7 +664,7 @@ const CandidateCard = (param)=>{
                         className: "absolute inset-0 rounded-xl opacity-60 animate-pulse"
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 142,
+                        lineNumber: 143,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -675,12 +676,12 @@ const CandidateCard = (param)=>{
                                     className: "w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                    lineNumber: 146,
+                                    lineNumber: 147,
                                     columnNumber: 17
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 145,
+                                lineNumber: 146,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -694,7 +695,7 @@ const CandidateCard = (param)=>{
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 149,
+                                lineNumber: 150,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             symbolError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -703,19 +704,19 @@ const CandidateCard = (param)=>{
                                 children: "🏛️"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 160,
+                                lineNumber: 161,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 143,
+                        lineNumber: 144,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                lineNumber: 141,
+                lineNumber: 142,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0));
         } else {
@@ -726,7 +727,7 @@ const CandidateCard = (param)=>{
                         className: "absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl opacity-60 animate-pulse"
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 170,
+                        lineNumber: 171,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -737,23 +738,24 @@ const CandidateCard = (param)=>{
                             children: candidate.symbol || '🏛️'
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 172,
+                            lineNumber: 173,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 171,
+                        lineNumber: 172,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                lineNumber: 169,
+                lineNumber: 170,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0));
         }
     };
-    const isLeading = showResults && totalVotes > 0 && voteCount > 0 && votePercentage === Math.max(...arguments[5] || [], parseFloat(votePercentage));
+    // Fixed isLeading calculation
+    const isLeading = showResults && totalVotes > 0 && voteCount > 0 && allCandidates.length > 0 && voteCount === Math.max(...allCandidates.map((c)=>parseInt(c.voteCount || 0)));
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "relative group cursor-pointer transition-all duration-700 ".concat(isHovered ? 'scale-102' : 'scale-100'),
         onMouseEnter: ()=>setIsHovered(true),
@@ -763,7 +765,7 @@ const CandidateCard = (param)=>{
                 className: "absolute -inset-2 bg-gradient-to-r opacity-0 group-hover:opacity-30 rounded-2xl transition-all duration-1000 ".concat(isLeading ? 'from-yellow-400 via-orange-500 to-yellow-400' : 'from-purple-600 via-blue-500 to-cyan-400')
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                lineNumber: 193,
+                lineNumber: 196,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -775,12 +777,12 @@ const CandidateCard = (param)=>{
                             className: "h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-pulse"
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 209,
+                            lineNumber: 212,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 208,
+                        lineNumber: 211,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -793,12 +795,12 @@ const CandidateCard = (param)=>{
                             }
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 215,
+                            lineNumber: 218,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 214,
+                        lineNumber: 217,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -811,7 +813,7 @@ const CandidateCard = (param)=>{
                                         className: "w-3 h-3"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 225,
+                                        lineNumber: 228,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -819,13 +821,13 @@ const CandidateCard = (param)=>{
                                         children: "CHAMPION"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 226,
+                                        lineNumber: 229,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 224,
+                                lineNumber: 227,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -833,11 +835,11 @@ const CandidateCard = (param)=>{
                                 children: [
                                     hasValidImage ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IPFSImage, {}, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 233,
+                                        lineNumber: 236,
                                         columnNumber: 30
                                     }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AvatarFallback, {}, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 233,
+                                        lineNumber: 236,
                                         columnNumber: 46
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -848,7 +850,7 @@ const CandidateCard = (param)=>{
                                                 children: candidate.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 237,
+                                                lineNumber: 240,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -856,24 +858,24 @@ const CandidateCard = (param)=>{
                                                 children: candidate.partyName
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 240,
+                                                lineNumber: 243,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 236,
+                                        lineNumber: 239,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SymbolDisplay, {}, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 246,
+                                        lineNumber: 249,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 231,
+                                lineNumber: 234,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -892,12 +894,12 @@ const CandidateCard = (param)=>{
                                                             className: "w-4 h-4 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 255,
+                                                            lineNumber: 258,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                        lineNumber: 254,
+                                                        lineNumber: 257,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -907,7 +909,7 @@ const CandidateCard = (param)=>{
                                                                 children: "REGISTERED"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                lineNumber: 258,
+                                                                lineNumber: 261,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -915,29 +917,29 @@ const CandidateCard = (param)=>{
                                                                 children: candidateDate.toLocaleDateString()
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                lineNumber: 259,
+                                                                lineNumber: 262,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                        lineNumber: 257,
+                                                        lineNumber: 260,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 253,
+                                                lineNumber: 256,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 252,
+                                            lineNumber: 255,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 251,
+                                        lineNumber: 254,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -953,12 +955,12 @@ const CandidateCard = (param)=>{
                                                             className: "w-4 h-4 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 269,
+                                                            lineNumber: 272,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 271,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -968,7 +970,7 @@ const CandidateCard = (param)=>{
                                                                 children: "STATUS"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                lineNumber: 272,
+                                                                lineNumber: 275,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -978,42 +980,42 @@ const CandidateCard = (param)=>{
                                                                         className: "w-2 h-2 rounded-full ".concat(candidate.isActive ? 'bg-green-400 animate-pulse' : 'bg-red-400')
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                        lineNumber: 276,
+                                                                        lineNumber: 279,
                                                                         columnNumber: 23
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     candidate.isActive ? 'ACTIVE' : 'INACTIVE'
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                lineNumber: 273,
+                                                                lineNumber: 276,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                        lineNumber: 271,
+                                                        lineNumber: 274,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 267,
+                                                lineNumber: 270,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 266,
+                                            lineNumber: 269,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 265,
+                                        lineNumber: 268,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 250,
+                                lineNumber: 253,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             showResults && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1033,12 +1035,12 @@ const CandidateCard = (param)=>{
                                                                 className: "w-5 h-5 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                lineNumber: 296,
+                                                                lineNumber: 299,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 295,
+                                                            lineNumber: 298,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1048,7 +1050,7 @@ const CandidateCard = (param)=>{
                                                                     children: "LIVE RESULTS"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                    lineNumber: 299,
+                                                                    lineNumber: 302,
                                                                     columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1056,19 +1058,19 @@ const CandidateCard = (param)=>{
                                                                     children: "Real-time data"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                                    lineNumber: 302,
+                                                                    lineNumber: 305,
                                                                     columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 298,
+                                                            lineNumber: 301,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                    lineNumber: 294,
+                                                    lineNumber: 297,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1079,7 +1081,7 @@ const CandidateCard = (param)=>{
                                                             children: voteCount.toLocaleString()
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 306,
+                                                            lineNumber: 309,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1087,19 +1089,19 @@ const CandidateCard = (param)=>{
                                                             children: "VOTES"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 309,
+                                                            lineNumber: 312,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                    lineNumber: 305,
+                                                    lineNumber: 308,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 293,
+                                            lineNumber: 296,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1116,30 +1118,30 @@ const CandidateCard = (param)=>{
                                                             className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-pulse"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 325,
+                                                            lineNumber: 328,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transition-transform duration-3000 ".concat(isHovered ? 'translate-x-full' : '-translate-x-full')
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 326,
+                                                            lineNumber: 329,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                    lineNumber: 316,
+                                                    lineNumber: 319,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 315,
+                                                lineNumber: 318,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 314,
+                                            lineNumber: 317,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1152,7 +1154,7 @@ const CandidateCard = (param)=>{
                                                             className: "w-4 h-4 text-orange-500 animate-pulse"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 335,
+                                                            lineNumber: 338,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1163,7 +1165,7 @@ const CandidateCard = (param)=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 336,
+                                                            lineNumber: 339,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1171,13 +1173,13 @@ const CandidateCard = (param)=>{
                                                             children: "of total"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                            lineNumber: 339,
+                                                            lineNumber: 342,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                    lineNumber: 334,
+                                                    lineNumber: 337,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1188,24 +1190,24 @@ const CandidateCard = (param)=>{
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                    lineNumber: 341,
+                                                    lineNumber: 344,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 333,
+                                            lineNumber: 336,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                    lineNumber: 290,
+                                    lineNumber: 293,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 289,
+                                lineNumber: 292,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1219,7 +1221,7 @@ const CandidateCard = (param)=>{
                                                 className: "w-5 h-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 357,
+                                                lineNumber: 360,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1227,25 +1229,25 @@ const CandidateCard = (param)=>{
                                                 children: "CAST VOTE"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 358,
+                                                lineNumber: 361,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
                                                 className: "w-4 h-4 animate-pulse"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                                lineNumber: 359,
+                                                lineNumber: 362,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                        lineNumber: 356,
+                                        lineNumber: 359,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                    lineNumber: 352,
+                                    lineNumber: 355,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     disabled: true,
@@ -1255,7 +1257,7 @@ const CandidateCard = (param)=>{
                                             className: "w-5 h-5"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 367,
+                                            lineNumber: 370,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1263,24 +1265,24 @@ const CandidateCard = (param)=>{
                                             children: !candidate.isActive ? 'INACTIVE' : 'VOTING CLOSED'
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                            lineNumber: 368,
+                                            lineNumber: 371,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                    lineNumber: 363,
+                                    lineNumber: 366,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                                lineNumber: 350,
+                                lineNumber: 353,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 221,
+                        lineNumber: 224,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     canVote && candidate.isActive && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1289,38 +1291,38 @@ const CandidateCard = (param)=>{
                             className: "h-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-pulse"
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateUserCard.jsx",
-                            lineNumber: 379,
+                            lineNumber: 382,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateUserCard.jsx",
-                        lineNumber: 376,
+                        lineNumber: 379,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                lineNumber: 200,
+                lineNumber: 203,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/20 rounded-full animate-ping opacity-0 group-hover:opacity-100"
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                lineNumber: 385,
+                lineNumber: 388,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute -bottom-2 -left-2 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse opacity-0 group-hover:opacity-100"
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateUserCard.jsx",
-                lineNumber: 386,
+                lineNumber: 389,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/CandidateUserCard.jsx",
-        lineNumber: 185,
+        lineNumber: 188,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -1356,6 +1358,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-client] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-client] (ecmascript) <export default as CheckCircle2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/zap.js [app-client] (ecmascript) <export default as Zap>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-client] (ecmascript) <export default as Search>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye.js [app-client] (ecmascript) <export default as Eye>");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
@@ -1367,7 +1371,7 @@ const CandidateList = (param)=>{
     let { electionId, isElectionActive } = param;
     var _getLeadingCandidate;
     _s();
-    const { getElectionCandidates, getCandidateDetails, castVote, isLoading, account } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ContractContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useVoting"])();
+    const { getElectionCandidates, getCandidateDetails, castVote, getVoteByCNIC, isLoading, account } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ContractContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useVoting"])();
     const [candidates, setCandidates] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [selectedCandidate, setSelectedCandidate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [showResults, setShowResults] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -1382,6 +1386,12 @@ const CandidateList = (param)=>{
     const [biometricData, setBiometricData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [biometricStatus, setBiometricStatus] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [isBiometricLoading, setIsBiometricLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Vote verification states
+    const [showVerificationModal, setShowVerificationModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [verificationCnic, setVerificationCnic] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [verificationResult, setVerificationResult] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [verificationLoading, setVerificationLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [verificationError, setVerificationError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     // Fetch candidates from contract
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CandidateList.useEffect": ()=>{
@@ -1415,6 +1425,17 @@ const CandidateList = (param)=>{
         getElectionCandidates,
         getCandidateDetails
     ]);
+    // Hash CNIC function (simple hash for demo - use proper hashing in production)
+    const hashCNIC = (cnic)=>{
+        // Simple hash function - replace with proper crypto hash in production
+        let hash = 0;
+        for(let i = 0; i < cnic.length; i++){
+            const char = cnic.charCodeAt(i);
+            hash = (hash << 5) - hash + char;
+            hash = hash & hash; // Convert to 32-bit integer
+        }
+        return Math.abs(hash).toString();
+    };
     // CNIC verification functions
     const handleVoteNow = (candidate)=>{
         setSelectedCandidate(candidate);
@@ -1437,43 +1458,33 @@ const CandidateList = (param)=>{
         try {
             setVotingInProgress(true);
             setCnicError('');
+            console.log('🔍 Verifying CNIC:', cnicNumber);
             // Verify CNIC with backend
             const response = await fetch("/api/registration/".concat(cnicNumber));
             const result = await response.json();
             if (!response.ok) {
                 throw new Error(result.message || 'CNIC verification failed');
             }
+            console.log('✅ CNIC verification response:', result);
             if (!result.data.isVerified) {
                 throw new Error('CNIC is not verified. Please complete your NADRA registration first.');
             }
+            // Check if biometric data exists
+            if (!result.data.biometricData || !result.data.biometricData.id) {
+                throw new Error('No biometric data found. Please complete your NADRA registration with fingerprint enrollment first.');
+            }
+            // Store the complete registration data including biometric info
             setUserRegistration(result.data);
             setVerificationStep('fingerprint');
-            setBiometricStatus('✅ CNIC verified! Now register your fingerprint to proceed.');
+            setBiometricStatus("✅ CNIC verified! Found biometric registration with ID: ".concat(result.data.biometricData.id.substring(0, 20), "..."));
+            console.log('🎉 CNIC verification successful, proceeding to biometric authentication');
         } catch (error) {
-            console.error('CNIC verification error:', error);
+            console.error('❌ CNIC verification error:', error);
             setCnicError(error.message);
+            setUserRegistration(null);
         } finally{
             setVotingInProgress(false);
         }
-    };
-    // Biometric helper functions
-    const generateSecureChallenge = ()=>{
-        const array = new Uint8Array(32);
-        crypto.getRandomValues(array);
-        return array;
-    };
-    const generateUserId = ()=>{
-        const array = new Uint8Array(16);
-        crypto.getRandomValues(array);
-        return array;
-    };
-    const arrayBufferToBase64 = (buffer)=>{
-        const bytes = new Uint8Array(buffer);
-        let binary = '';
-        for(let i = 0; i < bytes.byteLength; i++){
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return btoa(binary);
     };
     const handleBiometricVerification = async ()=>{
         try {
@@ -1484,77 +1495,89 @@ const CandidateList = (param)=>{
             if (!available) {
                 throw new Error('No biometric authenticator detected on this device');
             }
-            setIsBiometricLoading(true);
-            setBiometricStatus('🔐 Place your finger on the biometric sensor...');
-            const userId = generateUserId();
-            const challenge = generateSecureChallenge();
-            const registrationOptions = {
-                challenge: challenge,
-                rp: {
-                    name: "Voting System",
-                    id: window.location.hostname || "localhost"
-                },
-                user: {
-                    id: userId,
-                    name: "".concat(userRegistration.firstName, ".").concat(userRegistration.lastName, "@voting.gov.pk"),
-                    displayName: "".concat(userRegistration.firstName, " ").concat(userRegistration.lastName)
-                },
-                pubKeyCredParams: [
-                    {
-                        alg: -7,
-                        type: "public-key"
-                    },
-                    {
-                        alg: -35,
-                        type: "public-key"
-                    },
-                    {
-                        alg: -36,
-                        type: "public-key"
-                    },
-                    {
-                        alg: -257,
-                        type: "public-key"
-                    }
-                ],
-                authenticatorSelection: {
-                    authenticatorAttachment: "platform",
-                    userVerification: "required",
-                    requireResidentKey: true,
-                    residentKey: "required"
-                },
-                timeout: 60000,
-                attestation: "direct",
-                excludeCredentials: []
-            };
-            const credential = await navigator.credentials.create({
-                publicKey: registrationOptions
-            });
-            if (!credential) {
-                throw new Error('No credential returned from biometric registration');
+            if (!userRegistration || !userRegistration.biometricData || !userRegistration.biometricData.id) {
+                throw new Error('Missing biometric registration data. Please verify your CNIC first.');
             }
-            const credentialInfo = {
-                id: credential.id,
-                rawId: arrayBufferToBase64(credential.rawId),
-                type: credential.type,
-                challenge: arrayBufferToBase64(challenge),
-                userId: arrayBufferToBase64(userId),
-                timestamp: new Date().toISOString(),
-                cnicNumber: cnicNumber
+            setIsBiometricLoading(true);
+            setBiometricStatus('🔐 Authenticating with your registered fingerprint...');
+            console.log('🔍 Starting biometric authentication...');
+            // Generate challenge for authentication
+            const challenge = generateSecureChallenge();
+            // Use the registered credential ID from the database
+            const allowCredentials = [];
+            try {
+                const credentialId = userRegistration.biometricData.id;
+                console.log('🆔 Using credential ID for authentication:', credentialId);
+                // Convert the credential ID to ArrayBuffer
+                const credentialIdBuffer = base64ToArrayBuffer(credentialId);
+                allowCredentials.push({
+                    id: credentialIdBuffer,
+                    type: "public-key",
+                    transports: [
+                        "internal"
+                    ] // Platform authenticator
+                });
+            } catch (conversionError) {
+                console.error('❌ Error converting credential ID:', conversionError);
+                throw new Error('Invalid credential ID format from registration data');
+            }
+            // Authentication options
+            const authenticationOptions = {
+                challenge: challenge,
+                timeout: 60000,
+                userVerification: "required",
+                allowCredentials: allowCredentials
             };
-            setBiometricData(credentialInfo);
-            setBiometricStatus('✅ Fingerprint verified successfully!');
+            console.log('🚀 Calling navigator.credentials.get...');
+            // Perform authentication
+            const assertion = await navigator.credentials.get({
+                publicKey: authenticationOptions
+            });
+            if (!assertion) {
+                throw new Error('No assertion returned from biometric authentication');
+            }
+            console.log('✅ Authentication successful!');
+            // Verify that the credential ID matches the registered one
+            if (assertion.id !== userRegistration.biometricData.id) {
+                console.error('❌ Credential ID mismatch');
+                throw new Error('Credential ID mismatch - this fingerprint does not match your registered biometric data');
+            }
+            // Create authentication data for backend verification
+            const authenticationData = {
+                id: assertion.id,
+                rawId: arrayBufferToBase64(assertion.rawId),
+                type: assertion.type,
+                challenge: arrayBufferToBase64(challenge),
+                timestamp: new Date().toISOString(),
+                cnicNumber: cnicNumber,
+                authenticatorData: arrayBufferToBase64(assertion.response.authenticatorData),
+                signature: arrayBufferToBase64(assertion.response.signature),
+                userHandle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null,
+                clientDataJSON: arrayBufferToBase64(assertion.response.clientDataJSON)
+            };
+            setBiometricData(authenticationData);
+            setBiometricStatus('✅ Fingerprint authenticated successfully!');
             setVerificationStep('verifying');
             // Proceed with vote casting
-            await castVoteWithVerification(credentialInfo);
+            await castVoteWithVerification(authenticationData);
         } catch (error) {
-            console.error('Biometric verification failed:', error);
-            setBiometricStatus('❌ Fingerprint verification failed');
-            let errorMessage = '🚫 FINGERPRINT VERIFICATION FAILED\n\n';
+            console.error('❌ Biometric authentication failed:', error);
+            setBiometricStatus('❌ Fingerprint authentication failed');
+            let errorMessage = '🚫 FINGERPRINT AUTHENTICATION FAILED\n\n';
             if (error.name === 'NotAllowedError') {
-                errorMessage += '❌ Verification cancelled or failed\n\n🔧 Please try again and complete the biometric prompt';
+                errorMessage += '❌ Authentication cancelled or failed\n\n🔧 Please try again and complete the biometric prompt';
             } else if (error.name === 'SecurityError') {
                 errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
+            } else if (error.name === 'InvalidStateError') {
+                errorMessage += '❌ No registered fingerprint found\n\n🔧 Please complete NADRA registration first';
+            } else if (error.name === 'NotSupportedError') {
+                errorMessage += '❌ This authenticator does not support the requested operation\n\n🔧 Try using the fingerprint sensor you used during registration';
+            } else if (error.message.includes('Credential ID mismatch')) {
+                errorMessage += '❌ This fingerprint does not match your registered biometric data\n\n🔧 Please use the same finger you registered with NADRA';
+            } else if (error.message.includes('Missing biometric registration data')) {
+                errorMessage += '❌ No biometric registration found\n\n🔧 Please verify your CNIC first';
+            } else if (error.message.includes('Invalid credential ID format')) {
+                errorMessage += '❌ Corrupted biometric registration data\n\n🔧 Please contact support or re-register';
             } else {
                 errorMessage += "❌ Error: ".concat(error.message || 'Unknown biometric error');
             }
@@ -1563,6 +1586,41 @@ const CandidateList = (param)=>{
             setIsBiometricLoading(false);
         }
     };
+    // Helper functions
+    const base64ToArrayBuffer = (base64)=>{
+        try {
+            let base64String = base64;
+            if (base64String.includes('-') || base64String.includes('_')) {
+                base64String = base64String.replace(/-/g, '+').replace(/_/g, '/');
+            }
+            while(base64String.length % 4){
+                base64String += '=';
+            }
+            const binaryString = atob(base64String);
+            const bytes = new Uint8Array(binaryString.length);
+            for(let i = 0; i < binaryString.length; i++){
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        } catch (error) {
+            console.error('Error converting base64 to ArrayBuffer:', error);
+            throw new Error('Invalid base64 format');
+        }
+    };
+    const arrayBufferToBase64 = (buffer)=>{
+        const bytes = new Uint8Array(buffer);
+        let binary = '';
+        for(let i = 0; i < bytes.byteLength; i++){
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+    };
+    const generateSecureChallenge = ()=>{
+        const array = new Uint8Array(32);
+        crypto.getRandomValues(array);
+        return array;
+    };
+    // FIXED: Updated vote casting function to match contract parameters
     const castVoteWithVerification = async (biometricCredential)=>{
         try {
             setVotingInProgress(true);
@@ -1585,10 +1643,16 @@ const CandidateList = (param)=>{
                 throw new Error(verificationResult.message || 'Biometric verification failed');
             }
             setBiometricStatus('✅ Biometric verified! Casting vote on blockchain...');
-            // Use the verification hash from backend for blockchain transaction
-            const fingerprintVerification = verificationResult.data.verificationHash;
-            // Cast vote directly to smart contract
-            const voteReceipt = await castVote(electionId, selectedCandidate.candidateId, fingerprintVerification);
+            // FIXED: Cast vote with correct parameters matching the smart contract
+            const cnicHash = hashCNIC(cnicNumber);
+            const biometricId = biometricCredential.id; // Use the biometric credential ID
+            console.log('Casting vote with parameters:', {
+                electionId,
+                candidateId: selectedCandidate.candidateId,
+                cnicHash,
+                biometricId: biometricId.substring(0, 20) + '...'
+            });
+            const voteReceipt = await castVote(electionId, selectedCandidate.candidateId, cnicHash, biometricId);
             setBiometricStatus('🎉 Vote successfully recorded on blockchain!');
             // Refresh candidates to get updated vote counts from blockchain
             const candidateIds = await getElectionCandidates(electionId);
@@ -1612,12 +1676,12 @@ const CandidateList = (param)=>{
             let errorMessage = '❌ VOTE CASTING FAILED\n\n';
             if (error.message.includes('already voted')) {
                 errorMessage += '🚫 You have already voted in this election.\n\n💡 Each voter can only vote once per election.';
+            } else if (error.message.includes('CNIC already used')) {
+                errorMessage += '🚫 This CNIC has already been used to vote in this election.\n\n💡 Each CNIC can only vote once per election.';
             } else if (error.message.includes('not verified')) {
                 errorMessage += '🚫 Your registration is not verified.\n\n💡 Please complete your NADRA verification first.';
             } else if (error.message.includes('Rate limit')) {
                 errorMessage += '⏰ Too many verification attempts.\n\n🔄 Please wait a few minutes before trying again.';
-            } else if (error.message.includes('Biometric data is too old')) {
-                errorMessage += '⏱️ Biometric data expired.\n\n🔄 Please re-authenticate your fingerprint.';
             } else if (error.message.includes('execution reverted')) {
                 errorMessage += '🚫 Smart contract rejected the vote.\n\n💡 You may have already voted or the election may be inactive.';
             } else {
@@ -1626,6 +1690,37 @@ const CandidateList = (param)=>{
             alert(errorMessage);
         } finally{
             setVotingInProgress(false);
+        }
+    };
+    // NEW: Vote verification function
+    const handleVerifyVote = ()=>{
+        setShowVerificationModal(true);
+        setVerificationCnic('');
+        setVerificationResult(null);
+        setVerificationError('');
+    };
+    const handleVoteVerification = async ()=>{
+        if (!verificationCnic || verificationCnic.length !== 13) {
+            setVerificationError('CNIC must be exactly 13 digits');
+            return;
+        }
+        try {
+            setVerificationLoading(true);
+            setVerificationError('');
+            const cnicHash = hashCNIC(verificationCnic);
+            const result = await getVoteByCNIC(electionId, cnicHash);
+            if (!result.hasVoted) {
+                setVerificationError('No vote found for this CNIC in this election');
+                setVerificationResult(null);
+                return;
+            }
+            setVerificationResult(result);
+        } catch (error) {
+            console.error('Error verifying vote:', error);
+            setVerificationError('Error verifying vote: ' + error.message);
+            setVerificationResult(null);
+        } finally{
+            setVerificationLoading(false);
         }
     };
     const resetVerificationState = ()=>{
@@ -1657,20 +1752,20 @@ const CandidateList = (param)=>{
                                 className: "w-16 h-16 text-purple-400 mx-auto animate-spin"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 333,
+                                lineNumber: 463,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute inset-0 w-16 h-16 border-4 border-purple-400/20 rounded-full mx-auto animate-ping"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 334,
+                                lineNumber: 464,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 332,
+                        lineNumber: 462,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1678,7 +1773,7 @@ const CandidateList = (param)=>{
                         children: "Loading Candidates..."
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 336,
+                        lineNumber: 466,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1686,18 +1781,18 @@ const CandidateList = (param)=>{
                         children: "Fetching candidate information from the blockchain network."
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 339,
+                        lineNumber: 469,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 331,
+                lineNumber: 461,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         }, void 0, false, {
             fileName: "[project]/src/components/CandidateList.jsx",
-            lineNumber: 330,
+            lineNumber: 460,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0));
     }
@@ -1718,12 +1813,12 @@ const CandidateList = (param)=>{
                                         className: "w-8 h-8 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 354,
+                                        lineNumber: 484,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 353,
+                                    lineNumber: 483,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1731,7 +1826,7 @@ const CandidateList = (param)=>{
                                     children: candidates.length
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 356,
+                                    lineNumber: 486,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1739,13 +1834,13 @@ const CandidateList = (param)=>{
                                     children: "Candidates"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 357,
+                                    lineNumber: 487,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 352,
+                            lineNumber: 482,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1757,12 +1852,12 @@ const CandidateList = (param)=>{
                                         className: "w-8 h-8 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 362,
+                                        lineNumber: 492,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 361,
+                                    lineNumber: 491,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1770,7 +1865,7 @@ const CandidateList = (param)=>{
                                     children: getTotalVotes()
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 364,
+                                    lineNumber: 494,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1778,13 +1873,13 @@ const CandidateList = (param)=>{
                                     children: "Total Votes"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 365,
+                                    lineNumber: 495,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 360,
+                            lineNumber: 490,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1796,12 +1891,12 @@ const CandidateList = (param)=>{
                                         className: "w-8 h-8 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 370,
+                                        lineNumber: 500,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 369,
+                                    lineNumber: 499,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1809,7 +1904,7 @@ const CandidateList = (param)=>{
                                     children: ((_getLeadingCandidate = getLeadingCandidate()) === null || _getLeadingCandidate === void 0 ? void 0 : _getLeadingCandidate.name) || 'No Votes Yet'
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 372,
+                                    lineNumber: 502,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1817,28 +1912,28 @@ const CandidateList = (param)=>{
                                     children: "Leading"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 375,
+                                    lineNumber: 505,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 368,
+                            lineNumber: 498,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/CandidateList.jsx",
-                    lineNumber: 351,
+                    lineNumber: 481,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 350,
+                lineNumber: 480,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex justify-between items-center",
+                className: "flex justify-between items-center flex-wrap gap-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                         className: "text-3xl font-bold text-white flex items-center gap-3",
@@ -1849,43 +1944,70 @@ const CandidateList = (param)=>{
                                     className: "w-5 h-5 text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 384,
+                                    lineNumber: 514,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 383,
+                                lineNumber: 513,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             "Candidates"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 382,
+                        lineNumber: 512,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>setShowResults(!showResults),
-                        className: "flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg border border-white/20 hover:scale-105",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex gap-3",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
-                                className: "w-5 h-5"
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: handleVerifyVote,
+                                className: "flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg hover:scale-105 shadow-lg",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
+                                        className: "w-5 h-5"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                        lineNumber: 525,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    "Verify Vote"
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 392,
+                                lineNumber: 521,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
-                            showResults ? 'Hide Results' : 'Show Results'
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setShowResults(!showResults),
+                                className: "flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 backdrop-blur-lg border border-white/20 hover:scale-105",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
+                                        className: "w-5 h-5"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                        lineNumber: 534,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    showResults ? 'Hide Results' : 'Show Results'
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/CandidateList.jsx",
+                                lineNumber: 530,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 388,
+                        lineNumber: 519,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 381,
+                lineNumber: 511,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             candidates.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1897,12 +2019,12 @@ const CandidateList = (param)=>{
                             className: "w-10 h-10 text-white"
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 401,
+                            lineNumber: 544,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 400,
+                        lineNumber: 543,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1910,7 +2032,7 @@ const CandidateList = (param)=>{
                         children: "No Candidates Found"
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 403,
+                        lineNumber: 546,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1918,13 +2040,13 @@ const CandidateList = (param)=>{
                         children: "No candidates have been added to this election yet."
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 406,
+                        lineNumber: 549,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 399,
+                lineNumber: 542,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
@@ -1936,12 +2058,12 @@ const CandidateList = (param)=>{
                         totalVotes: getTotalVotes()
                     }, candidate.candidateId, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 413,
+                        lineNumber: 556,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)))
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 411,
+                lineNumber: 554,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             showCnicModal && selectedCandidate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1963,12 +2085,12 @@ const CandidateList = (param)=>{
                                                     className: "w-6 h-6 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 434,
+                                                    lineNumber: 577,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 433,
+                                                lineNumber: 576,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1976,13 +2098,13 @@ const CandidateList = (param)=>{
                                                 children: "Secure Voter Verification"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 436,
+                                                lineNumber: 579,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 432,
+                                        lineNumber: 575,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1996,23 +2118,23 @@ const CandidateList = (param)=>{
                                             className: "w-6 h-6"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 448,
+                                            lineNumber: 591,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 440,
+                                        lineNumber: 583,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 431,
+                                lineNumber: 574,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 430,
+                            lineNumber: 573,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2021,57 +2143,83 @@ const CandidateList = (param)=>{
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "bg-gradient-to-r from-slate-700 to-slate-600 rounded-xl p-4 mb-6 border border-slate-500",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-4",
+                                        className: "flex items-center gap-4 justify-between",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "w-14 h-14 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg",
-                                                children: selectedCandidate.name.charAt(0)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 457,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center gap-[10px]",
                                                 children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                        className: "font-bold text-white text-lg",
-                                                        children: selectedCandidate.name
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "w-[100px] flex gap-[10px] h-[100px] bg-gradient-to-br overflow-hidden from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                            src: "https://gateway.pinata.cloud/ipfs/" + (selectedCandidate === null || selectedCandidate === void 0 ? void 0 : selectedCandidate.imageHash),
+                                                            alt: "",
+                                                            width: "200px",
+                                                            height: "200px"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/CandidateList.jsx",
+                                                            lineNumber: 602,
+                                                            columnNumber: 20
+                                                        }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 461,
-                                                        columnNumber: 21
+                                                        lineNumber: 601,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-slate-300",
-                                                        children: selectedCandidate.partyName
-                                                    }, void 0, false, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                className: "font-bold text-white text-lg",
+                                                                children: selectedCandidate.name
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 605,
+                                                                columnNumber: 21
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-slate-300",
+                                                                children: selectedCandidate.partyName
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 606,
+                                                                columnNumber: 21
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 462,
-                                                        columnNumber: 21
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-2xl",
-                                                        children: selectedCandidate.symbol
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 463,
-                                                        columnNumber: 21
+                                                        lineNumber: 604,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 460,
+                                                lineNumber: 600,
+                                                columnNumber: 20
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                    src: "https://gateway.pinata.cloud/ipfs/" + (selectedCandidate === null || selectedCandidate === void 0 ? void 0 : selectedCandidate.symbol),
+                                                    alt: "",
+                                                    width: "50px",
+                                                    height: "50px"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/CandidateList.jsx",
+                                                    lineNumber: 610,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 609,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 456,
+                                        lineNumber: 599,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 455,
+                                    lineNumber: 598,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2088,12 +2236,12 @@ const CandidateList = (param)=>{
                                                                 className: "w-5 h-5 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 475,
+                                                                lineNumber: 622,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 474,
+                                                            lineNumber: 621,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2103,7 +2251,7 @@ const CandidateList = (param)=>{
                                                                     children: "Step 1: CNIC Verification"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 478,
+                                                                    lineNumber: 625,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2111,19 +2259,19 @@ const CandidateList = (param)=>{
                                                                     children: "Verify your voter registration"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 479,
+                                                                    lineNumber: 626,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 477,
+                                                            lineNumber: 624,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 473,
+                                                    lineNumber: 620,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2141,7 +2289,7 @@ const CandidateList = (param)=>{
                                                             disabled: votingInProgress
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 484,
+                                                            lineNumber: 631,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         cnicError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2151,14 +2299,14 @@ const CandidateList = (param)=>{
                                                                     className: "w-4 h-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 502,
+                                                                    lineNumber: 649,
                                                                     columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 cnicError
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 501,
+                                                            lineNumber: 648,
                                                             columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2171,7 +2319,7 @@ const CandidateList = (param)=>{
                                                                         className: "w-5 h-5 animate-spin"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 514,
+                                                                        lineNumber: 661,
                                                                         columnNumber: 29
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     "Verifying CNIC..."
@@ -2182,7 +2330,7 @@ const CandidateList = (param)=>{
                                                                         className: "w-5 h-5"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 519,
+                                                                        lineNumber: 666,
                                                                         columnNumber: 29
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     "Verify CNIC"
@@ -2190,19 +2338,19 @@ const CandidateList = (param)=>{
                                                             }, void 0, true)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 507,
+                                                            lineNumber: 654,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 483,
+                                                    lineNumber: 630,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 472,
+                                            lineNumber: 619,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         verificationStep === 'fingerprint' && userRegistration && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2216,12 +2364,12 @@ const CandidateList = (param)=>{
                                                                 className: "w-5 h-5 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 533,
+                                                                lineNumber: 680,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 532,
+                                                            lineNumber: 679,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2231,7 +2379,7 @@ const CandidateList = (param)=>{
                                                                     children: "Step 2: Biometric Verification"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 536,
+                                                                    lineNumber: 683,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2239,19 +2387,19 @@ const CandidateList = (param)=>{
                                                                     children: "Authenticate with your fingerprint"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 537,
+                                                                    lineNumber: 684,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 535,
+                                                            lineNumber: 682,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 531,
+                                                    lineNumber: 678,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2266,7 +2414,7 @@ const CandidateList = (param)=>{
                                                                         className: "w-5 h-5 text-emerald-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 545,
+                                                                        lineNumber: 692,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2274,13 +2422,13 @@ const CandidateList = (param)=>{
                                                                         children: "CNIC Verified Successfully"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 546,
+                                                                        lineNumber: 693,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0))
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 544,
+                                                                lineNumber: 691,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2293,7 +2441,7 @@ const CandidateList = (param)=>{
                                                                                 children: "Name:"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                                lineNumber: 549,
+                                                                                lineNumber: 696,
                                                                                 columnNumber: 30
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             " ",
@@ -2303,7 +2451,7 @@ const CandidateList = (param)=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 549,
+                                                                        lineNumber: 696,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2313,7 +2461,7 @@ const CandidateList = (param)=>{
                                                                                 children: "Province:"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                                lineNumber: 550,
+                                                                                lineNumber: 697,
                                                                                 columnNumber: 30
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             " ",
@@ -2321,7 +2469,7 @@ const CandidateList = (param)=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 550,
+                                                                        lineNumber: 697,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2331,7 +2479,7 @@ const CandidateList = (param)=>{
                                                                                 children: "Constituency:"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                                lineNumber: 551,
+                                                                                lineNumber: 698,
                                                                                 columnNumber: 30
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             " ",
@@ -2339,24 +2487,24 @@ const CandidateList = (param)=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 551,
+                                                                        lineNumber: 698,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0))
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 548,
+                                                                lineNumber: 695,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 543,
+                                                        lineNumber: 690,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 542,
+                                                    lineNumber: 689,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2374,33 +2522,33 @@ const CandidateList = (param)=>{
                                                                             className: "w-16 h-16 text-white z-10"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                                            lineNumber: 566,
+                                                                            lineNumber: 713,
                                                                             columnNumber: 27
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         isBiometricLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                                            lineNumber: 568,
+                                                                            lineNumber: 715,
                                                                             columnNumber: 29
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 565,
+                                                                    lineNumber: 712,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                     className: "absolute inset-0 w-32 h-32 border-4 border-emerald-400/30 rounded-full mx-auto animate-ping"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 571,
+                                                                    lineNumber: 718,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 558,
+                                                            lineNumber: 705,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2408,13 +2556,13 @@ const CandidateList = (param)=>{
                                                             children: isBiometricLoading ? 'Scanning fingerprint...' : 'Tap to authenticate'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 573,
+                                                            lineNumber: 720,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 557,
+                                                    lineNumber: 704,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 biometricStatus && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2422,13 +2570,13 @@ const CandidateList = (param)=>{
                                                     children: biometricStatus
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 580,
+                                                    lineNumber: 727,
                                                     columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 530,
+                                            lineNumber: 677,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         verificationStep === 'verifying' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2443,25 +2591,25 @@ const CandidateList = (param)=>{
                                                                 className: "w-10 h-10 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 598,
+                                                                lineNumber: 745,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 597,
+                                                            lineNumber: 744,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "absolute inset-0 w-20 h-20 border-4 border-purple-400/30 rounded-full mx-auto animate-spin"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 600,
+                                                            lineNumber: 747,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 596,
+                                                    lineNumber: 743,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -2469,7 +2617,7 @@ const CandidateList = (param)=>{
                                                     children: "Processing Your Vote"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 602,
+                                                    lineNumber: 749,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2477,7 +2625,7 @@ const CandidateList = (param)=>{
                                                     children: "Your vote is being securely recorded on the blockchain..."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 603,
+                                                    lineNumber: 750,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 biometricStatus && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2487,51 +2635,463 @@ const CandidateList = (param)=>{
                                                         children: biometricStatus
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 608,
+                                                        lineNumber: 755,
                                                         columnNumber: 25
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 607,
+                                                    lineNumber: 754,
                                                     columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 595,
+                                            lineNumber: 742,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 469,
+                                    lineNumber: 616,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 453,
+                            lineNumber: 596,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/CandidateList.jsx",
-                    lineNumber: 428,
+                    lineNumber: 571,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 427,
+                lineNumber: 570,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)),
+            showVerificationModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full border border-slate-600 overflow-hidden",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-gradient-to-r from-cyan-600 to-blue-600 p-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex justify-between items-center",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center gap-3",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
+                                                    className: "w-6 h-6 text-white"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/CandidateList.jsx",
+                                                    lineNumber: 775,
+                                                    columnNumber: 21
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 774,
+                                                columnNumber: 19
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                className: "text-xl font-bold text-white",
+                                                children: "Verify Your Vote"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 777,
+                                                columnNumber: 19
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                        lineNumber: 773,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>{
+                                            setShowVerificationModal(false);
+                                            setVerificationCnic('');
+                                            setVerificationResult(null);
+                                            setVerificationError('');
+                                        },
+                                        className: "text-white/70 hover:text-white transition-colors p-1 hover:bg-white/10 rounded-lg",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
+                                            className: "w-6 h-6"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/CandidateList.jsx",
+                                            lineNumber: 790,
+                                            columnNumber: 19
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                        lineNumber: 781,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/CandidateList.jsx",
+                                lineNumber: 772,
+                                columnNumber: 15
+                            }, ("TURBOPACK compile-time value", void 0))
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/CandidateList.jsx",
+                            lineNumber: 771,
+                            columnNumber: 13
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "p-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "space-y-6",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center gap-3 mb-4",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
+                                                            className: "w-5 h-5 text-white"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/CandidateList.jsx",
+                                                            lineNumber: 801,
+                                                            columnNumber: 23
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 800,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                className: "font-semibold text-white text-lg",
+                                                                children: "Enter Your CNIC"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 804,
+                                                                columnNumber: 23
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-slate-400 text-sm",
+                                                                children: "Check which candidate you voted for"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 805,
+                                                                columnNumber: 23
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 803,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 799,
+                                                columnNumber: 19
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-4",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "text",
+                                                        value: verificationCnic,
+                                                        onChange: (e)=>{
+                                                            setVerificationCnic(formatCNIC(e.target.value));
+                                                            setVerificationError('');
+                                                        },
+                                                        placeholder: "Enter your 13-digit CNIC number",
+                                                        className: "w-full px-4 py-3 bg-slate-700 border-2 rounded-xl text-white placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 ".concat(verificationError ? 'border-red-400 bg-red-900/20' : 'border-slate-600 focus:border-cyan-500'),
+                                                        disabled: verificationLoading
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 810,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    verificationError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex items-center gap-2 text-red-400 text-sm bg-red-900/20 p-3 rounded-lg border border-red-500/30",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
+                                                                className: "w-4 h-4"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 828,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            verificationError
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 827,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        onClick: handleVoteVerification,
+                                                        disabled: verificationLoading || !verificationCnic || verificationCnic.length !== 13,
+                                                        className: "w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-105 disabled:transform-none shadow-lg",
+                                                        children: verificationLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                                    className: "w-5 h-5 animate-spin"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/CandidateList.jsx",
+                                                                    lineNumber: 840,
+                                                                    columnNumber: 27
+                                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                                "Checking Vote..."
+                                                            ]
+                                                        }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
+                                                                    className: "w-5 h-5"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/CandidateList.jsx",
+                                                                    lineNumber: 845,
+                                                                    columnNumber: 27
+                                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                                "Verify Vote"
+                                                            ]
+                                                        }, void 0, true)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 833,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 809,
+                                                columnNumber: 19
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                        lineNumber: 798,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    verificationResult && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "bg-gradient-to-r from-emerald-900/30 to-green-900/30 border border-emerald-500/30 rounded-xl p-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "text-center mb-4",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-3",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
+                                                            className: "w-8 h-8 text-white"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/CandidateList.jsx",
+                                                            lineNumber: 858,
+                                                            columnNumber: 25
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 857,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                        className: "font-bold text-white text-lg mb-2",
+                                                        children: "Vote Found!"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 860,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 856,
+                                                columnNumber: 21
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-3 text-emerald-200",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex justify-between",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-slate-300",
+                                                                children: "Candidate:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 865,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "font-medium",
+                                                                children: verificationResult.candidateName
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 866,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 864,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex justify-between",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-slate-300",
+                                                                children: "Party:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 869,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "font-medium",
+                                                                children: verificationResult.partyName
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 870,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 868,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex justify-between",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-slate-300",
+                                                                children: "Symbol:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 873,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                    src: "https://gateway.pinata.cloud/ipfs/" + (verificationResult === null || verificationResult === void 0 ? void 0 : verificationResult.symbol),
+                                                                    alt: "",
+                                                                    width: "50px",
+                                                                    height: "50px"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/CandidateList.jsx",
+                                                                    lineNumber: 875,
+                                                                    columnNumber: 19
+                                                                }, ("TURBOPACK compile-time value", void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 874,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 872,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex justify-between",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-slate-300",
+                                                                children: "Vote Time:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 882,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "font-medium",
+                                                                children: new Date(parseInt(verificationResult.voteTimestamp) * 1000).toLocaleString()
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 883,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 881,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex justify-between",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-slate-300",
+                                                                children: "Wallet Address:"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 888,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "font-mono text-xs",
+                                                                children: [
+                                                                    verificationResult.voterAddress.substring(0, 6),
+                                                                    "..."
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                                lineNumber: 889,
+                                                                columnNumber: 25
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                                        lineNumber: 887,
+                                                        columnNumber: 23
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/CandidateList.jsx",
+                                                lineNumber: 863,
+                                                columnNumber: 21
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/CandidateList.jsx",
+                                        lineNumber: 855,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/CandidateList.jsx",
+                                lineNumber: 796,
+                                columnNumber: 15
+                            }, ("TURBOPACK compile-time value", void 0))
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/CandidateList.jsx",
+                            lineNumber: 795,
+                            columnNumber: 13
+                        }, ("TURBOPACK compile-time value", void 0))
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/CandidateList.jsx",
+                    lineNumber: 769,
+                    columnNumber: 11
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
+                fileName: "[project]/src/components/CandidateList.jsx",
+                lineNumber: 768,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/CandidateList.jsx",
-        lineNumber: 348,
+        lineNumber: 478,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(CandidateList, "Co5OcyQ+oECj+j/o4k3AhsKhhos=", false, function() {
+_s(CandidateList, "yv3v8PXsIFDcJUVMIpg5z3rfTNg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ContractContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useVoting"]
     ];
@@ -2985,9 +3545,15 @@ const UserPortal = ()=>{
                 className: "relative z-10 container mx-auto px-4 py-8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-6 mb-8 border border-white/20",
+                        className: "bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl flex items-center justify-evenly h-[300px] mb-8 ",
+                        style: {
+                            background: "url(/01.gif)",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat"
+                        },
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex items-center justify-between",
+                            className: "flex items-center justify-between w-full p-[30px] bg-[#00000094] h-full rounded-xl border border-white/20",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [

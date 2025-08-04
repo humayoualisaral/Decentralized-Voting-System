@@ -1,694 +1,372 @@
-'use client'
-import { useState, useEffect } from "react";
-import { User, MapPin, Hash, Calendar } from "lucide-react";
+'use client';
 
-export default function Home() {
-  const [formData, setFormData] = useState({
-    cnicNumber: "",
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    province: "",
-    constituency: "",
-  });
+import React, { useState, useEffect } from 'react';
+import { useVoting } from '@/context/ContractContext';
+import ElectionCard from '@/components/ElectionCard';
+import CandidateList from '@/components/CandidateList';
+import { ArrowLeft, Vote, Clock, Users, Loader2, AlertCircle, ExternalLink, Wallet, Shield, CheckCircle, Activity } from 'lucide-react';
 
-  const [errors, setErrors] = useState({});
-  const [constituencies, setConstituencies] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const Home = () => {
+  const { 
+    isConnected, 
+    account, 
+    isLoading,
+    connectWallet,
+    getCurrentElectionId,
+    getElectionDetails
+  } = useVoting();
+  
+  const [selectedElection, setSelectedElection] = useState(null);
+  const [elections, setElections] = useState([]);
+  const [loadingElections, setLoadingElections] = useState(false);
+  const [error, setError] = useState(null);
+  const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
 
-  // Biometric states
-  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
-  const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
-  const [biometricStatus, setBiometricStatus] = useState('');
-  const [isBiometricLoading, setIsBiometricLoading] = useState(false);
-  const [registeredCredential, setRegisteredCredential] = useState(null);
-  const [biometricData, setBiometricData] = useState(null);
-
-  // API Response states
-  const [registrationResponse, setRegistrationResponse] = useState(null);
-  const [apiError, setApiError] = useState(null);
-
-  // Province → Constituency data map
-  const constituenciesData = {
-    Punjab: [
-      "Lahore", "Multan", "Rawalpindi", "Faisalabad", "Gujranwala", 
-      "Sialkot", "Gujrat", "Bahawalpur", "Sargodha"
-    ],
-    Sindh: [
-      "Karachi", "Hyderabad", "Sukkur", "Larkana", "Mirpurkhas", 
-      "Nawabshah", "Thatta"
-    ],
-    "Khyber Pakhtunkhwa": [
-      "Peshawar", "Swat", "Abbottabad", "Mardan", 
-      "Dera Ismail Khan", "Bannu", "Kohat"
-    ],
-    Balochistan: [
-      "Quetta", "Gwadar", "Khuzdar", "Sibi", 
-      "Zhob", "Kalat", "Lasbella"
-    ],
-    "Gilgit": [
-      "Gilgit", "Skardu", "Hunza", "Ghizer", 
-      "Ghanche", "Diamer", "Astore", "Nagar", 
-      "Shigar", "Kharmang"
-    ]
-  };
-
-  // Initialize biometric support check
+  // Check if MetaMask is installed
   useEffect(() => {
-    checkBiometricSupport();
+    setIsMetaMaskInstalled(typeof window !== 'undefined' && typeof window.ethereum !== 'undefined');
   }, []);
 
-  // Update constituencies when province changes
+  // Fetch elections from contract
   useEffect(() => {
-    if (formData.province && constituenciesData[formData.province]) {
-      setConstituencies(constituenciesData[formData.province]);
-      setFormData(prev => ({ ...prev, constituency: "" }));
-    } else {
-      setConstituencies([]);
-      setFormData(prev => ({ ...prev, constituency: "" }));
-    }
-  }, [formData.province]);
-
-  // Biometric helper functions
-  const checkBiometricSupport = async () => {
-    try {
-      if (!window.PublicKeyCredential) {
-        setBiometricStatus('❌ WebAuthn not supported in this browser');
-        return;
+    const fetchElections = async () => {
+      if (!isConnected) return;
+      
+      try {
+        setLoadingElections(true);
+        setError(null);
+        
+        // Get current election ID to determine how many elections exist
+        const currentElectionId = await getCurrentElectionId();
+        const totalElections = parseInt(currentElectionId);
+        
+        // Fetch details for each election
+        const electionPromises = [];
+        for (let i = 1; i <= totalElections; i++) {
+          electionPromises.push(getElectionDetails(i.toString()));
+        }
+        
+        const electionDetails = await Promise.all(electionPromises);
+        setElections(electionDetails);
+        
+      } catch (error) {
+        console.error('Error fetching elections:', error);
+        setError('Failed to load elections. Please try again.');
+        setElections([]);
+      } finally {
+        setLoadingElections(false);
       }
+    };
 
-      const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-      setIsBiometricAvailable(available);
-      setIsBiometricSupported(true);
-
-      if (available) {
-        setBiometricStatus('✅ Biometric fingerprint authentication is available');
-      } else {
-        setBiometricStatus('⚠️ No biometric authenticator detected on this device');
-      }
-    } catch (error) {
-      console.error('Error checking biometric support:', error);
-      setBiometricStatus('❌ Error checking biometric capabilities');
-      setIsBiometricSupported(false);
+    if (isConnected) {
+      fetchElections();
     }
+  }, [isConnected, getCurrentElectionId, getElectionDetails]);
+
+  const handleElectionSelect = (election) => {
+    setSelectedElection(election);
   };
 
-  const generateSecureChallenge = () => {
-    const array = new Uint8Array(32);
-    crypto.getRandomValues(array);
-    return array;
+  const handleBackToElections = () => {
+    setSelectedElection(null);
   };
 
-  const generateUserId = () => {
-    const array = new Uint8Array(16);
-    crypto.getRandomValues(array);
-    return array;
+  const handleInstallMetaMask = () => {
+    window.open('https://metamask.io/download/', '_blank');
   };
 
-  const arrayBufferToBase64 = (buffer) => {
-    const bytes = new Uint8Array(buffer);
-    let binary = '';
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
+  const getActiveElections = () => {
+    const now = new Date();
+    return elections.filter(election => {
+      const startDate = new Date(parseInt(election.startTime) * 1000);
+      const endDate = new Date(parseInt(election.endTime) * 1000);
+      return election.isActive && now >= startDate && now <= endDate;
+    });
   };
 
-  const handleBiometricRegistration = async () => {
-    if (!isBiometricAvailable) {
-      alert('🚫 BIOMETRIC NOT AVAILABLE\n\nYour device does not support biometric authentication or no fingerprint is enrolled.');
-      return;
-    }
-
-    setIsBiometricLoading(true);
-    setBiometricStatus('🔐 Place your finger on the biometric sensor...');
-
-    try {
-      const userId = generateUserId();
-      const challenge = generateSecureChallenge();
-
-      const registrationOptions = {
-        challenge: challenge,
-        rp: {
-          name: "NADRA Registration System",
-          id: window.location.hostname || "localhost",
-        },
-        user: {
-          id: userId,
-          name: `${formData.firstName || 'User'}.${formData.lastName || 'NADRA'}@nadra.gov.pk`,
-          displayName: `${formData.firstName || 'NADRA'} ${formData.lastName || 'User'}`,
-        },
-        pubKeyCredParams: [
-          { alg: -7, type: "public-key" },   // ES256
-          { alg: -35, type: "public-key" },  // ES384
-          { alg: -36, type: "public-key" },  // ES512
-          { alg: -257, type: "public-key" }, // RS256
-        ],
-        authenticatorSelection: {
-          authenticatorAttachment: "platform",
-          userVerification: "required",
-          requireResidentKey: true,
-          residentKey: "required"
-        },
-        timeout: 60000,
-        attestation: "direct",
-        excludeCredentials: []
-      };
-
-      const credential = await navigator.credentials.create({
-        publicKey: registrationOptions
-      });
-
-      if (!credential) {
-        throw new Error('No credential returned from biometric registration');
-      }
-
-      const credentialInfo = {
-        id: credential.id,
-        rawId: arrayBufferToBase64(credential.rawId),
-        type: credential.type,
-        challenge: arrayBufferToBase64(challenge),
-        userId: arrayBufferToBase64(userId),
-        timestamp: new Date().toISOString()
-      };
-
-      setRegisteredCredential(credentialInfo);
-      setBiometricData(credentialInfo);
-      
-      setBiometricStatus('✅ Biometric fingerprint registered successfully!');
-      
-      alert(`🎉 BIOMETRIC REGISTRATION SUCCESSFUL!\n\n✅ Your fingerprint has been securely registered with NADRA.\n🔐 Credential ID: ${credential.id.substring(0, 20)}...\n⏰ Registered: ${new Date().toLocaleString()}\n\n🛡️ Your biometric data is encrypted and stored securely.`);
-
-    } catch (error) {
-      console.error('Biometric registration failed:', error);
-      setBiometricStatus('❌ Biometric registration failed');
-      
-      let errorMessage = '🚫 BIOMETRIC REGISTRATION FAILED\n\n';
-      
-      if (error.name === 'NotAllowedError') {
-        errorMessage += '❌ Registration cancelled or verification failed\n\n🔧 Please try again and complete the biometric prompt';
-      } else if (error.name === 'SecurityError') {
-        errorMessage += '❌ Security requirements not met\n\n🔧 Ensure you\'re using HTTPS and the site is trusted';
-      } else {
-        errorMessage += `❌ Error: ${error.message || 'Unknown biometric error'}`;
-      }
-      
-      alert(errorMessage);
-    } finally {
-      setIsBiometricLoading(false);
-    }
+  const isElectionActive = (election) => {
+    const now = new Date();
+    const startDate = new Date(parseInt(election.startTime) * 1000);
+    const endDate = new Date(parseInt(election.endTime) * 1000);
+    return election.isActive && now >= startDate && now <= endDate;
   };
 
-  // Validation function
-  const validateForm = () => {
-    const newErrors = {};
-
-    // CNIC validation
-    if (!formData.cnicNumber) {
-      newErrors.cnicNumber = "CNIC Number is required";
-    } else if (!/^\d{13}$/.test(formData.cnicNumber)) {
-      newErrors.cnicNumber = "CNIC must be exactly 13 digits";
-    }
-
-    // First name validation
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First Name is required";
-    }
-
-    // Last name validation
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last Name is required";
-    }
-
-    // Date of birth validation
-    if (!formData.dateOfBirth) {
-      newErrors.dateOfBirth = "Date of Birth is required";
-    } else {
-      const birthDate = new Date(formData.dateOfBirth);
-      const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
-      
-      if (age < 18 || age > 100) {
-        newErrors.dateOfBirth = "Age must be between 18 and 100 years";
-      }
-    }
-
-    // Province validation
-    if (!formData.province) {
-      newErrors.province = "Province is required";
-    }
-
-    // Constituency validation
-    if (!formData.constituency) {
-      newErrors.constituency = "Constituency is required";
-    }
-
-    // Fingerprints validation
-    if (!biometricData) {
-      newErrors.biometric = "Biometric fingerprint registration is required";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Handle input changes
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
-    }
-  };
-
-  // Format CNIC input
-  const formatCNIC = (value) => {
-    const digits = value.replace(/\D/g, '');
-    return digits.slice(0, 13);
-  };
-
-  // API call to submit registration
-  const submitToAPI = async (registrationData) => {
-    try {
-      const response = await fetch('/api/registration/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(registrationData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || `HTTP error! status: ${response.status}`);
-      }
-
-      return result;
-    } catch (error) {
-      console.error('API Error:', error);
-      throw error;
-    }
-  };
-
-  // Handle form submission
-  const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setApiError(null);
-    setRegistrationResponse(null);
-
-    try {
-      const registrationData = {
-        cnicNumber: formData.cnicNumber,
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        dateOfBirth: formData.dateOfBirth,
-        province: formData.province,
-        constituency: formData.constituency,
-        biometricData: biometricData
-      };
-
-      console.log('Submitting registration data:', registrationData);
-
-      const result = await submitToAPI(registrationData);
-
-      setRegistrationResponse(result);
-      
-      // Show success message
-      alert(`✅ NADRA REGISTRATION SUCCESSFUL!\n\n🎉 Registration ID: ${result.data.registrationId}\n👤 Name: ${result.data.fullName}\n📍 Province: ${result.data.province}\n🏛️ Constituency: ${result.data.constituency}\n📅 Submitted: ${new Date().toLocaleString()}\n\n🔒 Your biometric data has been securely stored.`);
-      
-      // Reset form after successful submission
-      setFormData({
-        cnicNumber: "",
-        firstName: "",
-        lastName: "",
-        dateOfBirth: "",
-        province: "",
-        constituency: "",
-      });
-      setErrors({});
-      setRegisteredCredential(null);
-      setBiometricData(null);
-      setBiometricStatus('');
-      
-    } catch (error) {
-      console.error('Registration failed:', error);
-      setApiError(error.message);
-      
-      // Show error message
-      let errorMessage = '❌ REGISTRATION FAILED\n\n';
-      
-      if (error.message.includes('CNIC already registered')) {
-        errorMessage += '🚫 This CNIC number is already registered in the system.\n\n💡 If this is your CNIC, please contact NADRA support.';
-      } else if (error.message.includes('Rate limit exceeded')) {
-        errorMessage += '⏰ Too many registration attempts.\n\n🔄 Please wait 15 minutes before trying again.';
-      } else if (error.message.includes('Biometric data is too old')) {
-        errorMessage += '⏱️ Biometric data expired.\n\n🔄 Please re-register your fingerprint and try again.';
-      } else {
-        errorMessage += `💥 Error: ${error.message}\n\n🔄 Please check your information and try again.`;
-      }
-      
-      alert(errorMessage);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-[100px] rounded-full overflow-hidden h-[100px] mb-4">
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAb082NJggC71VykY1zPCSQbib4oNe6Tm2DA&s" alt="NADRA Logo" width={"100px"} height={"100px"} />
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-            NADRA Registration Form
-          </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Complete your National Database and Registration Authority (NADRA) registration with biometric authentication.
-          </p>
+  if (!isConnected) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+          <div className="absolute top-40 left-1/2 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
         </div>
 
-        {/* API Error Display */}
-        {apiError && (
-          <div className="mb-6 bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
-            <div className="flex">
-              <div className="ml-3">
-                <p className="text-sm text-red-800">
-                  <strong>Registration Error:</strong> {apiError}
+        <div className="relative z-10 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 border border-white/20">
+          <div className="text-center">
+            <div className="relative">
+              <div className="w-20 h-20 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <Vote className="w-10 h-10 text-white" />
+              </div>
+              <div className="absolute inset-0 w-20 h-20 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full mx-auto animate-ping opacity-20"></div>
+            </div>
+            
+            <h2 className="text-3xl font-bold text-white mb-3 bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+              Welcome to VoteChain
+            </h2>
+            <p className="text-blue-100 mb-8 leading-relaxed">
+              Secure, transparent, and decentralized voting powered by blockchain technology.
+            </p>
+
+            {!isMetaMaskInstalled ? (
+              <div className="space-y-4">
+                <div className="bg-amber-500/20 border border-amber-400/30 rounded-lg p-4 mb-6">
+                  <div className="flex items-center gap-2 text-amber-200 mb-2">
+                    <AlertCircle className="w-5 h-5" />
+                    <span className="font-medium">MetaMask Required</span>
+                  </div>
+                  <p className="text-amber-100 text-sm">
+                    MetaMask wallet is required to participate in voting. Please install it to continue.
+                  </p>
+                </div>
+                
+                <button 
+                  onClick={handleInstallMetaMask}
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  Install MetaMask
+                </button>
+                
+                <p className="text-blue-200 text-xs">
+                  After installation, refresh this page to connect your wallet.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-green-200 text-sm">
+                    <CheckCircle className="w-4 h-4" />
+                    <span>MetaMask detected</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-blue-200 text-sm">
+                    <Shield className="w-4 h-4" />
+                    <span>Secure blockchain voting</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-purple-200 text-sm">
+                    <Activity className="w-4 h-4" />
+                    <span>Real-time results</span>
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={connectWallet}
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 shadow-lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Connecting...
+                    </>
+                  ) : (
+                    <>
+                      <Wallet className="w-5 h-5" />
+                      Connect MetaMask
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const activeElections = getActiveElections();
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse"></div>
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-1000"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-500"></div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl flex items-center justify-evenly h-[300px] mb-8 " style={{background:"url(/01.gif)",backgroundSize:"cover",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
+          <div className="flex items-center justify-between w-full p-[30px] bg-[#00000094] h-full rounded-xl border border-white/20">
+            <div >
+              <h1 className="text-4xl font-bold text-white flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-blue-400 rounded-lg flex items-center justify-center">
+                  <Vote className="w-6 h-6 text-white" />
+                </div>
+                Voter Portal
+              </h1>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <p className="text-blue-200">
+                  Connected: <span className="font-mono bg-white/10 px-2 py-1 rounded text-sm">{account?.slice(0, 6)}...{account?.slice(-4)}</span>
                 </p>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Success Response Display */}
-        {registrationResponse && (
-          <div className="mb-6 bg-green-50 border-l-4 border-green-400 p-4 rounded-lg">
-            <div className="flex">
-              <div className="ml-3">
-                <h3 className="text-lg font-medium text-green-800">Registration Successful!</h3>
-                <div className="mt-2 text-sm text-green-700">
-                  <p><strong>Registration ID:</strong> {registrationResponse.data.registrationId}</p>
-                  <p><strong>Full Name:</strong> {registrationResponse.data.fullName}</p>
-                  <p><strong>Status:</strong> {registrationResponse.data.status}</p>
-                  <p><strong>Province:</strong> {registrationResponse.data.province}</p>
-                  <p><strong>Constituency:</strong> {registrationResponse.data.constituency}</p>
-                </div>
+            <div className="text-right space-y-2">
+              <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-xl p-4 border border-purple-400/30">
+                <p className="text-purple-200 text-sm font-medium">Active Elections</p>
+                <p className="text-3xl font-bold text-white">{activeElections.length}</p>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-500/20 backdrop-blur-lg border border-red-400/30 rounded-xl p-4 mb-6">
+            <div className="flex items-center gap-2 text-red-200 mb-2">
+              <AlertCircle className="w-5 h-5" />
+              <span className="font-medium">Error</span>
+            </div>
+            <p className="text-red-100 mb-3">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+            >
+              Retry
+            </button>
+          </div>
         )}
 
-        {/* Form Container */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-          <div className="bg-[darkgreen] px-6 py-4">
-            <h2 className="text-xl font-semibold text-white">Personal Information & Biometric Registration</h2>
-          </div>
-          
-          <div className="p-6 md:p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* CNIC Number */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  <Hash className="inline w-4 h-4 mr-2" />
-                  CNIC Number
-                </label>
-                <input
-                  type="text"
-                  value={formData.cnicNumber}
-                  onChange={(e) => handleInputChange('cnicNumber', formatCNIC(e.target.value))}
-                  placeholder="Enter 13-digit CNIC number"
-                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
-                    errors.cnicNumber 
-                      ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300 focus:border-emerald-500'
-                  }`}
-                />
-                {errors.cnicNumber && (
-                  <p className="mt-1 text-sm text-red-600">{errors.cnicNumber}</p>
-                )}
+        {/* Main Content */}
+        {!selectedElection ? (
+          <div className="space-y-8">
+            {/* Loading State */}
+            {loadingElections ? (
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-12 text-center border border-white/20">
+                <div className="relative mb-6">
+                  <Loader2 className="w-16 h-16 text-purple-400 mx-auto animate-spin" />
+                  <div className="absolute inset-0 w-16 h-16 border-4 border-purple-400/20 rounded-full mx-auto animate-ping"></div>
+                </div>
+                <h3 className="text-2xl font-semibold text-white mb-2">
+                  Loading Elections...
+                </h3>
+                <p className="text-blue-200">
+                  Fetching election data from the blockchain network.
+                </p>
               </div>
-
-              {/* First Name */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  <User className="inline w-4 h-4 mr-2" />
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  placeholder="Enter first name"
-                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
-                    errors.firstName 
-                      ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300 focus:border-emerald-500'
-                  }`}
-                />
-                {errors.firstName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
-                )}
-              </div>
-
-              {/* Last Name */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  <User className="inline w-4 h-4 mr-2" />
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  placeholder="Enter last name"
-                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
-                    errors.lastName 
-                      ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300 focus:border-emerald-500'
-                  }`}
-                />
-                {errors.lastName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
-                )}
-              </div>
-
-              {/* Date of Birth */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  <Calendar className="inline w-4 h-4 mr-2" />
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  value={formData.dateOfBirth}
-                  onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                  max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
-                  min={new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]}
-                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
-                    errors.dateOfBirth 
-                      ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300 focus:border-emerald-500'
-                  }`}
-                />
-                {errors.dateOfBirth && (
-                  <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>
-                )}
-              </div>
-
-              {/* Province */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  <MapPin className="inline w-4 h-4 mr-2" />
-                  Province
-                </label>
-                <select
-                  value={formData.province}
-                  onChange={(e) => handleInputChange('province', e.target.value)}
-                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white ${
-                    errors.province 
-                      ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300 focus:border-emerald-500'
-                  }`}
-                >
-                  <option value="">Select Province</option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
-                  <option value="Balochistan">Balochistan</option>
-                  <option value="Gilgit">Gilgit-Baltistan</option>
-                </select>
-                {errors.province && (
-                  <p className="mt-1 text-sm text-red-600">{errors.province}</p>
-                )}
-              </div>
-
-              {/* Constituency */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  <MapPin className="inline w-4 h-4 mr-2" />
-                  Constituency
-                </label>
-                <select
-                  value={formData.constituency}
-                  onChange={(e) => handleInputChange('constituency', e.target.value)}
-                  disabled={!formData.province}
-                  className={`w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white ${
-                    !formData.province 
-                      ? 'bg-gray-100 cursor-not-allowed' 
-                      : errors.constituency 
-                        ? 'border-red-300 bg-red-50' 
-                        : 'border-gray-300 focus:border-emerald-500'
-                  }`}
-                >
-                  <option value="">
-                    {formData.province ? 'Select Constituency' : 'Select Province First'}
-                  </option>
-                  {constituencies.map((constituency) => (
-                    <option key={constituency} value={constituency}>
-                      {constituency}
-                    </option>
-                  ))}
-                </select>
-                {errors.constituency && (
-                  <p className="mt-1 text-sm text-red-600">{errors.constituency}</p>
-                )}
-              </div>
-
-              {/* Biometric Fingerprint Section */}
-              <div className="md:col-span-2">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                      Biometric Fingerprint Authentication
-                    </h3>
-                    
-                    {/* Custom Fingerprint Logo */}
-                    <div className="flex justify-center mb-4">
-                      <button
-                        type="button"
-                        onClick={handleBiometricRegistration}
-                        disabled={!isBiometricSupported || isBiometricLoading}
-                        className={`relative group transition-all duration-300 ${
-                          registeredCredential
-                            ? 'cursor-default'
-                            : isBiometricLoading
-                            ? 'cursor-wait'
-                            : 'cursor-pointer hover:scale-110'
-                        }`}
-                      >
-                        {/* Fingerprint SVG Logo */}
-                        <div className="w-48 h-48 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-                          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" className="text-white">
-                            <path d="M17.81 4.47c-.08 0-.16-.02-.23-.06C15.66 3.42 14 3 12.01 3c-1.98 0-3.86.47-5.57 1.41-.24.13-.54.04-.68-.2-.13-.24-.04-.55.2-.68C7.82 2.52 9.86 2 12.01 2c2.13 0 3.99.47 6.03 1.52.25.13.34.43.21.67-.09.18-.26.28-.44.28zM3.5 9.72c-.1 0-.2-.03-.29-.09-.23-.16-.28-.47-.12-.7.99-1.4 2.25-2.5 3.75-3.27C9.98 4.04 14 4.03 17.15 5.65c1.5.77 2.76 1.86 3.75 3.25.16.22.11.54-.12.7-.23.16-.54.11-.7-.12-.9-1.26-2.04-2.25-3.39-2.94-2.87-1.47-6.54-1.47-9.4.01-1.36.7-2.5 1.7-3.4 2.96-.08.14-.23.21-.39.21zm6.25 12.07c-.13 0-.26-.05-.35-.15-.87-.87-1.34-1.43-2.01-2.64-.69-1.23-1.05-2.73-1.05-4.34 0-2.97 2.54-5.39 5.66-5.39s5.66 2.42 5.66 5.39c0 .28-.22.5-.5.5s-.5-.22-.5-.5c0-2.42-2.09-4.39-4.66-4.39-2.57 0-4.66 1.97-4.66 4.39 0 1.44.32 2.77.93 3.85.64 1.15 1.08 1.64 1.85 2.42.19.2.19.51 0 .71-.11.1-.24.15-.37.15zm7.17-1.85c-1.19 0-2.24-.3-3.1-.89-1.49-1.01-2.38-2.65-2.38-4.39 0-.28.22-.5.5-.5s.5.22.5.5c0 1.41.72 2.74 1.94 3.56.71.48 1.54.71 2.54.71.24 0 .64-.03 1.04-.1.27-.05.53.13.58.41.05.27-.13.53-.41.58-.57.11-1.07.12-1.21.12zM14.91 22c-.04 0-.09-.01-.13-.02-1.59-.44-2.63-1.03-3.72-2.1-1.4-1.39-2.17-3.24-2.17-5.22 0-1.62 1.38-2.94 3.08-2.94 1.7 0 3.08 1.32 3.08 2.94 0 1.07.93 1.94 2.08 1.94s2.08-.87 2.08-1.94c0-3.77-3.25-6.83-7.25-6.83-2.84 0-5.44 1.58-6.61 4.03-.39.81-.59 1.76-.59 2.8 0 .78.07 2.01.67 3.61.1.26-.03.55-.29.64-.26.1-.55-.04-.64-.29-.49-1.31-.73-2.61-.73-3.96 0-1.2.23-2.29.68-3.24 1.33-2.79 4.28-4.6 7.51-4.6 4.55 0 8.25 3.51 8.25 7.83 0 1.62-1.38 2.94-3.08 2.94s-3.08-1.32-3.08-2.94c0-1.07-.93-1.94-2.08-1.94s-2.08.87-2.08 1.94c0 1.71.66 3.31 1.87 4.51.95.94 1.86 1.46 3.27 1.85.27.07.42.35.35.61-.05.23-.26.38-.47.38z" fill="currentColor"/>
-                          </svg>
-                        </div>
-                      </button>
+            ) : (
+              <>
+                {/* Active Elections */}
+                <div>
+                  <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                      <Clock className="w-5 h-5 text-white" />
                     </div>
-
-                    {/* Status Message */}
-                    <div className={`mb-4 p-3 rounded-lg text-sm font-medium ${
-                      registeredCredential
-                        ? 'bg-green-50 border border-green-200 text-green-800'
-                        : isBiometricLoading
-                        ? 'bg-blue-50 border border-blue-200 text-blue-800'
-                        : isBiometricAvailable 
-                        ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' 
-                        : 'bg-yellow-50 border border-yellow-200 text-yellow-800'
-                    }`}>
-                      {isBiometricLoading ? (
-                        <div className="flex items-center justify-center">
-                          <span className="animate-spin mr-2">🔄</span>
-                          Place your finger on the biometric sensor...
-                        </div>
-                      ) : registeredCredential ? (
-                        <div className="flex items-center justify-center">
-                          <span className="mr-2">✅</span>
-                          Biometric fingerprint registered successfully!
-                        </div>
-                      ) : biometricStatus ? (
-                        biometricStatus
-                      ) : (
-                        'Checking biometric capabilities...'
-                      )}
-                    </div>
-
-                    {/* Instructions */}
-                    {!registeredCredential && (
-                      <p className="text-sm text-gray-600">
-                        {isBiometricAvailable 
-                          ? 'Click the fingerprint icon above to register your biometric authentication'
-                          : 'Biometric authentication is not available on this device'
-                        }
+                    Active Elections
+                  </h2>
+                  
+                  {activeElections.length === 0 ? (
+                    <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-12 text-center border border-white/20">
+                      <div className="w-20 h-20 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-6 opacity-50">
+                        <Vote className="w-10 h-10 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-semibold text-white mb-3">
+                        No Active Elections
+                      </h3>
+                      <p className="text-blue-200">
+                        There are currently no active elections. Check back later for new voting opportunities.
                       </p>
-                    )}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {activeElections.map((election) => (
+                        <ElectionCard
+                          key={election.electionId}
+                          election={election}
+                          onSelect={handleElectionSelect}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-                    {/* Biometric Details */}
-                    {registeredCredential && (
-                      <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
-                        <div className="font-medium text-green-800 mb-2">Registered Biometric Details:</div>
-                        <div className="text-green-700 space-y-1">
-                          <div className="font-mono">ID: {registeredCredential.id.substring(0, 30)}...</div>
-                          <div>Type: Hardware Security Platform</div>
-                          <div>Registered: {new Date(registeredCredential.timestamp).toLocaleString()}</div>
-                        </div>
+                {/* All Elections */}
+                {elections.length > 0 && (
+                  <div>
+                    <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg flex items-center justify-center">
+                        <Users className="w-5 h-5 text-white" />
                       </div>
-                    )}
-
-                    {/* Error Display */}
-                    {errors.biometric && (
-                      <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-sm text-red-600 font-medium">{errors.biometric}</p>
-                      </div>
-                    )}
+                      All Elections
+                    </h2>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {elections.map((election) => (
+                        <ElectionCard
+                          key={election.electionId}
+                          election={election}
+                          onSelect={handleElectionSelect}
+                          showInactive={true}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        ) : (
+          /* Selected Election View */
+          <div>
+            <div className="mb-6">
+              <button
+                onClick={handleBackToElections}
+                className="flex items-center gap-2 text-purple-300 hover:text-white font-medium mb-6 transition-colors group"
+              >
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                Back to Elections
+              </button>
+              
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-6 border border-white/20">
+                <h2 className="text-3xl font-bold text-white mb-3">
+                  {selectedElection.title}
+                </h2>
+                <p className="text-blue-200 mb-6 text-lg">
+                  {selectedElection.description}
+                </p>
+                
+                <div className="flex flex-wrap items-center gap-6 text-sm">
+                  <div className="flex items-center gap-2 text-blue-200">
+                    <Clock className="w-4 h-4" />
+                    <span>
+                      Ends: {new Date(parseInt(selectedElection.endTime) * 1000).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-blue-200">
+                    <Users className="w-4 h-4" />
+                    <span>{selectedElection.totalVotes} votes cast</span>
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                    isElectionActive(selectedElection)
+                      ? 'bg-green-500/20 text-green-200 border-green-400/30' 
+                      : 'bg-gray-500/20 text-gray-200 border-gray-400/30'
+                  }`}>
+                    {isElectionActive(selectedElection) ? 'Active' : 'Inactive'}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="mt-8 flex justify-center">
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className={`px-8 py-4 rounded-lg font-semibold text-white transition-all duration-200 min-w-[200px] ${
-                  isSubmitting
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-[darkgreen] hover:bg-green-700 transform hover:scale-105 shadow-lg hover:shadow-xl'
-                }`}
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Submitting Registration...
-                  </div>
-                ) : (
-                  'Submit NADRA Registration'
-                )}
-              </button>
-            </div>
+            <CandidateList 
+              electionId={selectedElection.electionId}
+              isElectionActive={isElectionActive(selectedElection)}
+            />
           </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-sm text-gray-500">
-            By submitting this form, you agree to NADRA's terms and conditions.
-          </p>
-          <p className="text-xs text-gray-400 mt-2">
-            🔒 Your biometric data is encrypted and securely stored according to NADRA protocols.
-          </p>
-        </div>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default Home;

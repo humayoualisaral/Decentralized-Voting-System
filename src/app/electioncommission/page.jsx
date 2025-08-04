@@ -302,7 +302,7 @@ const ElectionCommissionDashboard = () => {
         <div className={`
           fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl lg:shadow-lg
           transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0
-          transition-transform duration-300 ease-in-out lg:block border-r border-gray-200
+          transition-transform duration-300 ease-in-out lg:block border-r border-gray-200 w-[30%] h-full
         `}>
           <div className="h-full flex flex-col">
             {/* Mobile header */}

@@ -196,9 +196,9 @@ const UserPortal = () => {
 
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl p-6 mb-8 border border-white/20">
-          <div className="flex items-center justify-between">
-            <div>
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl flex items-center justify-evenly h-[300px] mb-8 " style={{background:"url(/01.gif)",backgroundSize:"cover",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
+          <div className="flex items-center justify-between w-full p-[30px] bg-[#00000094] h-full rounded-xl border border-white/20">
+            <div >
               <h1 className="text-4xl font-bold text-white flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-blue-400 rounded-lg flex items-center justify-center">
                   <Vote className="w-6 h-6 text-white" />

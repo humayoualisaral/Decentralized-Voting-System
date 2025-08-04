@@ -8,7 +8,8 @@ const CandidateCard = ({
   onVoteNow, 
   canVote = false, 
   showResults = false, 
-  totalVotes = 0 
+  totalVotes = 0,
+  allCandidates = [] // Add this prop to compare with other candidates
 }) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
@@ -178,8 +179,10 @@ const CandidateCard = ({
     }
   };
 
+  // Fixed isLeading calculation
   const isLeading = showResults && totalVotes > 0 && voteCount > 0 && 
-    votePercentage === Math.max(...(arguments[5] || []), parseFloat(votePercentage));
+    allCandidates.length > 0 && 
+    voteCount === Math.max(...allCandidates.map(c => parseInt(c.voteCount || 0)));
 
   return (
     <div 

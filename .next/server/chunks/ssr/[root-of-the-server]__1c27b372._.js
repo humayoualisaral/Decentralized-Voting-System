@@ -206,9 +206,14 @@ const CONTRACT_ABI = [
                 "type": "uint256"
             },
             {
-                "internalType": "bytes32",
-                "name": "_fingerprintVerification",
-                "type": "bytes32"
+                "internalType": "string",
+                "name": "_cnicHash",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_biometricId",
+                "type": "string"
             }
         ],
         "name": "castVote",
@@ -344,29 +349,6 @@ const CONTRACT_ABI = [
         ],
         "name": "Paused",
         "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_electionId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_cnicHash",
-                "type": "string"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_fingerprintHash",
-                "type": "bytes32"
-            }
-        ],
-        "name": "registerVoter",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
     },
     {
         "inputs": [
@@ -568,25 +550,6 @@ const CONTRACT_ABI = [
                 "internalType": "uint256",
                 "name": "candidateId",
                 "type": "uint256"
-            }
-        ],
-        "name": "VoteCast",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "electionId",
-                "type": "uint256"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "voter",
-                "type": "address"
             },
             {
                 "indexed": false,
@@ -595,7 +558,7 @@ const CONTRACT_ABI = [
                 "type": "string"
             }
         ],
-        "name": "VoterRegistered",
+        "name": "VoteCast",
         "type": "event"
     },
     {
@@ -673,6 +636,30 @@ const CONTRACT_ABI = [
                 "internalType": "uint256",
                 "name": "timestamp",
                 "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "name": "cnicToAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -977,6 +964,60 @@ const CONTRACT_ABI = [
                 "type": "uint256"
             },
             {
+                "internalType": "string",
+                "name": "_cnicHash",
+                "type": "string"
+            }
+        ],
+        "name": "getVoteByCAIC",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "hasVoted",
+                "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "votedCandidateId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "candidateName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "partyName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "symbol",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "voteTimestamp",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "voterAddress",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_electionId",
+                "type": "uint256"
+            },
+            {
                 "internalType": "address",
                 "name": "_voter",
                 "type": "address"
@@ -984,11 +1025,6 @@ const CONTRACT_ABI = [
         ],
         "name": "getVoterStatus",
         "outputs": [
-            {
-                "internalType": "bool",
-                "name": "isRegistered",
-                "type": "bool"
-            },
             {
                 "internalType": "bool",
                 "name": "hasVoted",
@@ -1104,9 +1140,9 @@ const CONTRACT_ABI = [
                 "type": "string"
             },
             {
-                "internalType": "bytes32",
-                "name": "fingerprintHash",
-                "type": "bytes32"
+                "internalType": "string",
+                "name": "biometricId",
+                "type": "string"
             },
             {
                 "internalType": "bool",
@@ -1124,9 +1160,9 @@ const CONTRACT_ABI = [
                 "type": "uint256"
             },
             {
-                "internalType": "bool",
-                "name": "isRegistered",
-                "type": "bool"
+                "internalType": "address",
+                "name": "voterAddress",
+                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -1167,7 +1203,7 @@ const VotingProvider = ({ children })=>{
     const [isConnected, setIsConnected] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [chainId, setChainId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const CONTRACT_ADDRESS = ("TURBOPACK compile-time value", "0xCC129538eF038A7B10219cC08721F4BE28265bc7");
+    const CONTRACT_ADDRESS = ("TURBOPACK compile-time value", "0x3a607058D8856b5F3649475a3F8bfb1dB61907E7");
     // Initialize contract
     const initializeContract = async (signerOrProvider)=>{
         try {
@@ -1253,35 +1289,46 @@ const VotingProvider = ({ children })=>{
             setIsLoading(false);
         }
     };
-    // Voter Functions
-    const registerVoter = async (electionId, cnicHash, fingerprintHash)=>{
+    // FIXED: Updated castVote function to match the smart contract signature
+    const castVote = async (electionId, candidateId, cnicHash, biometricId)=>{
         try {
             if (!contract) throw new Error('Contract not initialized');
             setIsLoading(true);
-            const tx = await contract.registerVoter(electionId, cnicHash, fingerprintHash);
+            console.log('Casting vote with parameters:', {
+                electionId,
+                candidateId,
+                cnicHash,
+                biometricId: biometricId?.substring(0, 20) + '...' // Log truncated version for security
+            });
+            const tx = await contract.castVote(electionId, candidateId, cnicHash, biometricId);
             const receipt = await tx.wait();
-            console.log('Voter registered:', receipt);
-            return receipt;
-        } catch (error) {
-            console.error('Error registering voter:', error);
-            throw error;
-        } finally{
-            setIsLoading(false);
-        }
-    };
-    const castVote = async (electionId, candidateId, fingerprintVerification)=>{
-        try {
-            if (!contract) throw new Error('Contract not initialized');
-            setIsLoading(true);
-            const tx = await contract.castVote(electionId, candidateId, fingerprintVerification);
-            const receipt = await tx.wait();
-            console.log('Vote cast:', receipt);
+            console.log('Vote cast successfully:', receipt);
             return receipt;
         } catch (error) {
             console.error('Error casting vote:', error);
             throw error;
         } finally{
             setIsLoading(false);
+        }
+    };
+    // NEW: Vote verification function
+    const getVoteByCNIC = async (electionId, cnicHash)=>{
+        try {
+            if (!contract) throw new Error('Contract not initialized');
+            console.log('Verifying vote for CNIC:', cnicHash);
+            const result = await contract.getVoteByCAIC(electionId, cnicHash);
+            return {
+                hasVoted: result.hasVoted,
+                votedCandidateId: result.votedCandidateId.toString(),
+                candidateName: result.candidateName,
+                partyName: result.partyName,
+                symbol: result.symbol,
+                voteTimestamp: result.voteTimestamp.toString(),
+                voterAddress: result.voterAddress
+            };
+        } catch (error) {
+            console.error('Error getting vote by CNIC:', error);
+            throw error;
         }
     };
     // View Functions
@@ -1339,7 +1386,6 @@ const VotingProvider = ({ children })=>{
             if (!address) throw new Error('No voter address provided');
             const status = await contract.getVoterStatus(electionId, address);
             return {
-                isRegistered: status.isRegistered,
                 hasVoted: status.hasVoted,
                 votedCandidateId: status.votedCandidateId.toString()
             };
@@ -1523,8 +1569,8 @@ const VotingProvider = ({ children })=>{
         createElection,
         addCandidate,
         // Voter functions
-        registerVoter,
         castVote,
+        getVoteByCNIC,
         // View functions
         getElectionDetails,
         getCandidateDetails,
@@ -1545,7 +1591,7 @@ const VotingProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/src/context/ContractContext.js",
-        lineNumber: 470,
+        lineNumber: 482,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };

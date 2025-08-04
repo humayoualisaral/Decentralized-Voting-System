@@ -596,14 +596,18 @@ const CandidateList = ({ electionId, isElectionActive }) => {
             <div className="p-6">
               {/* Selected Candidate Info */}
               <div className="bg-gradient-to-r from-slate-700 to-slate-600 rounded-xl p-4 mb-6 border border-slate-500">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">
-                    {selectedCandidate.name.charAt(0)}
-                  </div>
+                <div className="flex items-center gap-4 justify-between">
+                   <div className='flex items-center gap-[10px]'>
+                  <div className="w-[100px] flex gap-[10px] h-[100px] bg-gradient-to-br overflow-hidden from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                   <img src={"https://gateway.pinata.cloud/ipfs/"+selectedCandidate?.imageHash} alt="" width={"200px"} height={"200px"} />
+                   </div>
                   <div>
                     <h4 className="font-bold text-white text-lg">{selectedCandidate.name}</h4>
                     <p className="text-slate-300">{selectedCandidate.partyName}</p>
-                    <p className="text-2xl">{selectedCandidate.symbol}</p>
+                  </div>
+                  </div>
+                  <div>
+                  <img src={"https://gateway.pinata.cloud/ipfs/"+selectedCandidate?.symbol} alt="" width={"50px"} height={"50px"} />
                   </div>
                 </div>
               </div>
@@ -867,7 +871,12 @@ const CandidateList = ({ electionId, isElectionActive }) => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-300">Symbol:</span>
-                        <span className="text-2xl">{verificationResult.symbol}</span>
+                        <div>
+                  <img src={"https://gateway.pinata.cloud/ipfs/"+verificationResult?.symbol} alt="" width={"50px"} height={"50px"} />
+                  </div>
+
+
+                        
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-300">Vote Time:</span>
@@ -878,7 +887,7 @@ const CandidateList = ({ electionId, isElectionActive }) => {
                       <div className="flex justify-between">
                         <span className="text-slate-300">Wallet Address:</span>
                         <span className="font-mono text-xs">
-                          {verificationResult.voterAddress.substring(0, 6)}...{verificationResult.voterAddress.substring(-4)}
+                          {verificationResult.voterAddress.substring(0, 6)}...
                         </span>
                       </div>
                     </div>
