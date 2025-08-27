@@ -306,7 +306,7 @@ const AddCandidateForm = () => {
             <select
               value={newCandidate.electionId}
               onChange={(e) => setNewCandidate({...newCandidate, electionId: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 text-[#000] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             >
               <option value="">Select Election</option>
@@ -326,7 +326,7 @@ const AddCandidateForm = () => {
               type="text"
               value={newCandidate.name}
               onChange={(e) => setNewCandidate({...newCandidate, name: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 text-[#000] py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
@@ -339,7 +339,7 @@ const AddCandidateForm = () => {
               type="text"
               value={newCandidate.partyName}
               onChange={(e) => setNewCandidate({...newCandidate, partyName: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border text-[#000] border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>

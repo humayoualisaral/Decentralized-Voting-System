@@ -1866,7 +1866,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-yellow-200 font-medium",
-                                    children: "Leading"
+                                    children: isElectionActive ? 'Leading' : 'Winner'
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
                                     lineNumber: 505,
@@ -1901,19 +1901,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                     className: "w-5 h-5 text-white"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 514,
+                                    lineNumber: 516,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 513,
+                                lineNumber: 515,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             "Candidates"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 512,
+                        lineNumber: 514,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1927,14 +1927,14 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                         className: "w-5 h-5"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 525,
+                                        lineNumber: 527,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     "Verify Vote"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 521,
+                                lineNumber: 523,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1945,26 +1945,26 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                         className: "w-5 h-5"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 534,
+                                        lineNumber: 536,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     showResults ? 'Hide Results' : 'Show Results'
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 530,
+                                lineNumber: 532,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 519,
+                        lineNumber: 521,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 511,
+                lineNumber: 513,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             candidates.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1976,12 +1976,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                             className: "w-10 h-10 text-white"
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 544,
+                            lineNumber: 546,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 543,
+                        lineNumber: 545,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1989,7 +1989,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                         children: "No Candidates Found"
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 546,
+                        lineNumber: 548,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1997,13 +1997,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                         children: "No candidates have been added to this election yet."
                     }, void 0, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 549,
+                        lineNumber: 551,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 542,
+                lineNumber: 544,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
@@ -2015,12 +2015,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                         totalVotes: getTotalVotes()
                     }, candidate.candidateId, false, {
                         fileName: "[project]/src/components/CandidateList.jsx",
-                        lineNumber: 556,
+                        lineNumber: 558,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)))
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 554,
+                lineNumber: 556,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             showCnicModal && selectedCandidate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2042,12 +2042,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                     className: "w-6 h-6 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 577,
+                                                    lineNumber: 579,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 576,
+                                                lineNumber: 578,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2055,13 +2055,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                 children: "Secure Voter Verification"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 579,
+                                                lineNumber: 581,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 575,
+                                        lineNumber: 577,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2075,23 +2075,23 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                             className: "w-6 h-6"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 591,
+                                            lineNumber: 593,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 583,
+                                        lineNumber: 585,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 574,
+                                lineNumber: 576,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 573,
+                            lineNumber: 575,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2114,12 +2114,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                             height: "200px"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 602,
+                                                            lineNumber: 604,
                                                             columnNumber: 20
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 601,
+                                                        lineNumber: 603,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2129,7 +2129,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: selectedCandidate.name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 605,
+                                                                lineNumber: 607,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2137,19 +2137,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: selectedCandidate.partyName
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 606,
+                                                                lineNumber: 608,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 604,
+                                                        lineNumber: 606,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 600,
+                                                lineNumber: 602,
                                                 columnNumber: 20
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2160,23 +2160,23 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                     height: "50px"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 610,
+                                                    lineNumber: 612,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 609,
+                                                lineNumber: 611,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 599,
+                                        lineNumber: 601,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 598,
+                                    lineNumber: 600,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2193,12 +2193,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 className: "w-5 h-5 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 622,
+                                                                lineNumber: 624,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 621,
+                                                            lineNumber: 623,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2208,7 +2208,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     children: "Step 1: CNIC Verification"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 625,
+                                                                    lineNumber: 627,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2216,19 +2216,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     children: "Verify your voter registration"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 626,
+                                                                    lineNumber: 628,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 624,
+                                                            lineNumber: 626,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 620,
+                                                    lineNumber: 622,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2246,7 +2246,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                             disabled: votingInProgress
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 631,
+                                                            lineNumber: 633,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         cnicError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2256,14 +2256,14 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     className: "w-4 h-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 649,
+                                                                    lineNumber: 651,
                                                                     columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 cnicError
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 648,
+                                                            lineNumber: 650,
                                                             columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2276,7 +2276,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         className: "w-5 h-5 animate-spin"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 661,
+                                                                        lineNumber: 663,
                                                                         columnNumber: 29
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     "Verifying CNIC..."
@@ -2287,7 +2287,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         className: "w-5 h-5"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 666,
+                                                                        lineNumber: 668,
                                                                         columnNumber: 29
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     "Verify CNIC"
@@ -2295,19 +2295,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                             }, void 0, true)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 654,
+                                                            lineNumber: 656,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 630,
+                                                    lineNumber: 632,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 619,
+                                            lineNumber: 621,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         verificationStep === 'fingerprint' && userRegistration && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2321,12 +2321,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 className: "w-5 h-5 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 680,
+                                                                lineNumber: 682,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 679,
+                                                            lineNumber: 681,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2336,7 +2336,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     children: "Step 2: Biometric Verification"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 683,
+                                                                    lineNumber: 685,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2344,19 +2344,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     children: "Authenticate with your fingerprint"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 684,
+                                                                    lineNumber: 686,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 682,
+                                                            lineNumber: 684,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 678,
+                                                    lineNumber: 680,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2371,7 +2371,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         className: "w-5 h-5 text-emerald-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 692,
+                                                                        lineNumber: 694,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2379,13 +2379,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         children: "CNIC Verified Successfully"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 693,
+                                                                        lineNumber: 695,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0))
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 691,
+                                                                lineNumber: 693,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2398,7 +2398,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                                 children: "Name:"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                                lineNumber: 696,
+                                                                                lineNumber: 698,
                                                                                 columnNumber: 30
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             " ",
@@ -2408,7 +2408,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 696,
+                                                                        lineNumber: 698,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2418,7 +2418,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                                 children: "Province:"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                                lineNumber: 697,
+                                                                                lineNumber: 699,
                                                                                 columnNumber: 30
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             " ",
@@ -2426,7 +2426,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 697,
+                                                                        lineNumber: 699,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2436,7 +2436,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                                 children: "Constituency:"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                                lineNumber: 698,
+                                                                                lineNumber: 700,
                                                                                 columnNumber: 30
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             " ",
@@ -2444,24 +2444,24 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                                        lineNumber: 698,
+                                                                        lineNumber: 700,
                                                                         columnNumber: 27
                                                                     }, ("TURBOPACK compile-time value", void 0))
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 695,
+                                                                lineNumber: 697,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 690,
+                                                        lineNumber: 692,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 689,
+                                                    lineNumber: 691,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2479,33 +2479,33 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                             className: "w-16 h-16 text-white z-10"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                                            lineNumber: 713,
+                                                                            lineNumber: 715,
                                                                             columnNumber: 27
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         isBiometricLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                                            lineNumber: 715,
+                                                                            lineNumber: 717,
                                                                             columnNumber: 29
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 712,
+                                                                    lineNumber: 714,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                     className: "absolute inset-0 w-32 h-32 border-4 border-emerald-400/30 rounded-full mx-auto animate-ping"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 718,
+                                                                    lineNumber: 720,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 705,
+                                                            lineNumber: 707,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2513,13 +2513,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                             children: isBiometricLoading ? 'Scanning fingerprint...' : 'Tap to authenticate'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 720,
+                                                            lineNumber: 722,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 704,
+                                                    lineNumber: 706,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 biometricStatus && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2527,13 +2527,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                     children: biometricStatus
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 727,
+                                                    lineNumber: 729,
                                                     columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 677,
+                                            lineNumber: 679,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         verificationStep === 'verifying' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2548,25 +2548,25 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 className: "w-10 h-10 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 745,
+                                                                lineNumber: 747,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 744,
+                                                            lineNumber: 746,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "absolute inset-0 w-20 h-20 border-4 border-purple-400/30 rounded-full mx-auto animate-spin"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 747,
+                                                            lineNumber: 749,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 743,
+                                                    lineNumber: 745,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -2574,7 +2574,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                     children: "Processing Your Vote"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 749,
+                                                    lineNumber: 751,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2582,7 +2582,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                     children: "Your vote is being securely recorded on the blockchain..."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 750,
+                                                    lineNumber: 752,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 biometricStatus && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2592,41 +2592,41 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                         children: biometricStatus
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 755,
+                                                        lineNumber: 757,
                                                         columnNumber: 25
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 754,
+                                                    lineNumber: 756,
                                                     columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 742,
+                                            lineNumber: 744,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                    lineNumber: 616,
+                                    lineNumber: 618,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 596,
+                            lineNumber: 598,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/CandidateList.jsx",
-                    lineNumber: 571,
+                    lineNumber: 573,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 570,
+                lineNumber: 572,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             showVerificationModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2648,12 +2648,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                     className: "w-6 h-6 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                    lineNumber: 775,
+                                                    lineNumber: 777,
                                                     columnNumber: 21
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 774,
+                                                lineNumber: 776,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2661,13 +2661,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                 children: "Verify Your Vote"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 777,
+                                                lineNumber: 779,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 773,
+                                        lineNumber: 775,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2682,23 +2682,23 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                             className: "w-6 h-6"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                            lineNumber: 790,
+                                            lineNumber: 792,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 781,
+                                        lineNumber: 783,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 772,
+                                lineNumber: 774,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 771,
+                            lineNumber: 773,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2717,12 +2717,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                             className: "w-5 h-5 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 801,
+                                                            lineNumber: 803,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 800,
+                                                        lineNumber: 802,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2732,7 +2732,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Enter Your CNIC"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 804,
+                                                                lineNumber: 806,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2740,19 +2740,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Check which candidate you voted for"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 805,
+                                                                lineNumber: 807,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 803,
+                                                        lineNumber: 805,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 799,
+                                                lineNumber: 801,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2770,7 +2770,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                         disabled: verificationLoading
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 810,
+                                                        lineNumber: 812,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     verificationError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2780,14 +2780,14 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 className: "w-4 h-4"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 828,
+                                                                lineNumber: 830,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             verificationError
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 827,
+                                                        lineNumber: 829,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2800,7 +2800,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     className: "w-5 h-5 animate-spin"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 840,
+                                                                    lineNumber: 842,
                                                                     columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 "Checking Vote..."
@@ -2811,7 +2811,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     className: "w-5 h-5"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 845,
+                                                                    lineNumber: 847,
                                                                     columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                                 "Verify Vote"
@@ -2819,19 +2819,19 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                         }, void 0, true)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 833,
+                                                        lineNumber: 835,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 809,
+                                                lineNumber: 811,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 798,
+                                        lineNumber: 800,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     verificationResult && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2846,12 +2846,12 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                             className: "w-8 h-8 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/CandidateList.jsx",
-                                                            lineNumber: 858,
+                                                            lineNumber: 860,
                                                             columnNumber: 25
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 857,
+                                                        lineNumber: 859,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -2859,13 +2859,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                         children: "Vote Found!"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 860,
+                                                        lineNumber: 862,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 856,
+                                                lineNumber: 858,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2879,7 +2879,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Candidate:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 865,
+                                                                lineNumber: 867,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2887,13 +2887,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: verificationResult.candidateName
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 866,
+                                                                lineNumber: 868,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 864,
+                                                        lineNumber: 866,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2904,7 +2904,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Party:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 869,
+                                                                lineNumber: 871,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2912,13 +2912,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: verificationResult.partyName
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 870,
+                                                                lineNumber: 872,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 868,
+                                                        lineNumber: 870,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2929,7 +2929,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Symbol:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 873,
+                                                                lineNumber: 875,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2940,18 +2940,18 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                     height: "50px"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/CandidateList.jsx",
-                                                                    lineNumber: 875,
+                                                                    lineNumber: 877,
                                                                     columnNumber: 19
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 874,
+                                                                lineNumber: 876,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 872,
+                                                        lineNumber: 874,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2962,7 +2962,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Vote Time:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 882,
+                                                                lineNumber: 884,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2970,13 +2970,13 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: new Date(parseInt(verificationResult.voteTimestamp) * 1000).toLocaleString()
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 883,
+                                                                lineNumber: 885,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 881,
+                                                        lineNumber: 883,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2987,7 +2987,7 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 children: "Wallet Address:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 888,
+                                                                lineNumber: 890,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2998,47 +2998,47 @@ const CandidateList = ({ electionId, isElectionActive })=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                                lineNumber: 889,
+                                                                lineNumber: 891,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                                        lineNumber: 887,
+                                                        lineNumber: 889,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                                lineNumber: 863,
+                                                lineNumber: 865,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/CandidateList.jsx",
-                                        lineNumber: 855,
+                                        lineNumber: 857,
                                         columnNumber: 19
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/CandidateList.jsx",
-                                lineNumber: 796,
+                                lineNumber: 798,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/components/CandidateList.jsx",
-                            lineNumber: 795,
+                            lineNumber: 797,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/CandidateList.jsx",
-                    lineNumber: 769,
+                    lineNumber: 771,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/CandidateList.jsx",
-                lineNumber: 768,
+                lineNumber: 770,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]

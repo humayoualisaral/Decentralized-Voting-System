@@ -199,6 +199,22 @@ export default function NadraRegistrationForm() {
     }
   };
 
+  // Helper function to calculate exact age
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    // If the birthday hasn't occurred this year yet, subtract 1
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
+  };
+
   // Validation function
   const validateForm = () => {
     const newErrors = {};
@@ -224,12 +240,12 @@ export default function NadraRegistrationForm() {
     if (!formData.dateOfBirth) {
       newErrors.dateOfBirth = "Date of Birth is required";
     } else {
-      const birthDate = new Date(formData.dateOfBirth);
-      const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
+      const age = calculateAge(formData.dateOfBirth);
       
-      if (age < 18 || age > 100) {
-        newErrors.dateOfBirth = "Age must be between 18 and 100 years";
+      if (age < 18) {
+        newErrors.dateOfBirth = `You must be at least 18 years old to register. Your current age is ${age} years.`;
+      } else if (age > 100) {
+        newErrors.dateOfBirth = "Age cannot be more than 100 years";
       }
     }
 
@@ -295,6 +311,10 @@ export default function NadraRegistrationForm() {
   // Handle form submission
   const handleSubmit = async () => {
     if (!validateForm()) {
+      // Show specific error if user is under 18
+      if (errors.dateOfBirth && errors.dateOfBirth.includes('must be at least 18')) {
+        alert(`❌ REGISTRATION NOT ALLOWED\n\n🚫 ${errors.dateOfBirth}\n\n⚠️ You must be 18 years or older to register with NADRA.`);
+      }
       return;
     }
 

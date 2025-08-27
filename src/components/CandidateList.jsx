@@ -502,7 +502,9 @@ const CandidateList = ({ electionId, isElectionActive }) => {
             <p className="text-lg font-bold text-white mb-1 truncate">
               {getLeadingCandidate()?.name || 'No Votes Yet'}
             </p>
-            <p className="text-yellow-200 font-medium">Leading</p>
+            <p className="text-yellow-200 font-medium">
+              {isElectionActive ? 'Leading' : 'Winner'}
+            </p>
           </div>
         </div>
       </div>

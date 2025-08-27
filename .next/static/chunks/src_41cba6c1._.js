@@ -1113,7 +1113,7 @@ const AddCandidateForm = ()=>{
                                                 ...newCandidate,
                                                 electionId: e.target.value
                                             }),
-                                        className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                        className: "w-full px-3 py-2 border border-gray-300 text-[#000] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                                         required: true,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1161,7 +1161,7 @@ const AddCandidateForm = ()=>{
                                                 ...newCandidate,
                                                 name: e.target.value
                                             }),
-                                        className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                        className: "w-full px-3 text-[#000] py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AddCandidateForm.jsx",
@@ -1191,7 +1191,7 @@ const AddCandidateForm = ()=>{
                                                 ...newCandidate,
                                                 partyName: e.target.value
                                             }),
-                                        className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                                        className: "w-full px-3 py-2 border text-[#000] border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/AddCandidateForm.jsx",
@@ -3489,6 +3489,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/activity.js [app-client] (ecmascript) <export default as Activity>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trophy.js [app-client] (ecmascript) <export default as Trophy>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chart-column.js [app-client] (ecmascript) <export default as BarChart3>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-client] (ecmascript) <export default as Shield>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldAlert$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield-alert.js [app-client] (ecmascript) <export default as ShieldAlert>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/log-out.js [app-client] (ecmascript) <export default as LogOut>");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
@@ -3502,7 +3505,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 const ElectionCommissionDashboard = ()=>{
     _s();
-    const { account, isConnected, isLoading, connectWallet, getElectionDetails, getCandidateDetails, getElectionCandidates, getElectionResults, getCurrentElectionId, setElectionStatus, setCandidateStatus } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ContractContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useVoting"])();
+    const { account, isConnected, isLoading, connectWallet, disconnectWallet, getElectionDetails, getCandidateDetails, getElectionCandidates, getElectionResults, getCurrentElectionId, setElectionStatus, setCandidateStatus, contract } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ContractContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useVoting"])();
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('dashboard');
     const [elections, setElections] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [candidates, setCandidates] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -3515,6 +3518,519 @@ const ElectionCommissionDashboard = ()=>{
     });
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [success, setSuccess] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    // New state for admin check
+    const [isAdmin, setIsAdmin] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isCheckingAdmin, setIsCheckingAdmin] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [showAdminPopup, setShowAdminPopup] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Check if current account has admin role
+    const checkAdminRole = async ()=>{
+        try {
+            if (!contract || !account) {
+                setIsAdmin(false);
+                setIsCheckingAdmin(false);
+                return;
+            }
+            setIsCheckingAdmin(true);
+            // Check if account has ELECTION_COMMISSION_ROLE
+            // This assumes your contract has a function to check roles
+            // You may need to adjust this based on your contract's role checking method
+            try {
+                // Try to call an admin-only function to check if account has admin rights
+                // This is a common pattern - trying to call a restricted function
+                const ELECTION_COMMISSION_ROLE = await contract.ELECTION_COMMISSION_ROLE();
+                const hasRole = await contract.hasRole(ELECTION_COMMISSION_ROLE, account);
+                setIsAdmin(hasRole);
+                if (!hasRole) {
+                    setShowAdminPopup(true);
+                }
+            } catch (roleError) {
+                // If the contract doesn't have role-based access, try alternative methods
+                console.log('Role check failed, trying alternative admin check:', roleError);
+                // Alternative: Check if account is the owner/deployer
+                try {
+                    const owner = await contract.owner();
+                    const isOwner = owner.toLowerCase() === account.toLowerCase();
+                    setIsAdmin(isOwner);
+                    if (!isOwner) {
+                        setShowAdminPopup(true);
+                    }
+                } catch (ownerError) {
+                    console.error('Admin check failed:', ownerError);
+                    setIsAdmin(false);
+                    setShowAdminPopup(true);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking admin role:', error);
+            setIsAdmin(false);
+            setShowAdminPopup(true);
+        } finally{
+            setIsCheckingAdmin(false);
+        }
+    };
+    // Check admin role when wallet connects or account changes
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ElectionCommissionDashboard.useEffect": ()=>{
+            if (isConnected && account && contract) {
+                checkAdminRole();
+            } else {
+                setIsAdmin(false);
+                setIsCheckingAdmin(false);
+                setShowAdminPopup(false);
+            }
+        }
+    }["ElectionCommissionDashboard.useEffect"], [
+        isConnected,
+        account,
+        contract
+    ]);
+    // Admin Access Denied Popup Component
+    const AdminAccessDeniedPopup = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "fixed inset-0 z-50 overflow-y-auto",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm transition-opacity"
+                }, void 0, false, {
+                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                    lineNumber: 132,
+                    columnNumber: 7
+                }, ("TURBOPACK compile-time value", void 0)),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex min-h-full items-center justify-center p-4",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-gradient-to-r from-red-500 to-red-600 px-6 py-4",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex-shrink-0",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldAlert$3e$__["ShieldAlert"], {
+                                                className: "h-8 w-8 text-white"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 141,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                            lineNumber: 140,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "ml-3",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                    className: "text-lg font-semibold text-white",
+                                                    children: "Access Denied"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                    lineNumber: 144,
+                                                    columnNumber: 17
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-red-100 text-sm",
+                                                    children: "Admin privileges required"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                    lineNumber: 147,
+                                                    columnNumber: 17
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                            lineNumber: 143,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                    lineNumber: 139,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                lineNumber: 138,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "px-6 py-6",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-center mb-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "mx-auto mb-4 w-16 h-16 bg-red-100 rounded-full flex items-center justify-center",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                                    className: "w-8 h-8 text-red-600"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                    lineNumber: 158,
+                                                    columnNumber: 17
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 157,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                className: "text-xl font-bold text-gray-900 mb-2",
+                                                children: "Admin Access Required"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 160,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-gray-600 leading-relaxed mb-4",
+                                                children: "You need to connect with an admin wallet to access the Election Commission Dashboard."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 163,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "bg-red-50 border border-red-200 rounded-lg p-4 mb-6",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-start",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
+                                                            className: "h-5 w-5 text-red-400 mr-2 mt-0.5"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 168,
+                                                            columnNumber: 19
+                                                        }, ("TURBOPACK compile-time value", void 0)),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-left",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-sm text-red-800 font-medium mb-1",
+                                                                    children: "Current Wallet:"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                                    lineNumber: 170,
+                                                                    columnNumber: 21
+                                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-xs text-red-600 font-mono bg-red-100 px-2 py-1 rounded",
+                                                                    children: account ? "".concat(account.slice(0, 6), "...").concat(account.slice(-4)) : 'Not connected'
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                                    lineNumber: 173,
+                                                                    columnNumber: 21
+                                                                }, ("TURBOPACK compile-time value", void 0))
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 169,
+                                                            columnNumber: 19
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                    lineNumber: 167,
+                                                    columnNumber: 17
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 166,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 156,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "space-y-4 mb-6",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-start space-x-3",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-xs font-semibold text-blue-600",
+                                                            children: "1"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 185,
+                                                            columnNumber: 19
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 184,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-sm text-gray-700",
+                                                        children: "Disconnect your current wallet"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 187,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 183,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-start space-x-3",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-xs font-semibold text-blue-600",
+                                                            children: "2"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 193,
+                                                            columnNumber: 19
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 192,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-sm text-gray-700",
+                                                        children: "Connect with an admin wallet that has Election Commission privileges"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 195,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 191,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-start space-x-3",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-xs font-semibold text-blue-600",
+                                                            children: "3"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 201,
+                                                            columnNumber: 19
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 200,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-sm text-gray-700",
+                                                        children: "Access will be granted automatically upon successful connection"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 203,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 199,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 182,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "space-y-3",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>{
+                                                    disconnectWallet();
+                                                    setShowAdminPopup(false);
+                                                },
+                                                className: "w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-lg hover:shadow-xl",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
+                                                        className: "w-5 h-5 mr-2"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                        lineNumber: 218,
+                                                        columnNumber: 17
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    "Disconnect & Switch Wallet"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 211,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: checkAdminRole,
+                                                disabled: isCheckingAdmin,
+                                                className: "w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed",
+                                                children: isCheckingAdmin ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 229,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0)),
+                                                        "Checking..."
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                    lineNumber: 228,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                                            className: "w-5 h-5 mr-2"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                            lineNumber: 234,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0)),
+                                                        "Recheck Admin Access"
+                                                    ]
+                                                }, void 0, true)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 222,
+                                                columnNumber: 15
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 210,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                lineNumber: 155,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-gray-50 px-6 py-4 border-t border-gray-200",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-xs text-gray-500 text-center",
+                                    children: "Contact your system administrator if you believe this is an error"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                    lineNumber: 244,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                lineNumber: 243,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                        lineNumber: 136,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0))
+                }, void 0, false, {
+                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                    lineNumber: 135,
+                    columnNumber: 7
+                }, ("TURBOPACK compile-time value", void 0))
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/app/electioncommission/page.jsx",
+            lineNumber: 130,
+            columnNumber: 5
+        }, ("TURBOPACK compile-time value", void 0));
+    // Loading Screen for Admin Check
+    const AdminCheckingLoader = ()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "max-w-md w-full",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                className: "w-10 h-10 text-white"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                lineNumber: 259,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0))
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                            lineNumber: 258,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                            className: "text-3xl font-bold text-gray-900 mb-4",
+                            children: "Verifying Access"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                            lineNumber: 261,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-gray-600 mb-8 -relaxed",
+                            children: "Checking admin privileges for your wallet..."
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                            lineNumber: 264,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex items-center justify-center mb-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                lineNumber: 268,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0))
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                            lineNumber: 267,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-xs text-gray-500",
+                            children: "This may take a few seconds"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                            lineNumber: 270,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0))
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                    lineNumber: 257,
+                    columnNumber: 9
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
+                fileName: "[project]/src/app/electioncommission/page.jsx",
+                lineNumber: 256,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        }, void 0, false, {
+            fileName: "[project]/src/app/electioncommission/page.jsx",
+            lineNumber: 255,
+            columnNumber: 5
+        }, ("TURBOPACK compile-time value", void 0));
     // Update dashboard statistics
     const updateDashboardStats = (electionsList)=>{
         const totalElections = electionsList.length;
@@ -3530,7 +4046,7 @@ const ElectionCommissionDashboard = ()=>{
     // Load elections from blockchain
     const loadElections = async ()=>{
         try {
-            if (!isConnected) return;
+            if (!isConnected || !isAdmin) return;
             const currentId = await getCurrentElectionId();
             const electionsList = [];
             for(let i = 1; i <= parseInt(currentId); i++){
@@ -3556,7 +4072,7 @@ const ElectionCommissionDashboard = ()=>{
     // Load candidates from blockchain
     const loadCandidates = async ()=>{
         try {
-            if (!isConnected || elections.length === 0) return;
+            if (!isConnected || !isAdmin || elections.length === 0) return;
             const allCandidates = [];
             for (const election of elections){
                 try {
@@ -3582,24 +4098,26 @@ const ElectionCommissionDashboard = ()=>{
             setError('Failed to load candidates');
         }
     };
-    // Load data when connected
+    // Load data when admin access is granted
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ElectionCommissionDashboard.useEffect": ()=>{
-            if (isConnected) {
+            if (isConnected && isAdmin) {
                 loadElections();
             }
         }
     }["ElectionCommissionDashboard.useEffect"], [
-        isConnected
+        isConnected,
+        isAdmin
     ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ElectionCommissionDashboard.useEffect": ()=>{
-            if (elections.length > 0) {
+            if (elections.length > 0 && isAdmin) {
                 loadCandidates();
             }
         }
     }["ElectionCommissionDashboard.useEffect"], [
-        elections
+        elections,
+        isAdmin
     ]);
     // Update stats when candidates change
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -3644,12 +4162,12 @@ const ElectionCommissionDashboard = ()=>{
                                 className: "w-10 h-10 text-white"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 170,
+                                lineNumber: 393,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 169,
+                            lineNumber: 392,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -3657,15 +4175,15 @@ const ElectionCommissionDashboard = ()=>{
                             children: "Election Commission"
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 172,
+                            lineNumber: 395,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-gray-600 mb-8 leading-relaxed",
-                            children: "Connect your wallet to access the blockchain-based election management system"
+                            children: "Connect your admin wallet to access the blockchain-based election management system"
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 175,
+                            lineNumber: 398,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3679,43 +4197,43 @@ const ElectionCommissionDashboard = ()=>{
                                         className: "animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                        lineNumber: 185,
+                                        lineNumber: 408,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     "Connecting..."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 184,
+                                lineNumber: 407,
                                 columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0)) : 'Connect Wallet'
+                            }, ("TURBOPACK compile-time value", void 0)) : 'Connect Admin Wallet'
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 178,
+                            lineNumber: 401,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-xs text-gray-500 mt-4",
-                            children: "Secure blockchain connection required"
+                            children: "Admin privileges required for access"
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 192,
+                            lineNumber: 415,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 168,
+                    lineNumber: 391,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 167,
+                lineNumber: 390,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         }, void 0, false, {
             fileName: "[project]/src/app/electioncommission/page.jsx",
-            lineNumber: 166,
+            lineNumber: 389,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0));
     // Enhanced Alert Message Component
@@ -3734,18 +4252,18 @@ const ElectionCommissionDashboard = ()=>{
                                 className: "h-5 w-5 text-red-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 213,
+                                lineNumber: 436,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
                                 className: "h-5 w-5 text-green-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 215,
+                                lineNumber: 438,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 211,
+                            lineNumber: 434,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3755,12 +4273,12 @@ const ElectionCommissionDashboard = ()=>{
                                 children: message
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 219,
+                                lineNumber: 442,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 218,
+                            lineNumber: 441,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3772,33 +4290,33 @@ const ElectionCommissionDashboard = ()=>{
                                     className: "h-4 w-4"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 234,
+                                    lineNumber: 457,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 226,
+                                lineNumber: 449,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 225,
+                            lineNumber: 448,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 210,
+                    lineNumber: 433,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 207,
+                lineNumber: 430,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         }, void 0, false, {
             fileName: "[project]/src/app/electioncommission/page.jsx",
-            lineNumber: 202,
+            lineNumber: 425,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0));
     };
@@ -3820,12 +4338,12 @@ const ElectionCommissionDashboard = ()=>{
                                         className: "h-6 w-6"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                        lineNumber: 252,
+                                        lineNumber: 475,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 248,
+                                    lineNumber: 471,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3837,12 +4355,12 @@ const ElectionCommissionDashboard = ()=>{
                                                 className: "w-6 h-6 text-white"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 256,
+                                                lineNumber: 479,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 255,
+                                            lineNumber: 478,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3852,7 +4370,7 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Election Commission"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 259,
+                                                    lineNumber: 482,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3860,25 +4378,25 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Blockchain Management System"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 260,
+                                                    lineNumber: 483,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 258,
+                                            lineNumber: 481,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 254,
+                                    lineNumber: 477,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 247,
+                            lineNumber: 470,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3887,11 +4405,35 @@ const ElectionCommissionDashboard = ()=>{
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "hidden sm:flex items-center px-3 py-2 bg-green-50 rounded-lg border border-green-200",
                                     children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                            className: "w-4 h-4 text-green-500 mr-2"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                            lineNumber: 490,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-sm font-medium text-green-700",
+                                            children: "Admin"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                            lineNumber: 491,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                    lineNumber: 489,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "hidden sm:flex items-center px-3 py-2 bg-green-50 rounded-lg border border-green-200",
+                                    children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 267,
+                                            lineNumber: 494,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3899,13 +4441,13 @@ const ElectionCommissionDashboard = ()=>{
                                             children: "Connected"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 268,
+                                            lineNumber: 495,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 266,
+                                    lineNumber: 493,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3915,34 +4457,34 @@ const ElectionCommissionDashboard = ()=>{
                                         children: account ? "".concat(account.slice(0, 6), "...").concat(account.slice(-4)) : ''
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                        lineNumber: 271,
+                                        lineNumber: 498,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 270,
+                                    lineNumber: 497,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 265,
+                            lineNumber: 488,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 246,
+                    lineNumber: 469,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 245,
+                lineNumber: 468,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         }, void 0, false, {
             fileName: "[project]/src/app/electioncommission/page.jsx",
-            lineNumber: 244,
+            lineNumber: 467,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0));
     // Enhanced Navigation Sidebar Component
@@ -3986,7 +4528,7 @@ const ElectionCommissionDashboard = ()=>{
                     onClick: ()=>setSidebarOpen(false)
                 }, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 295,
+                    lineNumber: 522,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4008,12 +4550,12 @@ const ElectionCommissionDashboard = ()=>{
                                                         className: "w-5 h-5 text-white"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                        lineNumber: 313,
+                                                        lineNumber: 540,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 312,
+                                                    lineNumber: 539,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -4021,13 +4563,13 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Navigation"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 315,
+                                                    lineNumber: 542,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 311,
+                                            lineNumber: 538,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4037,23 +4579,23 @@ const ElectionCommissionDashboard = ()=>{
                                                 className: "h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 321,
+                                                lineNumber: 548,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 317,
+                                            lineNumber: 544,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 310,
+                                    lineNumber: 537,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 309,
+                                lineNumber: 536,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -4075,7 +4617,7 @@ const ElectionCommissionDashboard = ()=>{
                                                         className: "w-5 h-5 mr-3 ".concat(isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-700')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                        lineNumber: 345,
+                                                        lineNumber: 572,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4083,13 +4625,13 @@ const ElectionCommissionDashboard = ()=>{
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                        lineNumber: 348,
+                                                        lineNumber: 575,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 344,
+                                                lineNumber: 571,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4097,60 +4639,85 @@ const ElectionCommissionDashboard = ()=>{
                                                 children: item.description
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 350,
+                                                lineNumber: 577,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, item.id, true, {
                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                        lineNumber: 332,
+                                        lineNumber: 559,
                                         columnNumber: 19
                                     }, ("TURBOPACK compile-time value", void 0));
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 327,
+                                lineNumber: 554,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "p-6 border-t border-gray-200 bg-gray-50",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center text-sm text-gray-600",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], {
-                                            className: "w-4 h-4 mr-2 text-green-500"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 363,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0)),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            children: "System Status: Online"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 364,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 362,
-                                    columnNumber: 15
-                                }, ("TURBOPACK compile-time value", void 0))
-                            }, void 0, false, {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center text-sm text-gray-600 mb-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$activity$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Activity$3e$__["Activity"], {
+                                                className: "w-4 h-4 mr-2 text-green-500"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 590,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                children: "System Status: Online"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 591,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 589,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center text-sm text-gray-600",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                                className: "w-4 h-4 mr-2 text-blue-500"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 594,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                children: "Admin Access: Granted"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/electioncommission/page.jsx",
+                                                lineNumber: 595,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 593,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 361,
+                                lineNumber: 588,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                        lineNumber: 307,
+                        lineNumber: 534,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 302,
+                    lineNumber: 529,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
@@ -4200,10 +4767,10 @@ const ElectionCommissionDashboard = ()=>{
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             className: "text-3xl font-bold mb-2",
-                            children: "Welcome to Election Dashboard"
+                            children: "Welcome to Admin Dashboard"
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 414,
+                            lineNumber: 645,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4211,13 +4778,13 @@ const ElectionCommissionDashboard = ()=>{
                             children: "Manage elections and candidates with blockchain transparency"
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 415,
+                            lineNumber: 646,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 413,
+                    lineNumber: 644,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4239,7 +4806,7 @@ const ElectionCommissionDashboard = ()=>{
                                                         children: stat.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                        lineNumber: 432,
+                                                        lineNumber: 663,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4247,13 +4814,13 @@ const ElectionCommissionDashboard = ()=>{
                                                         children: stat.value
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                        lineNumber: 435,
+                                                        lineNumber: 666,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 431,
+                                                lineNumber: 662,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4262,23 +4829,23 @@ const ElectionCommissionDashboard = ()=>{
                                                     className: "w-8 h-8 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 440,
+                                                    lineNumber: 671,
                                                     columnNumber: 23
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 439,
+                                                lineNumber: 670,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                        lineNumber: 430,
+                                        lineNumber: 661,
                                         columnNumber: 19
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 429,
+                                    lineNumber: 660,
                                     columnNumber: 17
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4290,37 +4857,37 @@ const ElectionCommissionDashboard = ()=>{
                                                 className: "w-4 h-4 mr-1"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 446,
+                                                lineNumber: 677,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: "Updated now"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                lineNumber: 447,
+                                                lineNumber: 678,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/electioncommission/page.jsx",
-                                        lineNumber: 445,
+                                        lineNumber: 676,
                                         columnNumber: 19
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 444,
+                                    lineNumber: 675,
                                     columnNumber: 17
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, stat.name, true, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 425,
+                            lineNumber: 656,
                             columnNumber: 15
                         }, ("TURBOPACK compile-time value", void 0));
                     })
                 }, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 421,
+                    lineNumber: 652,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4331,7 +4898,7 @@ const ElectionCommissionDashboard = ()=>{
                             children: "Quick Actions"
                         }, void 0, false, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 457,
+                            lineNumber: 688,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4345,7 +4912,7 @@ const ElectionCommissionDashboard = ()=>{
                                             className: "w-8 h-8 text-blue-600 mr-4 group-hover:scale-110 transition-transform"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 463,
+                                            lineNumber: 694,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4356,7 +4923,7 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Create New Election"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 465,
+                                                    lineNumber: 696,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4364,19 +4931,19 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Set up a new voting process"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 466,
+                                                    lineNumber: 697,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 464,
+                                            lineNumber: 695,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 459,
+                                    lineNumber: 690,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4387,7 +4954,7 @@ const ElectionCommissionDashboard = ()=>{
                                             className: "w-8 h-8 text-green-600 mr-4 group-hover:scale-110 transition-transform"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 473,
+                                            lineNumber: 704,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4398,7 +4965,7 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Add Candidate"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 475,
+                                                    lineNumber: 706,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4406,37 +4973,37 @@ const ElectionCommissionDashboard = ()=>{
                                                     children: "Register new candidates"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                                    lineNumber: 476,
+                                                    lineNumber: 707,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                                            lineNumber: 474,
+                                            lineNumber: 705,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 469,
+                                    lineNumber: 700,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 458,
+                            lineNumber: 689,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 456,
+                    lineNumber: 687,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/electioncommission/page.jsx",
-            lineNumber: 411,
+            lineNumber: 642,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0));
     };
@@ -4446,7 +5013,7 @@ const ElectionCommissionDashboard = ()=>{
             case 'dashboard':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedDashboardOverview, {}, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 490,
+                    lineNumber: 721,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0));
             case 'elections':
@@ -4459,7 +5026,7 @@ const ElectionCommissionDashboard = ()=>{
                     isLoading: isLoading
                 }, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 494,
+                    lineNumber: 725,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0));
             case 'candidates':
@@ -4473,25 +5040,25 @@ const ElectionCommissionDashboard = ()=>{
                     loadCandidates: loadCandidates
                 }, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 505,
+                    lineNumber: 736,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0));
             case 'create-election':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$CreateElectionForm$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 516,
+                    lineNumber: 747,
                     columnNumber: 16
                 }, ("TURBOPACK compile-time value", void 0));
             case 'add-candidate':
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$AddCandidateForm$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 518,
+                    lineNumber: 749,
                     columnNumber: 16
                 }, ("TURBOPACK compile-time value", void 0));
             default:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedDashboardOverview, {}, void 0, false, {
                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 521,
+                    lineNumber: 752,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0));
         }
@@ -4500,91 +5067,113 @@ const ElectionCommissionDashboard = ()=>{
     if (!isConnected) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedWalletConnection, {}, void 0, false, {
             fileName: "[project]/src/app/electioncommission/page.jsx",
-            lineNumber: 528,
+            lineNumber: 759,
+            columnNumber: 12
+        }, ("TURBOPACK compile-time value", void 0));
+    }
+    // Show loading screen while checking admin status
+    if (isCheckingAdmin) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AdminCheckingLoader, {}, void 0, false, {
+            fileName: "[project]/src/app/electioncommission/page.jsx",
+            lineNumber: 764,
             columnNumber: 12
         }, ("TURBOPACK compile-time value", void 0));
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-gradient-to-br from-gray-50 to-gray-100",
         children: [
-            error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedAlertMessage, {
-                type: "error",
-                message: error,
-                onClose: ()=>setError('')
-            }, void 0, false, {
+            showAdminPopup && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AdminAccessDeniedPopup, {}, void 0, false, {
                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 535,
-                columnNumber: 9
-            }, ("TURBOPACK compile-time value", void 0)),
-            success && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedAlertMessage, {
-                type: "success",
-                message: success,
-                onClose: ()=>setSuccess('')
-            }, void 0, false, {
-                fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 542,
-                columnNumber: 9
-            }, ("TURBOPACK compile-time value", void 0)),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedDashboardHeader, {}, void 0, false, {
-                fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 550,
-                columnNumber: 7
+                lineNumber: 770,
+                columnNumber: 26
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex flex-col lg:flex-row gap-8",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedNavigationSidebar, {}, void 0, false, {
-                            fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 555,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex-1 min-w-0",
-                            children: isLoading && activeTab !== 'dashboard' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center justify-center h-64 bg-white rounded-xl shadow-lg",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$LoadingSpinner$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                className: showAdminPopup ? 'blur-sm pointer-events-none' : '',
+                children: [
+                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedAlertMessage, {
+                        type: "error",
+                        message: error,
+                        onClose: ()=>setError('')
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                        lineNumber: 776,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    success && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedAlertMessage, {
+                        type: "success",
+                        message: success,
+                        onClose: ()=>setSuccess('')
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                        lineNumber: 783,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedDashboardHeader, {}, void 0, false, {
+                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                        lineNumber: 791,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-col lg:flex-row gap-8",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedNavigationSidebar, {}, void 0, false, {
                                     fileName: "[project]/src/app/electioncommission/page.jsx",
-                                    lineNumber: 561,
-                                    columnNumber: 17
+                                    lineNumber: 796,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex-1 min-w-0",
+                                    children: isLoading && activeTab !== 'dashboard' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center justify-center h-64 bg-white rounded-xl shadow-lg",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$LoadingSpinner$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                                            fileName: "[project]/src/app/electioncommission/page.jsx",
+                                            lineNumber: 802,
+                                            columnNumber: 19
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 801,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "animate-in fade-in duration-300",
+                                        children: renderContent()
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                                        lineNumber: 805,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/electioncommission/page.jsx",
+                                    lineNumber: 799,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 560,
-                                columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "animate-in fade-in duration-300",
-                                children: renderContent()
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/electioncommission/page.jsx",
-                                lineNumber: 564,
-                                columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0))
-                        }, void 0, false, {
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/src/app/electioncommission/page.jsx",
-                            lineNumber: 558,
+                            lineNumber: 794,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/electioncommission/page.jsx",
-                    lineNumber: 553,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0))
-            }, void 0, false, {
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/electioncommission/page.jsx",
+                        lineNumber: 793,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/app/electioncommission/page.jsx",
-                lineNumber: 552,
+                lineNumber: 773,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/electioncommission/page.jsx",
-        lineNumber: 532,
+        lineNumber: 768,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(ElectionCommissionDashboard, "ucc2f6gLpd9mqCCPte38B5Oha9I=", false, function() {
+_s(ElectionCommissionDashboard, "lbx3VGkGHgL2HQN/xzlZ423RVgg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ContractContext$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useVoting"]
     ];

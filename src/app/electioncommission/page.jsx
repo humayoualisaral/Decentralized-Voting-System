@@ -20,7 +20,10 @@ import {
   UserPlus,
   Activity,
   Trophy,
-  BarChart3
+  BarChart3,
+  Shield,
+  ShieldAlert,
+  LogOut
 } from 'lucide-react';
 
 const ElectionCommissionDashboard = () => {
@@ -29,13 +32,15 @@ const ElectionCommissionDashboard = () => {
     isConnected,
     isLoading,
     connectWallet,
+    disconnectWallet,
     getElectionDetails,
     getCandidateDetails,
     getElectionCandidates,
     getElectionResults,
     getCurrentElectionId,
     setElectionStatus,
-    setCandidateStatus
+    setCandidateStatus,
+    contract
   } = useVoting();
 
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -51,6 +56,224 @@ const ElectionCommissionDashboard = () => {
   
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  
+  // New state for admin check
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isCheckingAdmin, setIsCheckingAdmin] = useState(true);
+  const [showAdminPopup, setShowAdminPopup] = useState(false);
+
+  // Check if current account has admin role
+  const checkAdminRole = async () => {
+    try {
+      if (!contract || !account) {
+        setIsAdmin(false);
+        setIsCheckingAdmin(false);
+        return;
+      }
+
+      setIsCheckingAdmin(true);
+      
+      // Check if account has ELECTION_COMMISSION_ROLE
+      // This assumes your contract has a function to check roles
+      // You may need to adjust this based on your contract's role checking method
+      try {
+        // Try to call an admin-only function to check if account has admin rights
+        // This is a common pattern - trying to call a restricted function
+        const ELECTION_COMMISSION_ROLE = await contract.ELECTION_COMMISSION_ROLE();
+        const hasRole = await contract.hasRole(ELECTION_COMMISSION_ROLE, account);
+        setIsAdmin(hasRole);
+        
+        if (!hasRole) {
+          setShowAdminPopup(true);
+        }
+      } catch (roleError) {
+        // If the contract doesn't have role-based access, try alternative methods
+        console.log('Role check failed, trying alternative admin check:', roleError);
+        
+        // Alternative: Check if account is the owner/deployer
+        try {
+          const owner = await contract.owner();
+          const isOwner = owner.toLowerCase() === account.toLowerCase();
+          setIsAdmin(isOwner);
+          
+          if (!isOwner) {
+            setShowAdminPopup(true);
+          }
+        } catch (ownerError) {
+          console.error('Admin check failed:', ownerError);
+          setIsAdmin(false);
+          setShowAdminPopup(true);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+      setIsAdmin(false);
+      setShowAdminPopup(true);
+    } finally {
+      setIsCheckingAdmin(false);
+    }
+  };
+
+  // Check admin role when wallet connects or account changes
+  useEffect(() => {
+    if (isConnected && account && contract) {
+      checkAdminRole();
+    } else {
+      setIsAdmin(false);
+      setIsCheckingAdmin(false);
+      setShowAdminPopup(false);
+    }
+  }, [isConnected, account, contract]);
+
+  // Admin Access Denied Popup Component
+  const AdminAccessDeniedPopup = () => (
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      {/* Backdrop with blur */}
+      <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm transition-opacity" />
+      
+      {/* Popup */}
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div className="relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-red-500 to-red-600 px-6 py-4">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <ShieldAlert className="h-8 w-8 text-white" />
+              </div>
+              <div className="ml-3">
+                <h3 className="text-lg font-semibold text-white">
+                  Access Denied
+                </h3>
+                <p className="text-red-100 text-sm">
+                  Admin privileges required
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="px-6 py-6">
+            <div className="text-center mb-6">
+              <div className="mx-auto mb-4 w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                <Shield className="w-8 h-8 text-red-600" />
+              </div>
+              <h4 className="text-xl font-bold text-gray-900 mb-2">
+                Admin Access Required
+              </h4>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                You need to connect with an admin wallet to access the Election Commission Dashboard.
+              </p>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <div className="flex items-start">
+                  <AlertCircle className="h-5 w-5 text-red-400 mr-2 mt-0.5" />
+                  <div className="text-left">
+                    <p className="text-sm text-red-800 font-medium mb-1">
+                      Current Wallet:
+                    </p>
+                    <p className="text-xs text-red-600 font-mono bg-red-100 px-2 py-1 rounded">
+                      {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Not connected'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Instructions */}
+            <div className="space-y-4 mb-6">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-semibold text-blue-600">1</span>
+                </div>
+                <p className="text-sm text-gray-700">
+                  Disconnect your current wallet
+                </p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-semibold text-blue-600">2</span>
+                </div>
+                <p className="text-sm text-gray-700">
+                  Connect with an admin wallet that has Election Commission privileges
+                </p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-semibold text-blue-600">3</span>
+                </div>
+                <p className="text-sm text-gray-700">
+                  Access will be granted automatically upon successful connection
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              <button
+                onClick={() => {
+                  disconnectWallet();
+                  setShowAdminPopup(false);
+                }}
+                className="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                <LogOut className="w-5 h-5 mr-2" />
+                Disconnect & Switch Wallet
+              </button>
+              
+              <button
+                onClick={checkAdminRole}
+                disabled={isCheckingAdmin}
+                className="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isCheckingAdmin ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Checking...
+                  </div>
+                ) : (
+                  <>
+                    <Shield className="w-5 h-5 mr-2" />
+                    Recheck Admin Access
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
+            <p className="text-xs text-gray-500 text-center">
+              Contact your system administrator if you believe this is an error
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Loading Screen for Admin Check
+  const AdminCheckingLoader = () => (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center">
+          <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg">
+            <Shield className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Verifying Access
+          </h1>
+          <p className="text-gray-600 mb-8 -relaxed">
+            Checking admin privileges for your wallet...
+          </p>
+          <div className="flex items-center justify-center mb-6">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+          <p className="text-xs text-gray-500">
+            This may take a few seconds
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 
   // Update dashboard statistics
   const updateDashboardStats = (electionsList) => {
@@ -69,7 +292,7 @@ const ElectionCommissionDashboard = () => {
   // Load elections from blockchain
   const loadElections = async () => {
     try {
-      if (!isConnected) return;
+      if (!isConnected || !isAdmin) return;
       
       const currentId = await getCurrentElectionId();
       const electionsList = [];
@@ -99,7 +322,7 @@ const ElectionCommissionDashboard = () => {
   // Load candidates from blockchain
   const loadCandidates = async () => {
     try {
-      if (!isConnected || elections.length === 0) return;
+      if (!isConnected || !isAdmin || elections.length === 0) return;
       
       const allCandidates = [];
       
@@ -130,18 +353,18 @@ const ElectionCommissionDashboard = () => {
     }
   };
 
-  // Load data when connected
+  // Load data when admin access is granted
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected && isAdmin) {
       loadElections();
     }
-  }, [isConnected]);
+  }, [isConnected, isAdmin]);
 
   useEffect(() => {
-    if (elections.length > 0) {
+    if (elections.length > 0 && isAdmin) {
       loadCandidates();
     }
-  }, [elections]);
+  }, [elections, isAdmin]);
 
   // Update stats when candidates change
   useEffect(() => {
@@ -173,7 +396,7 @@ const ElectionCommissionDashboard = () => {
             Election Commission
           </h1>
           <p className="text-gray-600 mb-8 leading-relaxed">
-            Connect your wallet to access the blockchain-based election management system
+            Connect your admin wallet to access the blockchain-based election management system
           </p>
           <button
             onClick={connectWallet}
@@ -186,11 +409,11 @@ const ElectionCommissionDashboard = () => {
                 Connecting...
               </div>
             ) : (
-              'Connect Wallet'
+              'Connect Admin Wallet'
             )}
           </button>
           <p className="text-xs text-gray-500 mt-4">
-            Secure blockchain connection required
+            Admin privileges required for access
           </p>
         </div>
       </div>
@@ -263,6 +486,10 @@ const ElectionCommissionDashboard = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            <div className="hidden sm:flex items-center px-3 py-2 bg-green-50 rounded-lg border border-green-200">
+              <Shield className="w-4 h-4 text-green-500 mr-2" />
+              <span className="text-sm font-medium text-green-700">Admin</span>
+            </div>
             <div className="hidden sm:flex items-center px-3 py-2 bg-green-50 rounded-lg border border-green-200">
               <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
               <span className="text-sm font-medium text-green-700">Connected</span>
@@ -359,9 +586,13 @@ const ElectionCommissionDashboard = () => {
 
             {/* Footer */}
             <div className="p-6 border-t border-gray-200 bg-gray-50">
-              <div className="flex items-center text-sm text-gray-600">
+              <div className="flex items-center text-sm text-gray-600 mb-2">
                 <Activity className="w-4 h-4 mr-2 text-green-500" />
                 <span>System Status: Online</span>
+              </div>
+              <div className="flex items-center text-sm text-gray-600">
+                <Shield className="w-4 h-4 mr-2 text-blue-500" />
+                <span>Admin Access: Granted</span>
               </div>
             </div>
           </div>
@@ -411,7 +642,7 @@ const ElectionCommissionDashboard = () => {
       <div className="space-y-8">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-8 text-white shadow-xl">
-          <h2 className="text-3xl font-bold mb-2">Welcome to Election Dashboard</h2>
+          <h2 className="text-3xl font-bold mb-2">Welcome to Admin Dashboard</h2>
           <p className="text-blue-100 text-lg">
             Manage elections and candidates with blockchain transparency
           </p>
@@ -528,43 +759,54 @@ const ElectionCommissionDashboard = () => {
     return <EnhancedWalletConnection />;
   }
 
+  // Show loading screen while checking admin status
+  if (isCheckingAdmin) {
+    return <AdminCheckingLoader />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Alert Messages */}
-      {error && (
-        <EnhancedAlertMessage 
-          type="error" 
-          message={error} 
-          onClose={() => setError('')} 
-        />
-      )}
-      {success && (
-        <EnhancedAlertMessage 
-          type="success" 
-          message={success} 
-          onClose={() => setSuccess('')} 
-        />
-      )}
+      {/* Admin Access Denied Popup */}
+      {showAdminPopup && <AdminAccessDeniedPopup />}
 
-      {/* Header */}
-      <EnhancedDashboardHeader />
+      {/* Dashboard Content - Blurred when admin popup is shown */}
+      <div className={showAdminPopup ? 'blur-sm pointer-events-none' : ''}>
+        {/* Alert Messages */}
+        {error && (
+          <EnhancedAlertMessage 
+            type="error" 
+            message={error} 
+            onClose={() => setError('')} 
+          />
+        )}
+        {success && (
+          <EnhancedAlertMessage 
+            type="success" 
+            message={success} 
+            onClose={() => setSuccess('')} 
+          />
+        )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Navigation */}
-          <EnhancedNavigationSidebar />
+        {/* Header */}
+        <EnhancedDashboardHeader />
 
-          {/* Main Content */}
-          <div className="flex-1 min-w-0">
-            {isLoading && activeTab !== 'dashboard' ? (
-              <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-lg">
-                <LoadingSpinner />
-              </div>
-            ) : (
-              <div className="animate-in fade-in duration-300">
-                {renderContent()}
-              </div>
-            )}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Sidebar Navigation */}
+            <EnhancedNavigationSidebar />
+
+            {/* Main Content */}
+            <div className="flex-1 min-w-0">
+              {isLoading && activeTab !== 'dashboard' ? (
+                <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-lg">
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                <div className="animate-in fade-in duration-300">
+                  {renderContent()}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

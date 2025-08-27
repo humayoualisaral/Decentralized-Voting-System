@@ -235,6 +235,18 @@ function NadraRegistrationForm() {
             setIsBiometricLoading(false);
         }
     };
+    // Helper function to calculate exact age
+    const calculateAge = (dateOfBirth)=>{
+        const today = new Date();
+        const birthDate = new Date(dateOfBirth);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        // If the birthday hasn't occurred this year yet, subtract 1
+        if (monthDiff < 0 || monthDiff === 0 && today.getDate() < birthDate.getDate()) {
+            age--;
+        }
+        return age;
+    };
     // Validation function
     const validateForm = ()=>{
         const newErrors = {};
@@ -256,11 +268,11 @@ function NadraRegistrationForm() {
         if (!formData.dateOfBirth) {
             newErrors.dateOfBirth = "Date of Birth is required";
         } else {
-            const birthDate = new Date(formData.dateOfBirth);
-            const today = new Date();
-            const age = today.getFullYear() - birthDate.getFullYear();
-            if (age < 18 || age > 100) {
-                newErrors.dateOfBirth = "Age must be between 18 and 100 years";
+            const age = calculateAge(formData.dateOfBirth);
+            if (age < 18) {
+                newErrors.dateOfBirth = `You must be at least 18 years old to register. Your current age is ${age} years.`;
+            } else if (age > 100) {
+                newErrors.dateOfBirth = "Age cannot be more than 100 years";
             }
         }
         // Province validation
@@ -320,6 +332,10 @@ function NadraRegistrationForm() {
     // Handle form submission
     const handleSubmit = async ()=>{
         if (!validateForm()) {
+            // Show specific error if user is under 18
+            if (errors.dateOfBirth && errors.dateOfBirth.includes('must be at least 18')) {
+                alert(`❌ REGISTRATION NOT ALLOWED\n\n🚫 ${errors.dateOfBirth}\n\n⚠️ You must be 18 years or older to register with NADRA.`);
+            }
             return;
         }
         setIsSubmitting(true);
@@ -389,12 +405,12 @@ function NadraRegistrationForm() {
                                 height: "100px"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/registration/page.jsx",
-                                lineNumber: 368,
+                                lineNumber: 388,
                                 columnNumber: 12
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 367,
+                            lineNumber: 387,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -402,7 +418,7 @@ function NadraRegistrationForm() {
                             children: "NADRA Registration Form"
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 370,
+                            lineNumber: 390,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -410,13 +426,13 @@ function NadraRegistrationForm() {
                             children: "Complete your National Database and Registration Authority (NADRA) registration with biometric authentication."
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 373,
+                            lineNumber: 393,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/registration/page.jsx",
-                    lineNumber: 366,
+                    lineNumber: 386,
                     columnNumber: 9
                 }, this),
                 apiError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -432,7 +448,7 @@ function NadraRegistrationForm() {
                                         children: "Registration Error:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/registration/page.jsx",
-                                        lineNumber: 384,
+                                        lineNumber: 404,
                                         columnNumber: 19
                                     }, this),
                                     " ",
@@ -440,22 +456,22 @@ function NadraRegistrationForm() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/registration/page.jsx",
-                                lineNumber: 383,
+                                lineNumber: 403,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 382,
+                            lineNumber: 402,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/registration/page.jsx",
-                        lineNumber: 381,
+                        lineNumber: 401,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/registration/page.jsx",
-                    lineNumber: 380,
+                    lineNumber: 400,
                     columnNumber: 11
                 }, this),
                 registrationResponse && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -470,7 +486,7 @@ function NadraRegistrationForm() {
                                     children: "Registration Successful!"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/registration/page.jsx",
-                                    lineNumber: 396,
+                                    lineNumber: 416,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -482,7 +498,7 @@ function NadraRegistrationForm() {
                                                     children: "Registration ID:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 398,
+                                                    lineNumber: 418,
                                                     columnNumber: 22
                                                 }, this),
                                                 " ",
@@ -490,7 +506,7 @@ function NadraRegistrationForm() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 398,
+                                            lineNumber: 418,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -499,7 +515,7 @@ function NadraRegistrationForm() {
                                                     children: "Full Name:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 399,
+                                                    lineNumber: 419,
                                                     columnNumber: 22
                                                 }, this),
                                                 " ",
@@ -507,7 +523,7 @@ function NadraRegistrationForm() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 399,
+                                            lineNumber: 419,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -516,7 +532,7 @@ function NadraRegistrationForm() {
                                                     children: "Status:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 400,
+                                                    lineNumber: 420,
                                                     columnNumber: 22
                                                 }, this),
                                                 " ",
@@ -524,7 +540,7 @@ function NadraRegistrationForm() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 400,
+                                            lineNumber: 420,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -533,7 +549,7 @@ function NadraRegistrationForm() {
                                                     children: "Province:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 401,
+                                                    lineNumber: 421,
                                                     columnNumber: 22
                                                 }, this),
                                                 " ",
@@ -541,7 +557,7 @@ function NadraRegistrationForm() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 401,
+                                            lineNumber: 421,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -550,7 +566,7 @@ function NadraRegistrationForm() {
                                                     children: "Constituency:"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 402,
+                                                    lineNumber: 422,
                                                     columnNumber: 22
                                                 }, this),
                                                 " ",
@@ -558,29 +574,29 @@ function NadraRegistrationForm() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 402,
+                                            lineNumber: 422,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/registration/page.jsx",
-                                    lineNumber: 397,
+                                    lineNumber: 417,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 395,
+                            lineNumber: 415,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/registration/page.jsx",
-                        lineNumber: 394,
+                        lineNumber: 414,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/registration/page.jsx",
-                    lineNumber: 393,
+                    lineNumber: 413,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -593,12 +609,12 @@ function NadraRegistrationForm() {
                                 children: "Personal Information & Biometric Registration"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/registration/page.jsx",
-                                lineNumber: 412,
+                                lineNumber: 432,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 411,
+                            lineNumber: 431,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -617,14 +633,14 @@ function NadraRegistrationForm() {
                                                             className: "inline w-4 h-4 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 421,
+                                                            lineNumber: 441,
                                                             columnNumber: 19
                                                         }, this),
                                                         "CNIC Number"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 420,
+                                                    lineNumber: 440,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -635,7 +651,7 @@ function NadraRegistrationForm() {
                                                     className: `w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${errors.cnicNumber ? 'border-red-300 bg-red-50' : 'border-gray-300 focus:border-emerald-500'}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 424,
+                                                    lineNumber: 444,
                                                     columnNumber: 17
                                                 }, this),
                                                 errors.cnicNumber && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -643,13 +659,13 @@ function NadraRegistrationForm() {
                                                     children: errors.cnicNumber
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 436,
+                                                    lineNumber: 456,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 419,
+                                            lineNumber: 439,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -661,14 +677,14 @@ function NadraRegistrationForm() {
                                                             className: "inline w-4 h-4 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 443,
+                                                            lineNumber: 463,
                                                             columnNumber: 19
                                                         }, this),
                                                         "First Name"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 442,
+                                                    lineNumber: 462,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -679,7 +695,7 @@ function NadraRegistrationForm() {
                                                     className: `w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${errors.firstName ? 'border-red-300 bg-red-50' : 'border-gray-300 focus:border-emerald-500'}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 446,
+                                                    lineNumber: 466,
                                                     columnNumber: 17
                                                 }, this),
                                                 errors.firstName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -687,13 +703,13 @@ function NadraRegistrationForm() {
                                                     children: errors.firstName
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 458,
+                                                    lineNumber: 478,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 441,
+                                            lineNumber: 461,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -705,14 +721,14 @@ function NadraRegistrationForm() {
                                                             className: "inline w-4 h-4 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 465,
+                                                            lineNumber: 485,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Last Name"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 464,
+                                                    lineNumber: 484,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -723,7 +739,7 @@ function NadraRegistrationForm() {
                                                     className: `w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${errors.lastName ? 'border-red-300 bg-red-50' : 'border-gray-300 focus:border-emerald-500'}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 468,
+                                                    lineNumber: 488,
                                                     columnNumber: 17
                                                 }, this),
                                                 errors.lastName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -731,13 +747,13 @@ function NadraRegistrationForm() {
                                                     children: errors.lastName
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 480,
+                                                    lineNumber: 500,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 463,
+                                            lineNumber: 483,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -750,14 +766,14 @@ function NadraRegistrationForm() {
                                                             className: "inline w-4 h-4 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 487,
+                                                            lineNumber: 507,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Date of Birth"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 486,
+                                                    lineNumber: 506,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -769,7 +785,7 @@ function NadraRegistrationForm() {
                                                     className: `w-full text-[#000] px-4 py-3 border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${errors.dateOfBirth ? 'border-red-300 bg-red-50' : 'border-gray-300 focus:border-emerald-500'}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 490,
+                                                    lineNumber: 510,
                                                     columnNumber: 17
                                                 }, this),
                                                 errors.dateOfBirth && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -777,13 +793,13 @@ function NadraRegistrationForm() {
                                                     children: errors.dateOfBirth
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 503,
+                                                    lineNumber: 523,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 485,
+                                            lineNumber: 505,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -795,14 +811,14 @@ function NadraRegistrationForm() {
                                                             className: "inline w-4 h-4 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 510,
+                                                            lineNumber: 530,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Province"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 509,
+                                                    lineNumber: 529,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -815,7 +831,7 @@ function NadraRegistrationForm() {
                                                             children: "Select Province"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 522,
+                                                            lineNumber: 542,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -823,7 +839,7 @@ function NadraRegistrationForm() {
                                                             children: "Punjab"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 523,
+                                                            lineNumber: 543,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -831,7 +847,7 @@ function NadraRegistrationForm() {
                                                             children: "Sindh"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 524,
+                                                            lineNumber: 544,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -839,7 +855,7 @@ function NadraRegistrationForm() {
                                                             children: "Khyber Pakhtunkhwa"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 525,
+                                                            lineNumber: 545,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -847,7 +863,7 @@ function NadraRegistrationForm() {
                                                             children: "Balochistan"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 526,
+                                                            lineNumber: 546,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -855,13 +871,13 @@ function NadraRegistrationForm() {
                                                             children: "Gilgit-Baltistan"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 527,
+                                                            lineNumber: 547,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 513,
+                                                    lineNumber: 533,
                                                     columnNumber: 17
                                                 }, this),
                                                 errors.province && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -869,13 +885,13 @@ function NadraRegistrationForm() {
                                                     children: errors.province
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 530,
+                                                    lineNumber: 550,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 508,
+                                            lineNumber: 528,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -887,14 +903,14 @@ function NadraRegistrationForm() {
                                                             className: "inline w-4 h-4 mr-2"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 537,
+                                                            lineNumber: 557,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Constituency"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 536,
+                                                    lineNumber: 556,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -908,7 +924,7 @@ function NadraRegistrationForm() {
                                                             children: formData.province ? 'Select Constituency' : 'Select Province First'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 552,
+                                                            lineNumber: 572,
                                                             columnNumber: 19
                                                         }, this),
                                                         constituencies.map((constituency)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -916,13 +932,13 @@ function NadraRegistrationForm() {
                                                                 children: constituency
                                                             }, constituency, false, {
                                                                 fileName: "[project]/src/app/registration/page.jsx",
-                                                                lineNumber: 556,
+                                                                lineNumber: 576,
                                                                 columnNumber: 21
                                                             }, this))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 540,
+                                                    lineNumber: 560,
                                                     columnNumber: 17
                                                 }, this),
                                                 errors.constituency && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -930,13 +946,13 @@ function NadraRegistrationForm() {
                                                     children: errors.constituency
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 562,
+                                                    lineNumber: 582,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 535,
+                                            lineNumber: 555,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -951,7 +967,7 @@ function NadraRegistrationForm() {
                                                             children: "Biometric Fingerprint Authentication"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 570,
+                                                            lineNumber: 590,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -974,27 +990,27 @@ function NadraRegistrationForm() {
                                                                             fill: "currentColor"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                                            lineNumber: 591,
+                                                                            lineNumber: 611,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/registration/page.jsx",
-                                                                        lineNumber: 590,
+                                                                        lineNumber: 610,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                                    lineNumber: 589,
+                                                                    lineNumber: 609,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/registration/page.jsx",
-                                                                lineNumber: 576,
+                                                                lineNumber: 596,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 575,
+                                                            lineNumber: 595,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1007,14 +1023,14 @@ function NadraRegistrationForm() {
                                                                         children: "🔄"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/registration/page.jsx",
-                                                                        lineNumber: 609,
+                                                                        lineNumber: 629,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     "Place your finger on the biometric sensor..."
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/registration/page.jsx",
-                                                                lineNumber: 608,
+                                                                lineNumber: 628,
                                                                 columnNumber: 25
                                                             }, this) : registeredCredential ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "flex items-center justify-center",
@@ -1024,19 +1040,19 @@ function NadraRegistrationForm() {
                                                                         children: "✅"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/registration/page.jsx",
-                                                                        lineNumber: 614,
+                                                                        lineNumber: 634,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     "Biometric fingerprint registered successfully!"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/registration/page.jsx",
-                                                                lineNumber: 613,
+                                                                lineNumber: 633,
                                                                 columnNumber: 25
                                                             }, this) : biometricStatus ? biometricStatus : 'Checking biometric capabilities...'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 598,
+                                                            lineNumber: 618,
                                                             columnNumber: 21
                                                         }, this),
                                                         !registeredCredential && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1044,7 +1060,7 @@ function NadraRegistrationForm() {
                                                             children: isBiometricAvailable ? 'Click the fingerprint icon above to register your biometric authentication' : 'Biometric authentication is not available on this device'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 626,
+                                                            lineNumber: 646,
                                                             columnNumber: 23
                                                         }, this),
                                                         registeredCredential && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1055,7 +1071,7 @@ function NadraRegistrationForm() {
                                                                     children: "Registered Biometric Details:"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                                    lineNumber: 637,
+                                                                    lineNumber: 657,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1070,14 +1086,14 @@ function NadraRegistrationForm() {
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                                            lineNumber: 639,
+                                                                            lineNumber: 659,
                                                                             columnNumber: 27
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             children: "Type: Hardware Security Platform"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                                            lineNumber: 640,
+                                                                            lineNumber: 660,
                                                                             columnNumber: 27
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1087,19 +1103,19 @@ function NadraRegistrationForm() {
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                                            lineNumber: 641,
+                                                                            lineNumber: 661,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                                    lineNumber: 638,
+                                                                    lineNumber: 658,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 636,
+                                                            lineNumber: 656,
                                                             columnNumber: 23
                                                         }, this),
                                                         errors.biometric && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1109,34 +1125,34 @@ function NadraRegistrationForm() {
                                                                 children: errors.biometric
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/registration/page.jsx",
-                                                                lineNumber: 649,
+                                                                lineNumber: 669,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/registration/page.jsx",
-                                                            lineNumber: 648,
+                                                            lineNumber: 668,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 569,
+                                                    lineNumber: 589,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/registration/page.jsx",
-                                                lineNumber: 568,
+                                                lineNumber: 588,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 567,
+                                            lineNumber: 587,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/registration/page.jsx",
-                                    lineNumber: 416,
+                                    lineNumber: 436,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1153,36 +1169,36 @@ function NadraRegistrationForm() {
                                                     className: "animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/registration/page.jsx",
-                                                    lineNumber: 671,
+                                                    lineNumber: 691,
                                                     columnNumber: 21
                                                 }, this),
                                                 "Submitting Registration..."
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/registration/page.jsx",
-                                            lineNumber: 670,
+                                            lineNumber: 690,
                                             columnNumber: 19
                                         }, this) : 'Submit NADRA Registration'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/registration/page.jsx",
-                                        lineNumber: 659,
+                                        lineNumber: 679,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/registration/page.jsx",
-                                    lineNumber: 658,
+                                    lineNumber: 678,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 415,
+                            lineNumber: 435,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/registration/page.jsx",
-                    lineNumber: 410,
+                    lineNumber: 430,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1193,7 +1209,7 @@ function NadraRegistrationForm() {
                             children: "By submitting this form, you agree to NADRA's terms and conditions."
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 684,
+                            lineNumber: 704,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1201,24 +1217,24 @@ function NadraRegistrationForm() {
                             children: "🔒 Your biometric data is encrypted and securely stored according to NADRA protocols."
                         }, void 0, false, {
                             fileName: "[project]/src/app/registration/page.jsx",
-                            lineNumber: 687,
+                            lineNumber: 707,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/registration/page.jsx",
-                    lineNumber: 683,
+                    lineNumber: 703,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/registration/page.jsx",
-            lineNumber: 364,
+            lineNumber: 384,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/registration/page.jsx",
-        lineNumber: 363,
+        lineNumber: 383,
         columnNumber: 5
     }, this);
 }
